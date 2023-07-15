@@ -1,0 +1,50 @@
+syntax = "v1"
+
+info(
+    title: "用户中心"
+    desc: "用户中心服务"
+    author: "Barry"
+    email: "wyx_natural@gmail.com"
+    version: "v1"
+)
+type User {
+    Name string     `json:"name"`
+    Email string   `json:"email"`
+    Avatar string  `json:"avatar"`
+    Role uint32      `json:"role"`
+    Message string     `json:"message"`
+    StudentId string   `json:"studentId"`
+    College string   `json:"college"`
+    Major string `json:"major"`
+    Grade string `json:"grade"`
+    Gender string `json:"gender"`
+    QQNumber string `json:"qqNumber"`
+    PhoneNumber string `json:"phoneNumber"`
+}
+
+type VerificationCodeRequest{
+    Email string `json:"email"`
+}
+
+type  VerificationCodeResponse{
+    VerificationCode string `json:"verificationCode"`
+}
+
+
+type RegisterRequest{
+    Email string `json:"email"`
+    Password string `json:"password"`
+    VerificationCode string `json:"verification_code"`
+}
+
+type RegisterResponse{
+    Id int64 `json:"id"`
+    Token string `json:"token"`
+}
+
+type InfoRequest{
+}
+
+type InfoResponse{
+    User User `json:"user"`
+}
