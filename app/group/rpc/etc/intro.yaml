@@ -1,9 +1,0 @@
-Name: intro.rpc
-ListenOn: 0.0.0.0:8080
-Etcd:
-  Hosts:
-  - 127.0.0.1:2379
-  Key: intro.rpc
-MongoDBConf:
-  URL: mongodb://root:5huangwansuI@43.138.61.49:27017
-  DB: test
