@@ -1,0 +1,26 @@
+syntax = "v1"
+
+info (
+	title: "组别文案"
+	desc: "返回某组文案"
+	author: "w"
+	email: "1622284619@qq.com"
+)
+
+type getReq {
+	Name string `json:"name"`
+}
+
+type getResp {
+	Intro string `json:"intro"`
+}
+
+@server(
+	prefix: api/v2
+)
+
+service intro-api {
+	@doc"返回某组文案"
+	@handler GetHandler
+	post /group (getReq)returns(getResp)
+}

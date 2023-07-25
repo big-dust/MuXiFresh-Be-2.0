@@ -1,0 +1,353 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "报名",
+    "description": "与报名有关内容",
+    "version": ""
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "api/v2/form": {
+      "post": {
+        "summary": "创建表",
+        "operationId": "CreateForm",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/CreateResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": "提交报名表",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "form-api"
+        ]
+      },
+      "put": {
+        "summary": "编辑表",
+        "operationId": "UpdateForm",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/CreateResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": "提交报名表",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "form-api"
+        ]
+      }
+    },
+    "api/v2/form/judge": {
+      "get": {
+        "summary": "判断身份",
+        "operationId": "JudgeUser",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/ClickResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "form-api"
+        ]
+      }
+    },
+    "api/v2/form/view": {
+      "get": {
+        "summary": "查看表",
+        "operationId": "CheckForm",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/CheckResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "entry_form_id",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "form-api"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "CheckReq": {
+      "type": "object",
+      "properties": {
+        "Authorization": {
+          "type": "string"
+        },
+        "entry_form_id": {
+          "type": "string"
+        }
+      },
+      "title": "CheckReq",
+      "required": [
+        "token",
+        "entry_form_id"
+      ]
+    },
+    "CheckResp": {
+      "type": "object",
+      "properties": {
+        "avatar": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "stu_number": {
+          "type": "string"
+        },
+        "school": {
+          "type": "string"
+        },
+        "major": {
+          "type": "string"
+        },
+        "grade": {
+          "type": "string"
+        },
+        "gender": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "qq": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "group": {
+          "type": "string"
+        },
+        "reason": {
+          "type": "string"
+        },
+        "knowledge": {
+          "type": "string"
+        },
+        "self_intro": {
+          "type": "string"
+        },
+        "extra_question": {
+          "type": "string"
+        }
+      },
+      "title": "CheckResp",
+      "required": [
+        "avatar",
+        "name",
+        "stu_number",
+        "school",
+        "major",
+        "grade",
+        "gender",
+        "email",
+        "qq",
+        "phone",
+        "group",
+        "reason",
+        "knowledge",
+        "self_intro",
+        "extra_question"
+      ]
+    },
+    "ClickReq": {
+      "type": "object",
+      "properties": {
+        "Authorization": {
+          "type": "string"
+        }
+      },
+      "title": "ClickReq",
+      "required": [
+        "token"
+      ]
+    },
+    "ClickResp": {
+      "type": "object",
+      "properties": {
+        "user_type": {
+          "type": "string"
+        },
+        "form_status": {
+          "type": "string"
+        }
+      },
+      "title": "ClickResp",
+      "required": [
+        "user_type",
+        "form_status"
+      ]
+    },
+    "CreateReq": {
+      "type": "object",
+      "properties": {
+        "Authorization": {
+          "type": "string"
+        },
+        "form_id": {
+          "type": "string"
+        },
+        "user_id": {
+          "type": "string"
+        },
+        "avatar": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "stu_number": {
+          "type": "string"
+        },
+        "school": {
+          "type": "string"
+        },
+        "major": {
+          "type": "string"
+        },
+        "grade": {
+          "type": "string"
+        },
+        "gender": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "qq": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "group": {
+          "type": "string"
+        },
+        "reason": {
+          "type": "string"
+        },
+        "knowledge": {
+          "type": "string"
+        },
+        "self_intro": {
+          "type": "string"
+        },
+        "extra_question": {
+          "type": "string"
+        }
+      },
+      "title": "CreateReq",
+      "required": [
+        "token",
+        "user_id",
+        "avatar",
+        "name",
+        "stu_number",
+        "school",
+        "major",
+        "grade",
+        "gender",
+        "email",
+        "qq",
+        "phone",
+        "group",
+        "reason",
+        "knowledge",
+        "self_intro",
+        "extra_question"
+      ]
+    },
+    "CreateResp": {
+      "type": "object",
+      "properties": {
+        "flag": {
+          "type": "boolean",
+          "format": "boolean"
+        }
+      },
+      "title": "CreateResp",
+      "required": [
+        "flag"
+      ]
+    }
+  },
+  "securityDefinitions": {
+    "apiKey": {
+      "type": "apiKey",
+      "description": "Enter JWT Bearer token **_only_**",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
+  "security": [
+    {
+      "apiKey": []
+    }
+  ]
+}

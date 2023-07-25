@@ -1,0 +1,54 @@
+syntax = "v1"
+
+info (
+	title: "进度查询"
+	desc: "进度查询"
+	author: "Ciel"
+	email: "1622284619@qq.com"
+)
+
+//生成进度表
+type CreateReq {
+	Authorization string `json:"Authorization"`
+	UserID        string `json:"user_id"`
+}
+type CreateResp {
+	Flag bool `json:"flag"`
+}
+
+//进度查询
+type CheckReq {
+	Authorization string `json:"Authorization"`
+	ScheduleID    string `json:"Schedule_id"`
+}
+type CheckResp {
+	Name            string `json:"name"`
+	School          string `json:"school"`
+	Major           string `json:"major"`
+	Group           string `json:"group"`
+	EntryFormStatus string `json:"entry_form_status"`
+	AdmissionStatus string `json:"admission_status"`
+}
+
+////判断用户身份
+//type JudgeUserReq{
+//	Authorization string `json:"Authorization"`
+//}
+//type JudgeUserResp{
+//	UserType string  `json:"user_type"`
+//}
+
+@server(
+	prefix: api/v2
+	jwt:JwtAuth
+)
+
+service schedule-api {
+	@doc"生成进度表"
+	@handler CreateSchedule
+	get /schedule/create (CreateReq)returns(CreateResp)
+
+	@doc"进度查询"
+	@handler Check
+	get /schedule(CheckReq) returns(CheckResp)
+}

@@ -3,17 +3,15 @@ package main
 import (
 	"flag"
 	"fmt"
-
-	"rpc/internal/config"
-	"rpc/internal/server"
-	"rpc/internal/svc"
-	"rpc/pb"
-
 	"github.com/zeromicro/go-zero/core/conf"
 	"github.com/zeromicro/go-zero/core/service"
 	"github.com/zeromicro/go-zero/zrpc"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
+	"usercenter-rpc/internal/config"
+	"usercenter-rpc/internal/server"
+	"usercenter-rpc/internal/svc"
+	"usercenter-rpc/pb"
 )
 
 var configFile = flag.String("f", "etc/usercenter.yaml", "the config file")
