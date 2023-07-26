@@ -14,8 +14,13 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 		[]rest.Route{
 			{
 				Method:  http.MethodPost,
-				Path:    "/group",
-				Handler: GetHandler(serverCtx),
+				Path:    "/intro/group",
+				Handler: GroupIntroHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/intro",
+				Handler: RecruitInfoHandler(serverCtx),
 			},
 		},
 		rest.WithPrefix("/api/v2"),

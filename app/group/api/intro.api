@@ -1,18 +1,28 @@
 syntax = "v1"
 
 info (
-	title: "组别文案"
-	desc: "返回某组文案"
-	author: "w"
+	title: "招募信息"
+	desc: "返回某组文案和招募信息"
+	author: "Ciel"
 	email: "1622284619@qq.com"
 )
 
-type getReq {
-	Name string `json:"name"`
+//返回某组文案
+type GroupIntroReq {
+	Authorization string `json:"Authorization"`
+	GroupName     string `json:"group_name"`
+}
+type GroupIntroResp {
+	Intro string `json:"intro"`
 }
 
-type getResp {
-	Intro string `json:"intro"`
+//返回招募信息
+type RecruitInfoReq {
+	Authorization string `json:"Authorization"`
+	URL           string `json:"url"`
+}
+type RecruitInfoResp {
+	Info string `json:"info"`
 }
 
 @server(
@@ -21,6 +31,10 @@ type getResp {
 
 service intro-api {
 	@doc"返回某组文案"
-	@handler GetHandler
-	post /group (getReq)returns(getResp)
+	@handler GroupIntro
+	post /intro/group (GroupIntroReq)returns(GroupIntroResp)
+
+	@doc"返回招募信息"
+	@handler RecruitInfo
+	get /intro
 }

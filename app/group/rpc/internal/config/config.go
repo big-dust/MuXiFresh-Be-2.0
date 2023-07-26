@@ -4,8 +4,4 @@ import "github.com/zeromicro/go-zero/zrpc"
 
 type Config struct {
 	zrpc.RpcServerConf
-	MongoDBConf struct {
-		URL string
-		DB  string
-	}
 }

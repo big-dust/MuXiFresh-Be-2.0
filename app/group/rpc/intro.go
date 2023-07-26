@@ -1,12 +1,13 @@
 package main
 
 import (
+	"flag"
+	"fmt"
+
 	"MuxiFresh2.0/MuXiFresh-Be-2.0/app/group/rpc/internal/config"
 	"MuxiFresh2.0/MuXiFresh-Be-2.0/app/group/rpc/internal/server"
 	"MuxiFresh2.0/MuXiFresh-Be-2.0/app/group/rpc/internal/svc"
 	"MuxiFresh2.0/MuXiFresh-Be-2.0/app/group/rpc/pb"
-	"flag"
-	"fmt"
 
 	"github.com/zeromicro/go-zero/core/conf"
 	"github.com/zeromicro/go-zero/core/service"
@@ -25,7 +26,7 @@ func main() {
 	ctx := svc.NewServiceContext(c)
 
 	s := zrpc.MustNewServer(c.RpcServerConf, func(grpcServer *grpc.Server) {
-		pb.RegisterGetClientServer(grpcServer, server.NewGetClientServer(ctx))
+		pb.RegisterIntroClientServer(grpcServer, server.NewIntroClientServer(ctx))
 
 		if c.Mode == service.DevMode || c.Mode == service.TestMode {
 			reflection.Register(grpcServer)

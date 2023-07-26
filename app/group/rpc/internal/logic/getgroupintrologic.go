@@ -1,9 +1,11 @@
 package logic
 
 import (
+	"context"
+	"strings"
+
 	"MuxiFresh2.0/MuXiFresh-Be-2.0/app/group/rpc/internal/svc"
 	"MuxiFresh2.0/MuXiFresh-Be-2.0/app/group/rpc/pb"
-	"context"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -22,13 +24,27 @@ func NewGetGroupIntroLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Get
 	}
 }
 
-func (l *GetGroupIntroLogic) GetGroupIntro(in *pb.GetReq) (*pb.GetResp, error) {
-	group, err := l.svcCtx.GroupClient.FindByName(l.ctx, in.Name)
-
-	if err != nil {
-		return nil, err
+func (l *GetGroupIntroLogic) GetGroupIntro(in *pb.GroupIntroReq) (*pb.GroupIntroResp, error) {
+	if strings.Compare(in.GroupName, "产品组") == 0 {
+		return &pb.GroupIntroResp{
+			Intro: "这是一段产品组的介绍",
+		}, nil
+	} else if strings.Compare(in.GroupName, "安卓组") == 0 {
+		return &pb.GroupIntroResp{
+			Intro: "这是一段安卓组的介绍",
+		}, nil
+	} else if strings.Compare(in.GroupName, "前端组") == 0 {
+		return &pb.GroupIntroResp{
+			Intro: "这是一段前端组的介绍",
+		}, nil
+	} else if strings.Compare(in.GroupName, "后端组") == 0 {
+		return &pb.GroupIntroResp{
+			Intro: "这是一段后端组的介绍",
+		}, nil
+	} else if strings.Compare(in.GroupName, "设计组") == 0 {
+		return &pb.GroupIntroResp{
+			Intro: "这是一段设计组的介绍",
+		}, nil
 	}
-	return &pb.GetResp{
-		Intro: group.Intro,
-	}, nil
+	return nil, nil
 }

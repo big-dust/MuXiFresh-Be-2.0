@@ -9,16 +9,16 @@ import (
 	"net/http"
 )
 
-func GetHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
+func GroupIntroHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		var req types.GetReq
+		var req types.GroupIntroReq
 		if err := httpx.Parse(r, &req); err != nil {
 			httpx.Error(w, err)
 			return
 		}
 
-		l := logic.NewGetLogic(r.Context(), svcCtx)
-		resp, err := l.Get(&req)
+		l := logic.NewGroupIntroLogic(r.Context(), svcCtx)
+		resp, err := l.GroupIntro(&req)
 		response.Response(w, resp, err)
 
 	}
