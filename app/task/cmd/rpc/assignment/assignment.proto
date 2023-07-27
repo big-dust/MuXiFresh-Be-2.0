@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+package assignment;
+option go_package="./pb";
+
+//list
+message GetAssignmentListReq {
+  string group = 1;
+}
+
+message Title {
+  string ID = 1;
+  string Text = 2;
+}
+
+message GetAssignmentListResp {
+  repeated  Title  Titles = 1;
+}
+
+//info
+message GetAssignmentInfoReq {
+  string AssignmentID = 1;
+}
+
+message GetAssignmentInfoResp {
+  string TitleText = 1;
+  string Content  = 2;
+  repeated string Urls  = 3;
+}
+
+//set
+message SetAssignmentReq {
+  string AssignmentID = 1;
+  string Group = 2;
+  string TitleText = 3;
+  string Content = 4;
+  repeated  string Urls = 5;
+}
+
+message SetAssignmentResp {
+  bool Flag = 1;
+}
+
+service assignmentClient {
+  rpc GetAssignmentList(GetAssignmentListReq) returns(GetAssignmentListResp);
+  rpc GetAssignmentInfo(GetAssignmentInfoReq) returns(GetAssignmentInfoResp);
+  rpc SetAssignment(SetAssignmentReq) returns(SetAssignmentResp);
+}

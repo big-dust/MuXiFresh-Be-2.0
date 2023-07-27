@@ -1,0 +1,770 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Task Part",
+    "description": "task part fo MuxiFresh-Be-2.0",
+    "version": ""
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "api/v2/task/assigned/list": {
+      "get": {
+        "summary": "获取作业列表(题目)",
+        "operationId": "GetAssignmentList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetAssignmentListResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "group",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "assigned"
+        ]
+      }
+    },
+    "api/v2/task/assigned/{id}": {
+      "get": {
+        "summary": "获取指定作业信息(题目)",
+        "operationId": "GetAssignmentInfo",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetAssignmentInfoResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Authorization",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "assigned"
+        ]
+      },
+      "post": {
+        "summary": "布置/修改指定作业(题目)",
+        "operationId": "SetAssignment",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/SetAssignmentResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SetAssignmentReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "assigned"
+        ]
+      }
+    },
+    "api/v2/task/assigned/{id}/completion": {
+      "get": {
+        "summary": "查看指定作业所有人完成情况",
+        "operationId": "GetAllSubmissionStatus",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetAllSubmissionStatusResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Authorization",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "submitted"
+        ]
+      }
+    },
+    "api/v2/task/assigned/{id}/status": {
+      "get": {
+        "summary": "我的某作业提交状态",
+        "operationId": "GetMySubmissionStatus",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetMySubmissionStatusResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Authorization",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "submitted"
+        ]
+      }
+    },
+    "api/v2/task/submitted": {
+      "post": {
+        "summary": "提交/修改作业",
+        "operationId": "SetSubmission",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/SetSubmissionResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SetSubmissionReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "submitted"
+        ]
+      }
+    },
+    "api/v2/task/submitted/comment/{id}": {
+      "delete": {
+        "summary": "删除指定评论",
+        "operationId": "DelSubmissionComment",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/DelSubmissionCommentResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DelSubmissionCommentReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "comment"
+        ]
+      }
+    },
+    "api/v2/task/submitted/{id}/comment": {
+      "get": {
+        "summary": "获取指定作业的评论",
+        "operationId": "GetSubmissionComment",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetSubmissionCommentResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Authorization",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "comment"
+        ]
+      },
+      "post": {
+        "summary": "评论指定作业",
+        "operationId": "SetSubmissionComment",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/SetSubmissionCommentResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SetSubmissionCommentReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "comment"
+        ]
+      }
+    },
+    "api/v2/task/submitted/{userID}/{assignedTaskID}": {
+      "get": {
+        "summary": "获取指定的作业提交",
+        "operationId": "GetSubmissionInfo",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetSubmissionInfoResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "userID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "assignedTaskID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Authorization",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "submitted"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "Comment": {
+      "type": "object",
+      "properties": {
+        "avatar": {
+          "type": "string"
+        },
+        "nickname": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        }
+      },
+      "title": "Comment",
+      "required": [
+        "avatar",
+        "nickname",
+        "content"
+      ]
+    },
+    "Completion": {
+      "type": "object",
+      "properties": {
+        "nickname": {
+          "type": "string"
+        },
+        "grade": {
+          "type": "string"
+        },
+        "college": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        }
+      },
+      "title": "Completion",
+      "required": [
+        "nickname",
+        "grade",
+        "college",
+        "status"
+      ]
+    },
+    "DelSubmissionCommentReq": {
+      "type": "object",
+      "properties": {
+        "Authorization": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "title": "DelSubmissionCommentReq",
+      "required": [
+        "Authorization",
+        "id"
+      ]
+    },
+    "DelSubmissionCommentResp": {
+      "type": "object",
+      "properties": {
+        "flag": {
+          "type": "boolean",
+          "format": "boolean"
+        }
+      },
+      "title": "DelSubmissionCommentResp",
+      "required": [
+        "flag"
+      ]
+    },
+    "GetAllSubmissionStatusReq": {
+      "type": "object",
+      "properties": {
+        "Authorization": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "page": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "GetAllSubmissionStatusReq",
+      "required": [
+        "Authorization",
+        "id",
+        "page"
+      ]
+    },
+    "GetAllSubmissionStatusResp": {
+      "type": "object",
+      "properties": {
+        "completions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Completion"
+          }
+        }
+      },
+      "title": "GetAllSubmissionStatusResp",
+      "required": [
+        "completions"
+      ]
+    },
+    "GetAssignmentInfoReq": {
+      "type": "object",
+      "properties": {
+        "Authorization": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "title": "GetAssignmentInfoReq",
+      "required": [
+        "Authorization",
+        "id"
+      ]
+    },
+    "GetAssignmentInfoResp": {
+      "type": "object",
+      "properties": {
+        "title_text": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        },
+        "urls": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "title": "GetAssignmentInfoResp",
+      "required": [
+        "title_text",
+        "content",
+        "urls"
+      ]
+    },
+    "GetAssignmentListReq": {
+      "type": "object",
+      "properties": {
+        "Authorization": {
+          "type": "string"
+        },
+        "group": {
+          "type": "string"
+        }
+      },
+      "title": "GetAssignmentListReq",
+      "required": [
+        "Authorization",
+        "group"
+      ]
+    },
+    "GetAssignmentListResp": {
+      "type": "object",
+      "properties": {
+        "titles": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Title"
+          }
+        }
+      },
+      "title": "GetAssignmentListResp",
+      "required": [
+        "titles"
+      ]
+    },
+    "GetMySubmissionStatusReq": {
+      "type": "object",
+      "properties": {
+        "Authorization": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "title": "GetMySubmissionStatusReq",
+      "required": [
+        "Authorization",
+        "id"
+      ]
+    },
+    "GetMySubmissionStatusResp": {
+      "type": "object",
+      "properties": {
+        "task_status": {
+          "type": "string"
+        }
+      },
+      "title": "GetMySubmissionStatusResp",
+      "required": [
+        "task_status"
+      ]
+    },
+    "GetSubmissionCommentReq": {
+      "type": "object",
+      "properties": {
+        "Authorization": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "title": "GetSubmissionCommentReq",
+      "required": [
+        "Authorization",
+        "id"
+      ]
+    },
+    "GetSubmissionCommentResp": {
+      "type": "object",
+      "properties": {
+        "comments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Comment"
+          }
+        }
+      },
+      "title": "GetSubmissionCommentResp",
+      "required": [
+        "comments"
+      ]
+    },
+    "GetSubmissionInfoReq": {
+      "type": "object",
+      "properties": {
+        "Authorization": {
+          "type": "string"
+        },
+        "assignedTaskID": {
+          "type": "string"
+        },
+        "userID": {
+          "type": "string"
+        }
+      },
+      "title": "GetSubmissionInfoReq",
+      "required": [
+        "Authorization",
+        "assignedTaskID",
+        "userID"
+      ]
+    },
+    "GetSubmissionInfoResp": {
+      "type": "object",
+      "properties": {
+        "urls": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "title": "GetSubmissionInfoResp",
+      "required": [
+        "urls"
+      ]
+    },
+    "SetAssignmentReq": {
+      "type": "object",
+      "properties": {
+        "Authorization": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "group": {
+          "type": "string"
+        },
+        "title_text": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        },
+        "urls": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "title": "SetAssignmentReq",
+      "required": [
+        "Authorization",
+        "group",
+        "title_text",
+        "content",
+        "urls"
+      ]
+    },
+    "SetAssignmentResp": {
+      "type": "object",
+      "properties": {
+        "flag": {
+          "type": "boolean",
+          "format": "boolean"
+        }
+      },
+      "title": "SetAssignmentResp",
+      "required": [
+        "flag"
+      ]
+    },
+    "SetSubmissionCommentReq": {
+      "type": "object",
+      "properties": {
+        "Authorization": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        }
+      },
+      "title": "SetSubmissionCommentReq",
+      "required": [
+        "Authorization",
+        "id",
+        "content"
+      ]
+    },
+    "SetSubmissionCommentResp": {
+      "type": "object",
+      "properties": {
+        "flag": {
+          "type": "boolean",
+          "format": "boolean"
+        }
+      },
+      "title": "SetSubmissionCommentResp",
+      "required": [
+        "flag"
+      ]
+    },
+    "SetSubmissionReq": {
+      "type": "object",
+      "properties": {
+        "Authorization": {
+          "type": "string"
+        },
+        "assignedTaskID": {
+          "type": "string"
+        },
+        "urls": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "title": "SetSubmissionReq",
+      "required": [
+        "Authorization",
+        "urls"
+      ]
+    },
+    "SetSubmissionResp": {
+      "type": "object",
+      "properties": {
+        "flag": {
+          "type": "boolean",
+          "format": "boolean"
+        }
+      },
+      "title": "SetSubmissionResp",
+      "required": [
+        "flag"
+      ]
+    },
+    "Title": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        }
+      },
+      "title": "Title",
+      "required": [
+        "id",
+        "text"
+      ]
+    }
+  },
+  "securityDefinitions": {
+    "apiKey": {
+      "type": "apiKey",
+      "description": "Enter JWT Bearer token **_only_**",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
+  "security": [
+    {
+      "apiKey": []
+    }
+  ]
+}

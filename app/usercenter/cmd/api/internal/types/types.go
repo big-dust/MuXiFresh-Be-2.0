@@ -5,7 +5,7 @@ type User struct {
 	Name        string `json:"name"`
 	Email       string `json:"email"`
 	Avatar      string `json:"avatar"`
-	Role        uint32 `json:"role"`
+	Role        uint32 `json:"user_type"`
 	Message     string `json:"message"`
 	StudentId   string `json:"studentId"`
 	College     string `json:"college"`

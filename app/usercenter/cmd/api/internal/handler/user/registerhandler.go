@@ -1,12 +1,12 @@
 package handler
 
 import (
-	"api/internal/logic/user"
-	"api/internal/svc"
-	"api/internal/types"
-	"github.com/Wishforpeace/zero-tools/response"
+	"MuXiFresh-Be-2.0/common/greet/response"
 	"github.com/zeromicro/go-zero/rest/httpx"
 	"net/http"
+	"usercenter-api/internal/logic/user"
+	"usercenter-api/internal/svc"
+	"usercenter-api/internal/types"
 )
 
 func RegisterHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {

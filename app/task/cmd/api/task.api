@@ -1,0 +1,190 @@
+syntax = "v1"
+
+info (
+	title: "Task Part"
+	desc: "task part fo MuxiFresh-Be-2.0"
+	author: "BIGDUST and Ciel"
+	email: "3264085417@qq.com"
+)
+//作业提交状态
+type (
+	GetMySubmissionStatusReq {
+		Authorization string `header:"Authorization"`
+		AssignmentID  string `path:"id"`
+	}
+	GetMySubmissionStatusResp {
+		MySubmissionStatus string `json:"task_status,options=[notSubmitted,submitted,reviewed]"`
+	}
+)
+//提交|修改作业
+type (
+	SetSubmissionReq {
+		Authorization string   `header:"Authorization"`
+		AssignmentID  string   `json:"assignedTaskID,optional"`
+		Urls          []string `json:"urls"`
+	}
+	SetSubmissionResp {
+		Flag bool `json:"flag"`
+	}
+)
+//指定的作业提交
+type (
+	GetSubmissionInfoReq {
+		Authorization string `header:"Authorization"`
+		AssignmentID  string `path:"assignedTaskID"`
+		UserID        string `path:"userID"`
+	}
+
+	GetSubmissionInfoResp {
+		SubmissionID string   `json:"submission_id"`
+		Urls         []string `json:"urls"`
+	}
+)
+//指定作业所有人完成情况
+type (
+	GetAllSubmissionStatusReq {
+		Authorization string `header:"Authorization"`
+		AssignmentID  string `path:"id"`
+		Page          int    `form:"page"`
+	}
+	Completion {
+		Name    string `json:"nickname"`
+		Grade   string `json:"grade"`
+		College string `json:"college"`
+		Status  string `json:"status,options=[yes,no]"`
+	}
+	GetAllSubmissionStatusResp {
+		Completions []Completion `json:"completions"`
+	}
+)
+
+type (
+	GetAssignmentListReq {
+		Authorization string `header:"Authorization"`
+		Group         string `form:"group,options=[Product,Design,Frontend,Backend,Android]"`
+	}
+	Title {
+		ID   string `json:"id"`
+		Text string `json:"text"`
+	}
+	GetAssignmentListResp {
+		Titles []Title `json:"titles"`
+	}
+)
+//获取指定作业（题目）
+type (
+	GetAssignmentInfoReq {
+		Authorization string `header:"Authorization"`
+		AssignmentID  string `path:"id"`
+	}
+	GetAssignmentInfoResp {
+		TitleText string   `json:"title_text"`
+		Content   string   `json:"content"`
+		Urls      []string `json:"urls"`
+	}
+)
+//修改指定作业（题目）
+type (
+	SetAssignmentReq {
+		Authorization string   `header:"Authorization"`
+		AssignmentID  string   `json:"assignedTaskID,optional"`
+		Group         string   `form:"group,options=[Product,Design,Frontend,Backend,Android]"`
+		TitleText     string   `json:"title_text"`
+		Content       string   `json:"content"`
+		Urls          []string `json:"urls"`
+	}
+	SetAssignmentResp {
+		Flag bool `json:"flag"`
+	}
+)
+type (
+	GetSubmissionCommentReq {
+		Authorization string `header:"Authorization"`
+		SubmissionID  string `path:"id"`
+	}
+	Comment {
+		CommentID string `json:"comment_id"`
+		Avatar    string `json:"avatar"`
+		Nickname  string `json:"nickname"`
+		Content   string `json:"content"`
+	}
+	GetSubmissionCommentResp {
+		Comments []Comment `json:"comments"`
+	}
+)
+
+type (
+	SetSubmissionCommentReq {
+		Authorization string `header:"Authorization"`
+		SubmissionID  string `path:"id"`
+		Content       string `json:"content"`
+	}
+	SetSubmissionCommentResp {
+		Flag bool `json:"flag"`
+	}
+)
+
+type (
+	DelSubmissionCommentReq {
+		Authorization string `header:"Authorization"`
+		CommentID     string `path:"id"`
+	}
+	DelSubmissionCommentResp {
+		Flag bool `json:"flag"`
+	}
+)
+
+@server(
+	prefix: api/v2/task
+	jwt: JwtAuth
+	group: comment
+)
+service task {
+	@doc"获取指定作业的评论"
+	@handler GetSubmissionComment
+	get /submitted/:id/comment (GetSubmissionCommentReq)returns(GetSubmissionCommentResp)
+	@doc"评论指定作业"
+	@handler SetSubmissionComment
+	post /submitted/:id/comment (SetSubmissionCommentReq)returns(SetSubmissionCommentResp)
+	@doc"删除指定评论"
+	@handler DelSubmissionComment
+	delete /submitted/comment/:id (DelSubmissionCommentReq)returns(DelSubmissionCommentResp)
+}
+
+@server(
+	prefix: api/v2/task
+	jwt: JwtAuth
+	group: submitted
+)
+
+service task {
+	@doc"我的某作业提交状态"
+	@handler GetMySubmissionStatus
+	get /assigned/:id/status (GetMySubmissionStatusReq) returns(GetMySubmissionStatusResp)
+	@doc"提交/修改作业"
+	@handler SetSubmission
+	post /submitted (SetSubmissionReq)returns(SetSubmissionResp)
+	@doc"获取指定的作业提交"
+	@handler GetSubmissionInfo
+	get /submitted/:userID/:assignedTaskID (GetSubmissionInfoReq)returns (GetSubmissionInfoResp)
+	@doc"查看指定作业所有人完成情况"
+	@handler GetAllSubmissionStatus
+	get /assigned/:id/completion (GetAllSubmissionStatusReq)returns (GetAllSubmissionStatusResp)
+}
+
+@server(
+	prefix: api/v2/task
+	jwt: JwtAuth
+	group: assigned
+)
+service task {
+	@doc"获取作业列表(题目)"
+	@handler GetAssignmentList
+	get /assigned/list (GetAssignmentListReq)returns(GetAssignmentListResp)
+	@doc"获取指定作业信息(题目)"
+	@handler GetAssignmentInfo
+	get /assigned/:id (GetAssignmentInfoReq)returns (GetAssignmentInfoResp)
+	@doc"布置/修改指定作业(题目)"
+	@handler SetAssignment
+	post /assigned (SetAssignmentReq)returns(SetAssignmentResp)
+}

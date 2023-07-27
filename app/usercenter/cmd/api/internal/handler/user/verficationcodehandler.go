@@ -1,7 +1,7 @@
 package handler
 
 import (
-	"github.com/Wishforpeace/zero-tools/response"
+	"MuXiFresh-Be-2.0/common/greet/response"
 	"github.com/zeromicro/go-zero/rest/httpx"
 	"net/http"
 	"usercenter-api/internal/logic/user"

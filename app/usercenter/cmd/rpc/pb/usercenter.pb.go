@@ -28,7 +28,7 @@ type User struct {
 	Name    string `protobuf:"bytes,1,opt,name=Name,proto3" json:"Name,omitempty"`
 	Email   string `protobuf:"bytes,2,opt,name=Email,proto3" json:"Email,omitempty"`
 	Avatar  string `protobuf:"bytes,3,opt,name=Avatar,proto3" json:"Avatar,omitempty"`
-	Role    uint64 `protobuf:"varint,4,opt,name=Role,proto3" json:"Role,omitempty"`
+	Role    uint64 `protobuf:"varint,4,opt,name=user_type,proto3" json:"user_type,omitempty"`
 	Message string `protobuf:"bytes,5,opt,name=Message,proto3" json:"Message,omitempty"`
 	// string  HashPassword = 6;
 	StudentId   string `protobuf:"bytes,6,opt,name=StudentId,proto3" json:"StudentId,omitempty"`
