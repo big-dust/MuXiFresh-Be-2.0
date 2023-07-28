@@ -17,6 +17,6 @@ func NewServiceContext(c config.Config) *ServiceContext {
 		Config:          c,
 		ScheduleClient:  model.NewScheduleModel(c.MongoDBConf.URL, c.MongoDBConf.DB, "schedule"),
 		EntryFormClient: model.NewEntryFormModel(c.MongoDBConf.URL, c.MongoDBConf.DB, "form"),
-		UserInfoClient:  model.NewUserInfoModel(c.MongoDBConf.URL, c.MongoDBConf.DB, "user"),
+		UserInfoClient:  model.NewUserInfoModel(c.MongoDBConf.URL, c.MongoDBConf.DB, "userinfo"),
 	}
 }
