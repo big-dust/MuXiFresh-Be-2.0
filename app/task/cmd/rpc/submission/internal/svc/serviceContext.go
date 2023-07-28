@@ -8,13 +8,13 @@ import (
 type ServiceContext struct {
 	Config          config.Config
 	SubmissionModel model.SubmissionModel
-	FormModel       model.FormModel
+	EntryFormModel  model.EntryFormModel
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
 	return &ServiceContext{
 		Config:          c,
 		SubmissionModel: model.NewSubmissionModel(c.MongoConf.URL, c.MongoConf.DB, "submission"),
-		FormModel:       model.NewFormModel(c.MongoConf.URL, c.MongoConf.DB, "form"),
+		EntryFormModel:  model.NewEntryFormModel(c.MongoConf.URL, c.MongoConf.DB, "entry_form"),
 	}
 }

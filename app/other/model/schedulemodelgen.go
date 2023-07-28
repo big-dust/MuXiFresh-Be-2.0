@@ -2,7 +2,6 @@
 package model
 
 import (
-	"MuXiFresh-Be-2.0/app/userauth/model"
 	"context"
 	"time"
 
@@ -12,22 +11,22 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
-type formModel interface {
-	Insert(ctx context.Context, data *Form) error
-	FindOne(ctx context.Context, id string) (*Form, error)
-	Update(ctx context.Context, data *Form) (*mongo.UpdateResult, error)
+type scheduleModel interface {
+	Insert(ctx context.Context, data *Schedule) error
+	FindOne(ctx context.Context, id string) (*Schedule, error)
+	Update(ctx context.Context, data *Schedule) (*mongo.UpdateResult, error)
 	Delete(ctx context.Context, id string) (int64, error)
 }
 
-type defaultFormModel struct {
+type defaultScheduleModel struct {
 	conn *mon.Model
 }
 
-func newDefaultFormModel(conn *mon.Model) *defaultFormModel {
-	return &defaultFormModel{conn: conn}
+func newDefaultScheduleModel(conn *mon.Model) *defaultScheduleModel {
+	return &defaultScheduleModel{conn: conn}
 }
 
-func (m *defaultFormModel) Insert(ctx context.Context, data *Form) error {
+func (m *defaultScheduleModel) Insert(ctx context.Context, data *Schedule) error {
 	if data.ID.IsZero() {
 		data.ID = primitive.NewObjectID()
 		data.CreateAt = time.Now()
@@ -38,36 +37,36 @@ func (m *defaultFormModel) Insert(ctx context.Context, data *Form) error {
 	return err
 }
 
-func (m *defaultFormModel) FindOne(ctx context.Context, id string) (*Form, error) {
+func (m *defaultScheduleModel) FindOne(ctx context.Context, id string) (*Schedule, error) {
 	oid, err := primitive.ObjectIDFromHex(id)
 	if err != nil {
-		return nil, model.ErrInvalidObjectId
+		return nil, ErrInvalidObjectId
 	}
 
-	var data Form
+	var data Schedule
 
 	err = m.conn.FindOne(ctx, &data, bson.M{"_id": oid})
 	switch err {
 	case nil:
 		return &data, nil
 	case mon.ErrNotFound:
-		return nil, model.ErrNotFound
+		return nil, ErrNotFound
 	default:
 		return nil, err
 	}
 }
 
-func (m *defaultFormModel) Update(ctx context.Context, data *Form) (*mongo.UpdateResult, error) {
+func (m *defaultScheduleModel) Update(ctx context.Context, data *Schedule) (*mongo.UpdateResult, error) {
 	data.UpdateAt = time.Now()
 
 	res, err := m.conn.UpdateOne(ctx, bson.M{"_id": data.ID}, bson.M{"$set": data})
 	return res, err
 }
 
-func (m *defaultFormModel) Delete(ctx context.Context, id string) (int64, error) {
+func (m *defaultScheduleModel) Delete(ctx context.Context, id string) (int64, error) {
 	oid, err := primitive.ObjectIDFromHex(id)
 	if err != nil {
-		return 0, model.ErrInvalidObjectId
+		return 0, ErrInvalidObjectId
 	}
 
 	res, err := m.conn.DeleteOne(ctx, bson.M{"_id": oid})

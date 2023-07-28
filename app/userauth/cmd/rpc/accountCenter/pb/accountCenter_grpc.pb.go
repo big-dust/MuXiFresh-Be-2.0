@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.3.0
 // - protoc             v4.22.2
-// source: accountCenter.proto
+// source: userinfo.proto
 
 package pb
 
@@ -253,5 +253,5 @@ var AccountCenterClient_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "accountCenter.proto",
+	Metadata: "userinfo.proto",
 }

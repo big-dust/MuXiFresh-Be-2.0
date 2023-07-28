@@ -39,7 +39,7 @@ func (l *BindStudentIDLogic) BindStudentID(in *pb.BindingStudentIDReq) (*pb.Bind
 	}
 	_, err = l.svcCtx.UserInfoClient.Update(l.ctx, &model.UserInfo{
 		ID:        uid,
-		StudentNo: in.StudentID,
+		StudentID: in.StudentID,
 		UpdateAt:  time.Now(),
 	})
 	if err != nil {

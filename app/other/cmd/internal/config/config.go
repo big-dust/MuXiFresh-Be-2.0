@@ -11,8 +11,10 @@ type Config struct {
 		AccessSecret string
 		AccessExpire int64
 	}
-	AssignmentConf zrpc.RpcClientConf
-	SubmissionConf zrpc.RpcClientConf
-	CommentConf    zrpc.RpcClientConf
-	UserInfoConf   zrpc.RpcClientConf
+	MongoConf struct {
+		URL string
+		DB  string
+	}
+	UserInfoConf zrpc.RpcClientConf
+	Limit        int64
 }

@@ -4,9 +4,11 @@ import (
 	"MuXiFresh-Be-2.0/app/task/cmd/api/internal/svc"
 	"MuXiFresh-Be-2.0/app/task/cmd/api/internal/types"
 	"MuXiFresh-Be-2.0/app/task/cmd/rpc/submission/pb"
+	pb2 "MuXiFresh-Be-2.0/app/userauth/cmd/rpc/userinfo/pb"
 	"MuXiFresh-Be-2.0/common/ctxData"
 	"MuXiFresh-Be-2.0/common/globalKey"
 	"context"
+	"errors"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -29,7 +31,15 @@ func (l *GetSubmissionInfoLogic) GetSubmissionInfo(req *types.GetSubmissionInfoR
 	var userId string
 	if req.UserID != globalKey.Empty {
 		//管理员身份认证
-
+		getUserTypeResp, err := l.svcCtx.UserInfoClient.GetUserType(l.ctx, &pb2.GetUserTypeReq{
+			UserId: ctxData.GetUserIdFromCtx(l.ctx),
+		})
+		if err != nil {
+			return nil, err
+		}
+		if getUserTypeResp.UserType != globalKey.Admin && getUserTypeResp.UserType != globalKey.SuperAdmin {
+			return nil, errors.New("permission denied")
+		}
 		userId = req.UserID
 	} else {
 		userId = ctxData.GetUserIdFromCtx(l.ctx)

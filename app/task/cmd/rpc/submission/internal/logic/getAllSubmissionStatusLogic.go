@@ -29,14 +29,14 @@ func (l *GetAllSubmissionStatusLogic) GetAllSubmissionStatus(in *pb.GetAllSubmis
 	}
 	var completions []*pb.Completion
 	for _, submission := range submissions {
-		form, err := l.svcCtx.FormModel.FindOneByUserId(l.ctx, submission.UserId.String()[10:34])
+		entryForm, err := l.svcCtx.EntryFormModel.FindOneByUserId(l.ctx, submission.UserId.String()[10:34])
 		if err != nil {
 			return nil, err
 		}
 		completions = append(completions, &pb.Completion{
-			Name:    form.Name,
-			Grade:   form.Grade,
-			College: form.College,
+			Name:    entryForm.Name,
+			Grade:   entryForm.Grade,
+			College: entryForm.College,
 			Status:  submission.Status,
 		})
 	}

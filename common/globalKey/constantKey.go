@@ -9,4 +9,8 @@ const (
 	Submitted    = "submitted"
 	Reviewed     = "reviewed"
 	Empty        = "empty"
+	Admin        = "admin"
+	SuperAdmin   = "super_admin"
+	Normal       = "normal"
+	Freshman     = "freshman"
 )

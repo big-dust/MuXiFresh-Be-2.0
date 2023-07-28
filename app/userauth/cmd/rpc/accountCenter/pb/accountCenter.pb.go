@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.31.0
 // 	protoc        v4.22.2
-// source: accountCenter.proto
+// source: userinfo.proto
 
 package pb
 

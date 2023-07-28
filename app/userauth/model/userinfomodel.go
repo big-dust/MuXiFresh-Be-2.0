@@ -32,7 +32,7 @@ func NewUserInfoModel(url, db, collection string) UserInfoModel {
 func (m *defaultUserInfoModel) FindByStudentID(ctx context.Context, studentID string) (*UserInfo, error) {
 	var data UserInfo
 
-	err := m.conn.FindOne(ctx, &data, bson.M{"student_no": studentID})
+	err := m.conn.FindOne(ctx, &data, bson.M{"student_id": studentID})
 	switch err {
 	case nil:
 		return &data, nil
