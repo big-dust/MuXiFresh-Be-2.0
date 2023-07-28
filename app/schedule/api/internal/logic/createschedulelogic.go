@@ -1,6 +1,7 @@
 package logic
 
 import (
+	"MuxiFresh2.0/MuXiFresh-Be-2.0/app/schedule/rpc/scheduleclient"
 	"context"
 
 	"MuxiFresh2.0/MuXiFresh-Be-2.0/app/schedule/api/internal/svc"
@@ -24,7 +25,13 @@ func NewCreateScheduleLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Cr
 }
 
 func (l *CreateScheduleLogic) CreateSchedule(req *types.CreateReq) (resp *types.CreateResp, err error) {
-	// todo: add your logic here and delete this line
-
-	return
+	_, err = l.svcCtx.ScheduleClient.Create(l.ctx, &scheduleclient.CreateReq{
+		Token: req.Authorization,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return &types.CreateResp{
+		Flag: true,
+	}, nil
 }

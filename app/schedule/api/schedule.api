@@ -10,7 +10,6 @@ info (
 //生成进度表
 type CreateReq {
 	Authorization string `json:"Authorization"`
-	UserID        string `json:"user_id"`
 }
 type CreateResp {
 	Flag bool `json:"flag"`
@@ -29,14 +28,6 @@ type CheckResp {
 	EntryFormStatus string `json:"entry_form_status"`
 	AdmissionStatus string `json:"admission_status"`
 }
-
-////判断用户身份
-//type JudgeUserReq{
-//	Authorization string `json:"Authorization"`
-//}
-//type JudgeUserResp{
-//	UserType string  `json:"user_type"`
-//}
 
 @server(
 	prefix: api/v2

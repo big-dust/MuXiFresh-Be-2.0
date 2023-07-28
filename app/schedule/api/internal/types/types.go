@@ -3,7 +3,6 @@ package types
 
 type CreateReq struct {
 	Authorization string `json:"Authorization"`
-	UserID        string `json:"user_id"`
 }
 
 type CreateResp struct {

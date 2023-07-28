@@ -1,0 +1,166 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "进度查询",
+    "description": "进度查询",
+    "version": ""
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "api/v2/schedule": {
+      "get": {
+        "summary": "进度查询",
+        "operationId": "Check",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/CheckResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Schedule_id",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "schedule-api"
+        ]
+      }
+    },
+    "api/v2/schedule/create": {
+      "get": {
+        "summary": "生成进度表",
+        "operationId": "CreateSchedule",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/CreateResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "schedule-api"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "CheckReq": {
+      "type": "object",
+      "properties": {
+        "Authorization": {
+          "type": "string"
+        },
+        "Schedule_id": {
+          "type": "string"
+        }
+      },
+      "title": "CheckReq",
+      "required": [
+        "Authorization",
+        "Schedule_id"
+      ]
+    },
+    "CheckResp": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "school": {
+          "type": "string"
+        },
+        "major": {
+          "type": "string"
+        },
+        "group": {
+          "type": "string"
+        },
+        "entry_form_status": {
+          "type": "string"
+        },
+        "admission_status": {
+          "type": "string"
+        }
+      },
+      "title": "CheckResp",
+      "required": [
+        "name",
+        "school",
+        "major",
+        "group",
+        "entry_form_status",
+        "admission_status"
+      ]
+    },
+    "CreateReq": {
+      "type": "object",
+      "properties": {
+        "Authorization": {
+          "type": "string"
+        }
+      },
+      "title": "CreateReq",
+      "required": [
+        "Authorization"
+      ]
+    },
+    "CreateResp": {
+      "type": "object",
+      "properties": {
+        "flag": {
+          "type": "boolean",
+          "format": "boolean"
+        }
+      },
+      "title": "CreateResp",
+      "required": [
+        "flag"
+      ]
+    }
+  },
+  "securityDefinitions": {
+    "apiKey": {
+      "type": "apiKey",
+      "description": "Enter JWT Bearer token **_only_**",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
+  "security": [
+    {
+      "apiKey": []
+    }
+  ]
+}

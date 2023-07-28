@@ -1,7 +1,7 @@
 package logic
 
 import (
-	"MuxiFresh2.0/MuXiFresh-Be-2.0/app/test/model"
+	"MuxiFresh2.0/MuXiFresh-Be-2.0/app/form/model"
 	"context"
 	"strings"
 	"time"

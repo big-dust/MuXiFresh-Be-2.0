@@ -3,6 +3,7 @@ package logic
 import (
 	"MuxiFresh2.0/MuXiFresh-Be-2.0/app/schedule/rpc/scheduleclient"
 	"MuxiFresh2.0/MuXiFresh-Be-2.0/common/ctxData"
+	"MuxiFresh2.0/MuXiFresh-Be-2.0/common/globalKey"
 	"context"
 
 	"MuxiFresh2.0/MuXiFresh-Be-2.0/app/schedule/api/internal/svc"
@@ -26,13 +27,15 @@ func NewCheckLogic(ctx context.Context, svcCtx *svc.ServiceContext) *CheckLogic 
 }
 
 func (l *CheckLogic) Check(req *types.CheckReq) (resp *types.CheckResp, err error) {
-	userid := ctxData.GetUserIdFromCtx(l.ctx)
-	u, err := l.svcCtx.UserInfoClient.FindOne(l.ctx, userid)
-	if err != nil {
-		return nil, err
+	//确定scheduleID
+	if req.ScheduleID == globalKey.NULL {
+		userid := ctxData.GetUserIdFromCtx(l.ctx)
+		u, err := l.svcCtx.UserInfoClient.FindOne(l.ctx, userid)
+		if err != nil {
+			return nil, err
+		}
+		req.ScheduleID = u.ScheduleID.String()[10:34]
 	}
-	req.ScheduleID = u.ScheduleID.String()[10:34]
-
 	c, err := l.svcCtx.ScheduleClient.Check(l.ctx, &scheduleclient.CheckReq{
 		ScheduleID: req.ScheduleID,
 	})

@@ -5,7 +5,6 @@ option go_package="./pb";
 
 message CreateReq{
   string Token = 1;
-  string UserID = 2;
 }
 message CreateResp{
   bool Flag = 1;
