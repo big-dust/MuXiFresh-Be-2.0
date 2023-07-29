@@ -1,0 +1,216 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "review",
+    "description": "api( get userinfo )and( review )",
+    "version": ""
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/review": {
+      "get": {
+        "summary": "审阅界面",
+        "operationId": "GetReview",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetReviewResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "year",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "group",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "review"
+        ]
+      }
+    },
+    "/review/admission_status": {
+      "post": {
+        "summary": "调整录取状态",
+        "operationId": "SetAdmissionStatus",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/SetAdmissionStatusResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": "调整录取状态",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SetAdmissionStatusReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "review"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "GetReviewReq": {
+      "type": "object",
+      "properties": {
+        "Authorization": {
+          "type": "string"
+        },
+        "year": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "group": {
+          "type": "string"
+        },
+        "page": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "GetReviewReq",
+      "required": [
+        "Authorization",
+        "year",
+        "group",
+        "page"
+      ]
+    },
+    "GetReviewResp": {
+      "type": "object",
+      "properties": {
+        "rows": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Row"
+          }
+        }
+      },
+      "title": "GetReviewResp",
+      "required": [
+        "rows"
+      ]
+    },
+    "Row": {
+      "type": "object",
+      "properties": {
+        "schedule_id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "grader": {
+          "type": "string"
+        },
+        "school": {
+          "type": "string"
+        },
+        "group": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        }
+      },
+      "title": "Row",
+      "required": [
+        "schedule_id",
+        "name",
+        "grader",
+        "school",
+        "group",
+        "status"
+      ]
+    },
+    "SetAdmissionStatusReq": {
+      "type": "object",
+      "properties": {
+        "Authorization": {
+          "type": "string"
+        },
+        "schedule_id": {
+          "type": "string"
+        },
+        "new_status，options=[已报名": {
+          "type": "string"
+        }
+      },
+      "title": "SetAdmissionStatusReq",
+      "required": [
+        "Authorization",
+        "schedule_id",
+        "new_status，options=[已报名"
+      ]
+    },
+    "SetAdmissionStatusResp": {
+      "type": "object",
+      "properties": {
+        "flag": {
+          "type": "boolean",
+          "format": "boolean"
+        }
+      },
+      "title": "SetAdmissionStatusResp",
+      "required": [
+        "flag"
+      ]
+    }
+  },
+  "securityDefinitions": {
+    "apiKey": {
+      "type": "apiKey",
+      "description": "Enter JWT Bearer token **_only_**",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
+  "security": [
+    {
+      "apiKey": []
+    }
+  ]
+}

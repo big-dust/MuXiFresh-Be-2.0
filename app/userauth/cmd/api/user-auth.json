@@ -45,6 +45,62 @@
         ]
       }
     },
+    "api/v2/bind-student-id": {
+      "post": {
+        "summary": "学号绑改",
+        "operationId": "BindStudentID",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/BindStudentIDResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/BindStudentIDReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "ccnulogin"
+        ]
+      }
+    },
+    "api/v2/ccnuLogin": {
+      "post": {
+        "summary": "学号登录",
+        "operationId": "ccnuLogin",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/ccnuLoginResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ccnuLoginReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "ccnulogin"
+        ]
+      }
+    },
     "api/v2/get-captcha": {
       "get": {
         "summary": "获取人机验证图",
@@ -264,6 +320,35 @@
         "auth_ch_pass_token"
       ]
     },
+    "BindStudentIDReq": {
+      "type": "object",
+      "properties": {
+        "student_id": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      },
+      "title": "BindStudentIDReq",
+      "required": [
+        "student_id",
+        "password"
+      ]
+    },
+    "BindStudentIDResp": {
+      "type": "object",
+      "properties": {
+        "flag": {
+          "type": "boolean",
+          "format": "boolean"
+        }
+      },
+      "title": "BindStudentIDResp",
+      "required": [
+        "flag"
+      ]
+    },
     "GetCaptchaResp": {
       "type": "object",
       "properties": {
@@ -345,7 +430,7 @@
       "title": "PassChangeReq",
       "required": [
         "password",
-        "auth_ch_pass_token"
+        "Authorization"
       ]
     },
     "PassChangeResp": {
@@ -474,6 +559,34 @@
       "title": "VerifyTokenResp",
       "required": [
         "flag"
+      ]
+    },
+    "ccnuLoginReq": {
+      "type": "object",
+      "properties": {
+        "student_id": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      },
+      "title": "ccnuLoginReq",
+      "required": [
+        "student_id",
+        "password"
+      ]
+    },
+    "ccnuLoginResp": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string"
+        }
+      },
+      "title": "ccnuLoginResp",
+      "required": [
+        "token"
       ]
     }
   },

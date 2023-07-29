@@ -4,7 +4,7 @@ import (
 	"MuXiFresh-Be-2.0/app/intro/api/internal/logic"
 	"MuXiFresh-Be-2.0/app/intro/api/internal/svc"
 	"MuXiFresh-Be-2.0/app/intro/api/internal/types"
-	"greet/response"
+	"MuXiFresh-Be-2.0/common/greet/response"
 	"net/http"
 )
 
