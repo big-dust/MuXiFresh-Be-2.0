@@ -1,0 +1,68 @@
+syntax = "proto3";
+
+package form;
+option go_package="./pb";
+
+//判断身份
+message ClickReq {
+  string Token = 1;
+}
+message ClickResp {
+  string UserType = 1;
+  string FormStatus = 2;
+}
+
+//提交报名表
+message CreateReq {
+  string UserId = 17;
+  string FormId = 18;
+  string Token = 1;
+  string Avatar=2;
+  string  Name=3;
+  string  StuNumber=4;
+  string  School=5;
+  string  Major=6;
+  string  Grade=7;
+  string  Gender=8;
+  string  Email=9;
+  string  QQ=10;
+  string Phone=11;
+  string  Group=12;
+  string  Reason=13;
+  string  Knowledge=14;
+  string  SelfIntro=15;
+  string  ExtraQuestion=16;
+}
+message CreateResp {
+    string FormID=1;
+}
+
+//查看报名表
+message CheckReq {
+  string Token=1;
+  string    EntryFormID=2;
+}
+message CheckResp {
+  string Avatar=1;
+  string  Name=2;
+  string  StuNumber=3;
+  string  School=4;
+  string  Major=5;
+  string  Grade=6;
+  string  Gender=7;
+  string  Email=8;
+  string  QQ=9;
+  string Phone=10;
+  string  Group=11;
+  string  Reason=12;
+  string  Knowledge=13;
+  string  SelfIntro=14;
+  string  ExtraQuestion=15;
+}
+
+service EntryFormClient {
+  rpc JudgeUser(ClickReq)returns(ClickResp);
+  rpc CreateForm(CreateReq)returns(CreateResp);
+  rpc UpdateForm(CreateReq)returns(CreateResp);
+  rpc CheckForm(CheckReq)returns(CheckResp);
+}

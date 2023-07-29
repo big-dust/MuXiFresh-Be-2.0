@@ -5,15 +5,34 @@ package server
 
 import (
 	"context"
-
-	"rpc/internal/logic"
-	"rpc/internal/svc"
-	"rpc/pb"
+	"usercenter-rpc/internal/logic"
+	"usercenter-rpc/internal/svc"
+	"usercenter-rpc/pb"
 )
 
 type UsercenterServer struct {
 	svcCtx *svc.ServiceContext
 	pb.UnimplementedUsercenterServer
+}
+
+func (s *UsercenterServer) GetVerificationCode(ctx context.Context, request *pb2.VerificationCodeRequest) (*pb2.VerificationCodeResponse, error) {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (s *UsercenterServer) Register(ctx context.Context, request *pb2.RegisterRequest) (*pb2.RegisterResponse, error) {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (s *UsercenterServer) GetInfo(ctx context.Context, request *pb2.GetInfoRequest) (*pb2.GetInfoResponse, error) {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (s *UsercenterServer) mustEmbedUnimplementedUsercenterServer() {
+	//TODO implement me
+	panic("implement me")
 }
 
 func NewUsercenterServer(svcCtx *svc.ServiceContext) *UsercenterServer {

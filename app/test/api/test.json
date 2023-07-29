@@ -1,0 +1,210 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "入职测试",
+    "description": "做测试、返回结果",
+    "version": ""
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "api/v2/user/test": {
+      "get": {
+        "summary": "做测验",
+        "operationId": "UserTest",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/TestResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "choice",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "test-api"
+        ]
+      }
+    },
+    "api/v2/user/test/result": {
+      "post": {
+        "summary": "查看结果",
+        "operationId": "CheckTestResult",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/TestInfoResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": "查看测试结果",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/TestInfoReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "test-api"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "TestInfoReq": {
+      "type": "object",
+      "properties": {
+        "Authorization": {
+          "type": "string"
+        },
+        "user_id": {
+          "type": "string"
+        }
+      },
+      "title": "TestInfoReq",
+      "required": [
+        "Authorization",
+        "user_id"
+      ]
+    },
+    "TestInfoResp": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "gender": {
+          "type": "string"
+        },
+        "major": {
+          "type": "string"
+        },
+        "grade": {
+          "type": "string"
+        },
+        "le_qun_xing": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "you_heng_xing": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "xing_fen_fen_xing": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "cong_hui_xing": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "jiao_ji_xing": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "huai_yi_xing": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "wen_ding_xing": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "choice": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "title": "TestInfoResp",
+      "required": [
+        "name",
+        "gender",
+        "major",
+        "grade",
+        "le_qun_xing",
+        "you_heng_xing",
+        "xing_fen_fen_xing",
+        "cong_hui_xing",
+        "jiao_ji_xing",
+        "huai_yi_xing",
+        "wen_ding_xing",
+        "choice"
+      ]
+    },
+    "TestReq": {
+      "type": "object",
+      "properties": {
+        "Authorization": {
+          "type": "string"
+        },
+        "choice": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "title": "TestReq",
+      "required": [
+        "Authorization",
+        "choice"
+      ]
+    },
+    "TestResp": {
+      "type": "object",
+      "properties": {
+        "flag": {
+          "type": "boolean",
+          "format": "boolean"
+        }
+      },
+      "title": "TestResp",
+      "required": [
+        "flag"
+      ]
+    }
+  },
+  "securityDefinitions": {
+    "apiKey": {
+      "type": "apiKey",
+      "description": "Enter JWT Bearer token **_only_**",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
+  "security": [
+    {
+      "apiKey": []
+    }
+  ]
+}

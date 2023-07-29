@@ -1,0 +1,90 @@
+syntax = "v1"
+
+info (
+	title: "报名"
+	desc: "与报名有关内容"
+	author: "Ciel"
+	email: "1622284619@qq.com"
+)
+
+//判断身份
+type ClickReq {
+	Authorization string `header:"Authorization"`
+}
+type ClickResp {
+	UserType   string `json:"user_type"`
+	FormStatus string `json:"form_status"`
+}
+
+//提交报名表
+type CreateReq {
+	Authorization string `header:"Authorization"`
+	FormId        string `json:"form_id,optional"`
+	Avatar        string `json:"avatar"`
+	Name          string `json:"name"`
+	StuNumber     string `json:"stu_number"`
+	School        string `json:"school"`
+	Major         string `json:"major"`
+	Grade         string `json:"grade"`
+	Gender        string `json:"gender"`
+	Email         string `json:"email"`
+	QQ            string `json:"qq"`
+	Phone         string `json:"phone"`
+	Group         string `json:"group"`
+	Reason        string `json:"reason"`
+	Knowledge     string `json:"knowledge"`
+	SelfIntro     string `json:"self_intro"`
+	ExtraQuestion string `json:"extra_question"`
+}
+type CreateResp {
+	Flag bool `json:"flag"`
+}
+
+//查看报名表
+type CheckReq {
+	Authorization string `header:"Authorization"`
+	EntryFormID   string `json:"entry_form_id"`
+}
+
+type CheckResp {
+	FormId        string `json:"form_id"`
+	Avatar        string `json:"avatar"`
+	Name          string `json:"name"`
+	StuNumber     string `json:"stu_number"`
+	School        string `json:"school"`
+	Major         string `json:"major"`
+	Grade         string `json:"grade"`
+	Gender        string `json:"gender"`
+	Email         string `json:"email"`
+	QQ            string `json:"qq"`
+	Phone         string `json:"phone"`
+	Group         string `json:"group"`
+	Reason        string `json:"reason"`
+	Knowledge     string `json:"knowledge"`
+	SelfIntro     string `json:"self_intro"`
+	ExtraQuestion string `json:"extra_question"`
+}
+
+@server(
+	prefix: api/v2
+	jwt: JwtAuth
+)
+
+service form-api {
+	@doc"判断身份"
+	@handler JudgeUser
+	get /form/judge (ClickReq)returns(ClickResp)
+
+	@doc"创建表"
+	@handler CreateForm
+	post /form (CreateReq)returns(CreateResp)
+
+	@doc"编辑表"
+	@handler UpdateForm
+	put /form (CreateReq)returns(CreateResp)
+
+	@doc"查看表"
+	@handler CheckForm
+	get /form/view(CheckReq)returns(CheckResp)
+
+}

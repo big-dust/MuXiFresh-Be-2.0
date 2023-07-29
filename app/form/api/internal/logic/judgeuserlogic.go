@@ -1,0 +1,37 @@
+package logic
+
+import (
+	"MuxiFresh2.0/MuXiFresh-Be-2.0/common/ctxData"
+	"context"
+
+	"MuxiFresh2.0/MuXiFresh-Be-2.0/app/form/api/internal/svc"
+	"MuxiFresh2.0/MuXiFresh-Be-2.0/app/form/api/internal/types"
+
+	"github.com/zeromicro/go-zero/core/logx"
+)
+
+type JudgeUserLogic struct {
+	logx.Logger
+	ctx    context.Context
+	svcCtx *svc.ServiceContext
+}
+
+func NewJudgeUserLogic(ctx context.Context, svcCtx *svc.ServiceContext) *JudgeUserLogic {
+	return &JudgeUserLogic{
+		Logger: logx.WithContext(ctx),
+		ctx:    ctx,
+		svcCtx: svcCtx,
+	}
+}
+
+func (l *JudgeUserLogic) JudgeUser(req *types.ClickReq) (resp *types.ClickResp, err error) {
+	userId := ctxData.GetUserIdFromCtx(l.ctx)
+	userInfo, err := l.svcCtx.UserInfoModelClient.FindOne(l.ctx, userId)
+	if err != nil {
+		return nil, err
+	}
+	return &types.ClickResp{
+		UserType:   userInfo.UserType,
+		FormStatus: userInfo.EntryFormID.String(),
+	}, nil
+}
