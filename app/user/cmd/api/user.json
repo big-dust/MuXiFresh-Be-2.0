@@ -1,0 +1,340 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "user",
+    "description": "user information",
+    "version": ""
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/api/v2/admin-list": {
+      "get": {
+        "summary": "管理员/超管列表",
+        "operationId": "GetAdminList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetAdminListResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "user_type",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "user"
+        ]
+      }
+    },
+    "/api/v2/users/{id}": {
+      "get": {
+        "summary": "获取用户信息",
+        "operationId": "GetUserInfo",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetUserInfoResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Authorization",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "user"
+        ]
+      },
+      "post": {
+        "summary": "修改用户信息",
+        "operationId": "SetUserInfo",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/SetUserInfoResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "修改用户信息",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SetUserInfoReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "user"
+        ]
+      }
+    },
+    "/api/v2/users/{id}/type": {
+      "post": {
+        "summary": "修改用户类型",
+        "operationId": "SetUserType",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/SetUserTypeResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "修改用户类型",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SetUserTypeReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "user"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "GetAdminListReq": {
+      "type": "object",
+      "properties": {
+        "Authorization": {
+          "type": "string"
+        },
+        "user_type": {
+          "type": "string"
+        },
+        "page": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "GetAdminListReq",
+      "required": [
+        "Authorization",
+        "user_type",
+        "page"
+      ]
+    },
+    "GetAdminListResp": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/One"
+          }
+        }
+      },
+      "title": "GetAdminListResp",
+      "required": [
+        "list"
+      ]
+    },
+    "GetUserInfoReq": {
+      "type": "object",
+      "properties": {
+        "Authorization": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "title": "GetUserInfoReq",
+      "required": [
+        "Authorization",
+        "id"
+      ]
+    },
+    "GetUserInfoResp": {
+      "type": "object",
+      "properties": {
+        "avatar": {
+          "type": "string"
+        },
+        "nickname": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "group": {
+          "type": "string"
+        },
+        "student_id": {
+          "type": "string"
+        }
+      },
+      "title": "GetUserInfoResp",
+      "required": [
+        "avatar",
+        "nickname",
+        "email",
+        "group",
+        "student_id"
+      ]
+    },
+    "One": {
+      "type": "object",
+      "properties": {
+        "user_id": {
+          "type": "string"
+        },
+        "avatar": {
+          "type": "string"
+        },
+        "nickname": {
+          "type": "string"
+        }
+      },
+      "title": "One",
+      "required": [
+        "user_id",
+        "avatar",
+        "nickname"
+      ]
+    },
+    "SetUserInfoReq": {
+      "type": "object",
+      "properties": {
+        "Authorization": {
+          "type": "string"
+        },
+        "avatar": {
+          "type": "string"
+        },
+        "nickname": {
+          "type": "string"
+        }
+      },
+      "title": "SetUserInfoReq",
+      "required": [
+        "Authorization",
+        "avatar",
+        "nickname"
+      ]
+    },
+    "SetUserInfoResp": {
+      "type": "object",
+      "properties": {
+        "flag": {
+          "type": "boolean",
+          "format": "boolean"
+        }
+      },
+      "title": "SetUserInfoResp",
+      "required": [
+        "flag"
+      ]
+    },
+    "SetUserTypeReq": {
+      "type": "object",
+      "properties": {
+        "Authorization": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "user_type": {
+          "type": "string"
+        }
+      },
+      "title": "SetUserTypeReq",
+      "required": [
+        "Authorization",
+        "email",
+        "user_type"
+      ]
+    },
+    "SetUserTypeResp": {
+      "type": "object",
+      "properties": {
+        "flag": {
+          "type": "boolean",
+          "format": "boolean"
+        }
+      },
+      "title": "SetUserTypeResp",
+      "required": [
+        "flag"
+      ]
+    }
+  },
+  "securityDefinitions": {
+    "apiKey": {
+      "type": "apiKey",
+      "description": "Enter JWT Bearer token **_only_**",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
+  "security": [
+    {
+      "apiKey": []
+    }
+  ]
+}
