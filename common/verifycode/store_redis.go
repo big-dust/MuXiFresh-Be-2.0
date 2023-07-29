@@ -1,7 +1,7 @@
 package verifycode
 
 import (
-	rds "LingXi/common/redis"
+	rds "MuXiFresh-Be-2.0/common/redis"
 	"time"
 )
 

@@ -3,11 +3,10 @@ package main
 import (
 	"flag"
 	"fmt"
-
-	"rpc/internal/config"
-	"rpc/internal/server"
-	"rpc/internal/svc"
-	"rpc/pb"
+	"usercenter-rpc/internal/config"
+	"usercenter-rpc/internal/server"
+	"usercenter-rpc/internal/svc"
+	"usercenter-rpc/pb"
 
 	"github.com/zeromicro/go-zero/core/conf"
 	"github.com/zeromicro/go-zero/core/service"

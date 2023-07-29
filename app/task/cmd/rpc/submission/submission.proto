@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+package submission;
+option go_package="./pb";
+//status
+message GetMySubmissionStatusReq {
+  string AssignmentID = 1;
+  string UserId = 2;
+}
+
+message GetMySubmissionStatusResp {
+  string Status = 1;
+}
+//set
+message SetSubmissionReq {
+  string AssignmentID = 1;
+  string UserId = 2;
+  repeated string Urls = 3;
+}
+
+message SetSubmissionResp {
+  bool Flag = 1;
+}
+//info
+message GetSubmissionInfoReq{
+  string AssignmentID = 1;
+  string UserId = 2;
+}
+
+message GetSubmissionInfoResp{
+  string SubmissionID  = 1;
+  repeated string Urls = 2;
+}
+//all status
+message GetAllSubmissionStatusReq{
+  string AssignmentID = 1;
+  int64 Page = 2;
+}
+message Completion {
+  string Name = 1;
+  string Grade = 2;
+  string College = 3;
+  string Status = 4;
+}
+message GetAllSubmissionStatusResp{
+  repeated Completion Completions = 1;
+}
+
+service submissionClient {
+  rpc GetMySubmissionStatus(GetMySubmissionStatusReq) returns(GetMySubmissionStatusResp);
+  rpc SetSubmission(SetSubmissionReq) returns(SetSubmissionResp);
+  rpc GetSubmissionInfo(GetSubmissionInfoReq) returns(GetSubmissionInfoResp);
+  rpc GetAllSubmissionStatus(GetAllSubmissionStatusReq) returns(GetAllSubmissionStatusResp);
+}
