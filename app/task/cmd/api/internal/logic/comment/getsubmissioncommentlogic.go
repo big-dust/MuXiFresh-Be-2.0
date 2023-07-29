@@ -3,7 +3,7 @@ package comment
 import (
 	"MuXiFresh-Be-2.0/app/task/cmd/api/internal/svc"
 	"MuXiFresh-Be-2.0/app/task/cmd/api/internal/types"
-	"MuXiFresh-Be-2.0/app/task/cmd/rpc/comment/pb"
+	"MuXiFresh-Be-2.0/app/task/cmd/rpc/comment/commentclient"
 	"context"
 	"github.com/jinzhu/copier"
 
@@ -25,7 +25,7 @@ func NewGetSubmissionCommentLogic(ctx context.Context, svcCtx *svc.ServiceContex
 }
 
 func (l *GetSubmissionCommentLogic) GetSubmissionComment(req *types.GetSubmissionCommentReq) (resp *types.GetSubmissionCommentResp, err error) {
-	getCommentResp, err := l.svcCtx.CommentClient.GetSubmissionComment(l.ctx, &pb.GetSubmissionCommentReq{
+	getCommentResp, err := l.svcCtx.CommentClient.GetSubmissionComment(l.ctx, &commentclient.GetSubmissionCommentReq{
 		SubmissionID: req.SubmissionID,
 	})
 	if err != nil {

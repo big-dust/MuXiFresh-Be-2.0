@@ -14,5 +14,5 @@ type Config struct {
 	AssignmentConf zrpc.RpcClientConf
 	SubmissionConf zrpc.RpcClientConf
 	CommentConf    zrpc.RpcClientConf
-	UserInfoConf   zrpc.RpcClientConf
+	UserConf       zrpc.RpcClientConf
 }

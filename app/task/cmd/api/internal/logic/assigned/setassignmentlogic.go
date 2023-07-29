@@ -1,8 +1,8 @@
 package assigned
 
 import (
-	"MuXiFresh-Be-2.0/app/task/cmd/rpc/assignment/pb"
-	pb2 "MuXiFresh-Be-2.0/app/userauth/cmd/rpc/userinfo/pb"
+	"MuXiFresh-Be-2.0/app/task/cmd/rpc/assignment/assignmentclient"
+	"MuXiFresh-Be-2.0/app/user/cmd/rpc/user/userclient"
 	"MuXiFresh-Be-2.0/common/ctxData"
 	"MuXiFresh-Be-2.0/common/globalKey"
 	"context"
@@ -31,7 +31,7 @@ func NewSetAssignmentLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Set
 func (l *SetAssignmentLogic) SetAssignment(req *types.SetAssignmentReq) (resp *types.SetAssignmentResp, err error) {
 
 	//管理员身份认证
-	getUserTypeResp, err := l.svcCtx.UserInfoClient.GetUserType(l.ctx, &pb2.GetUserTypeReq{
+	getUserTypeResp, err := l.svcCtx.UserClient.GetUserType(l.ctx, &userclient.GetUserTypeReq{
 		UserId: ctxData.GetUserIdFromCtx(l.ctx),
 	})
 	if err != nil {
@@ -41,7 +41,7 @@ func (l *SetAssignmentLogic) SetAssignment(req *types.SetAssignmentReq) (resp *t
 		return nil, errors.New("permission denied")
 	}
 	//布置
-	setAssignmentResp, err := l.svcCtx.AssignmentClient.SetAssignment(l.ctx, &pb.SetAssignmentReq{
+	setAssignmentResp, err := l.svcCtx.AssignmentClient.SetAssignment(l.ctx, &assignmentclient.SetAssignmentReq{
 		AssignmentID: req.AssignmentID,
 		Group:        req.Group,
 		TitleText:    req.TitleText,

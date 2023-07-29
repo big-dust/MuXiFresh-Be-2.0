@@ -1,0 +1,47 @@
+syntax = "v1"
+
+info(
+	title: "review"
+	desc: "api( get userinfo )and( review )"
+	author: "BIGDUST"
+	email: "3264085417@qq.com"
+)
+//获取审阅界面
+type GetReviewReq {
+	Authorization string `header:"Authorization"`
+	Year          int    `json:"year"`
+	Group         string `json:"group"`
+	Page          int64  `json:"page"`
+}
+type Row {
+	ScheduleID string `json:"schedule_id"`
+	Name       string `json:"name"`
+	Grade      string `json:"grader"`
+	School     string `json:"school"`
+	Group      string `json:"group"`
+	Status     string `json:"status"`
+}
+type GetReviewResp {
+	Rows []Row `json:"rows"`
+}
+//调整录取状态
+type SetAdmissionStatusReq {
+	Authorization string `header:"Authorization"`
+	ScheduleID    string `json:"schedule_id"`
+	NewStatus     string `json:"new_status，options=[已报名,实习期,已转正]"`
+}
+type SetAdmissionStatusResp {
+	Flag bool `json:"flag"`
+}
+@server(
+	perfix: /api/v2
+	jwt: JwtAuth
+)
+service review {
+	@doc"审阅界面"
+	@handler GetReview
+	get /review (GetReviewReq) returns (GetReviewResp)
+	@doc"调整录取状态"
+	@handler SetAdmissionStatus
+	post /review/admission_status (SetAdmissionStatusReq) returns (SetAdmissionStatusResp)
+}

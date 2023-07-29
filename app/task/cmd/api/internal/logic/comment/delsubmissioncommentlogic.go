@@ -1,7 +1,7 @@
 package comment
 
 import (
-	"MuXiFresh-Be-2.0/app/task/cmd/rpc/comment/pb"
+	"MuXiFresh-Be-2.0/app/task/cmd/rpc/comment/commentclient"
 	"MuXiFresh-Be-2.0/common/ctxData"
 	"context"
 	"fmt"
@@ -28,7 +28,7 @@ func NewDelSubmissionCommentLogic(ctx context.Context, svcCtx *svc.ServiceContex
 
 func (l *DelSubmissionCommentLogic) DelSubmissionComment(req *types.DelSubmissionCommentReq) (resp *types.DelSubmissionCommentResp, err error) {
 
-	isMyCmtResp, err := l.svcCtx.CommentClient.IsMyComment(l.ctx, &pb.IsMyCommentReq{
+	isMyCmtResp, err := l.svcCtx.CommentClient.IsMyComment(l.ctx, &commentclient.IsMyCommentReq{
 		UserId:    ctxData.GetUserIdFromCtx(l.ctx),
 		CommentID: req.CommentID,
 	})
@@ -38,7 +38,7 @@ func (l *DelSubmissionCommentLogic) DelSubmissionComment(req *types.DelSubmissio
 	if !isMyCmtResp.Flag {
 		return nil, fmt.Errorf("no permission to delete the comment")
 	}
-	delCommentResp, err := l.svcCtx.CommentClient.DelSubmissionComment(l.ctx, &pb.DelSubmissionCommentReq{
+	delCommentResp, err := l.svcCtx.CommentClient.DelSubmissionComment(l.ctx, &commentclient.DelSubmissionCommentReq{
 		CommentID: req.CommentID,
 	})
 	return &types.DelSubmissionCommentResp{

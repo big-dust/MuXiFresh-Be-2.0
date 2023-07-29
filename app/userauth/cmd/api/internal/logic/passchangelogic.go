@@ -1,7 +1,7 @@
 package logic
 
 import (
-	"MuXiFresh-Be-2.0/app/userauth/cmd/rpc/accountCenter/pb"
+	"MuXiFresh-Be-2.0/app/userauth/cmd/rpc/accountCenter/accountcenterclient"
 	"MuXiFresh-Be-2.0/common/ctxData"
 	"context"
 
@@ -26,7 +26,7 @@ func NewPassChangeLogic(ctx context.Context, svcCtx *svc.ServiceContext) *PassCh
 }
 
 func (l *PassChangeLogic) PassChange(req *types.PassChangeReq) (resp *types.PassChangeResp, err error) {
-	passChangeResp, err := l.svcCtx.ActCenterClient.PassChange(l.ctx, &pb.PassChangeReq{
+	passChangeResp, err := l.svcCtx.ActCenterClient.PassChange(l.ctx, &accountcenterclient.PassChangeReq{
 		Email:    ctxData.GetEmailFromCtx(l.ctx),
 		Password: req.Password,
 	})

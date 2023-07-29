@@ -2,7 +2,7 @@ package logic
 
 import (
 	"MuXiFresh-Be-2.0/app/userauth/cmd/api/internal/common/code"
-	"MuXiFresh-Be-2.0/app/userauth/cmd/rpc/accountCenter/pb"
+	"MuXiFresh-Be-2.0/app/userauth/cmd/rpc/accountCenter/accountcenterclient"
 	"MuXiFresh-Be-2.0/common/ctxData"
 	"MuXiFresh-Be-2.0/common/globalKey"
 	"context"
@@ -36,7 +36,7 @@ func (l *RegisterLogic) Register(req *types.RegisterReq) (resp *types.RegisterRe
 		return nil, fmt.Errorf("verify code failed")
 	}
 	//写入数据库
-	registerDataResp, err := l.svcCtx.ActCenterClient.Register(l.ctx, &pb.RegisterDataReq{
+	registerDataResp, err := l.svcCtx.ActCenterClient.Register(l.ctx, &accountcenterclient.RegisterDataReq{
 		Email:    req.Email,
 		Password: req.Password,
 	})

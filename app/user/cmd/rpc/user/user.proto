@@ -1,0 +1,60 @@
+syntax = "proto3";
+
+package user;
+option go_package="./pb";
+
+message GetUserInfoReq {
+  string UserId =1;
+  string UserType =2;
+}
+message GetUserInfoResp {
+  string Avatar =1;
+  string NickName  =2;
+  string Email =3;
+  string Group =4;
+  string StudentID =5;
+}
+
+message SetUserInfoReq {
+  string UserId =1;
+  string Avatar =2;
+  string NickName =3;
+}
+message SetUserInfoResp {
+  bool Flag =1;
+}
+
+message SetUserTypeReq{
+  string Email =1;
+  string UserType =2;
+}
+message SetUserTypeResp{
+  bool Flag =1;
+}
+
+message GetAdminListReq{
+  string UserType =1;
+  int64  Page =2;
+}
+message One {
+  string UserId =1;
+  string Nickname =2;
+  string Avatar =3;
+}
+message GetAdminListResp{
+  repeated One List =1;
+}
+
+message GetUserTypeReq {
+  string UserId = 1;
+}
+message GetUserTypeResp {
+  string UserType =1;
+}
+service userClient {
+  rpc GetUserInfo(GetUserInfoReq) returns (GetUserInfoResp);
+  rpc SetUserInfo(SetUserInfoReq)returns (SetUserInfoResp);
+  rpc SetUserType(SetUserTypeReq)returns(SetUserTypeResp);
+  rpc GetAdminList(GetAdminListReq)returns(GetAdminListResp);
+  rpc GetUserType(GetUserTypeReq) returns(GetUserTypeResp);
+}

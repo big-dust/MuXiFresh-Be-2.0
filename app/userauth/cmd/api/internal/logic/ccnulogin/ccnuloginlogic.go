@@ -1,7 +1,7 @@
 package ccnulogin
 
 import (
-	"MuXiFresh-Be-2.0/app/userauth/cmd/rpc/accountCenter/pb"
+	"MuXiFresh-Be-2.0/app/userauth/cmd/rpc/accountCenter/accountcenterclient"
 	"MuXiFresh-Be-2.0/common/ctxData"
 	"context"
 	"github.com/golang-jwt/jwt/v4"
@@ -28,7 +28,7 @@ func NewCcnuLoginLogic(ctx context.Context, svcCtx *svc.ServiceContext) *CcnuLog
 }
 
 func (l *CcnuLoginLogic) CcnuLogin(req *types.CcnuLoginReq) (resp *types.CcnuLoginResp, err error) {
-	ccnuLoginResp, err := l.svcCtx.ActCenterClient.CcnuLogin(l.ctx, &pb.CcnuLoginReq{
+	ccnuLoginResp, err := l.svcCtx.ActCenterClient.CcnuLogin(l.ctx, &accountcenterclient.CcnuLoginReq{
 		StudentID: req.StdudentID,
 		Password:  req.Password,
 	})

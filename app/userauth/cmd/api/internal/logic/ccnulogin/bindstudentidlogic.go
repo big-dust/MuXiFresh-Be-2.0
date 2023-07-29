@@ -1,7 +1,7 @@
 package ccnulogin
 
 import (
-	"MuXiFresh-Be-2.0/app/userauth/cmd/rpc/accountCenter/pb"
+	"MuXiFresh-Be-2.0/app/userauth/cmd/rpc/accountCenter/accountcenterclient"
 	"MuXiFresh-Be-2.0/common/ctxData"
 	"context"
 
@@ -27,7 +27,7 @@ func NewBindStudentIDLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Bin
 
 func (l *BindStudentIDLogic) BindStudentID(req *types.BindStudentIDReq) (resp *types.BindStudentIDResp, err error) {
 
-	bindResp, err := l.svcCtx.ActCenterClient.BindStudentID(l.ctx, &pb.BindingStudentIDReq{
+	bindResp, err := l.svcCtx.ActCenterClient.BindStudentID(l.ctx, &accountcenterclient.BindingStudentIDReq{
 		UserId:    ctxData.GetUserIdFromCtx(l.ctx),
 		StudentID: req.StdudentID,
 		Password:  req.Password,

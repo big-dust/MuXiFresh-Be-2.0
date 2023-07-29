@@ -1,7 +1,7 @@
 package assigned
 
 import (
-	"MuXiFresh-Be-2.0/app/task/cmd/rpc/assignment/pb"
+	"MuXiFresh-Be-2.0/app/task/cmd/rpc/assignment/assignmentclient"
 	"context"
 	"github.com/jinzhu/copier"
 
@@ -26,7 +26,7 @@ func NewGetAssignmentListLogic(ctx context.Context, svcCtx *svc.ServiceContext) 
 }
 
 func (l *GetAssignmentListLogic) GetAssignmentList(req *types.GetAssignmentListReq) (resp *types.GetAssignmentListResp, err error) {
-	getListResp, err := l.svcCtx.AssignmentClient.GetAssignmentList(l.ctx, &pb.GetAssignmentListReq{
+	getListResp, err := l.svcCtx.AssignmentClient.GetAssignmentList(l.ctx, &assignmentclient.GetAssignmentListReq{
 		Group: req.Group,
 	})
 	if err != nil {

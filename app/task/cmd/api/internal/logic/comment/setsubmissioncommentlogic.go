@@ -1,7 +1,7 @@
 package comment
 
 import (
-	"MuXiFresh-Be-2.0/app/task/cmd/rpc/comment/pb"
+	"MuXiFresh-Be-2.0/app/task/cmd/rpc/comment/commentclient"
 	"MuXiFresh-Be-2.0/common/ctxData"
 	"context"
 
@@ -26,7 +26,7 @@ func NewSetSubmissionCommentLogic(ctx context.Context, svcCtx *svc.ServiceContex
 }
 
 func (l *SetSubmissionCommentLogic) SetSubmissionComment(req *types.SetSubmissionCommentReq) (resp *types.SetSubmissionCommentResp, err error) {
-	setCommentResp, err := l.svcCtx.CommentClient.SetSubmissionComment(l.ctx, &pb.SetSubmissionCommentReq{
+	setCommentResp, err := l.svcCtx.CommentClient.SetSubmissionComment(l.ctx, &commentclient.SetSubmissionCommentReq{
 		UserId:       ctxData.GetUserIdFromCtx(l.ctx),
 		SubmissionID: req.SubmissionID,
 		Content:      req.Content,

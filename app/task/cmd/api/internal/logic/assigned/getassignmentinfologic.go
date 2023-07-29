@@ -1,7 +1,7 @@
 package assigned
 
 import (
-	"MuXiFresh-Be-2.0/app/task/cmd/rpc/assignment/pb"
+	"MuXiFresh-Be-2.0/app/task/cmd/rpc/assignment/assignmentclient"
 	"context"
 
 	"MuXiFresh-Be-2.0/app/task/cmd/api/internal/svc"
@@ -25,7 +25,7 @@ func NewGetAssignmentInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) 
 }
 
 func (l *GetAssignmentInfoLogic) GetAssignmentInfo(req *types.GetAssignmentInfoReq) (resp *types.GetAssignmentInfoResp, err error) {
-	getInfoResp, err := l.svcCtx.AssignmentClient.GetAssignmentInfo(l.ctx, &pb.GetAssignmentInfoReq{AssignmentID: req.AssignmentID})
+	getInfoResp, err := l.svcCtx.AssignmentClient.GetAssignmentInfo(l.ctx, &assignmentclient.GetAssignmentInfoReq{AssignmentID: req.AssignmentID})
 	if err != nil {
 		return nil, err
 	}

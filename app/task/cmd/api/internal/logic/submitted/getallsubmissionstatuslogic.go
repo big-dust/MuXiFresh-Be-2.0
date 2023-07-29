@@ -1,8 +1,8 @@
 package submitted
 
 import (
-	"MuXiFresh-Be-2.0/app/task/cmd/rpc/submission/pb"
-	pb2 "MuXiFresh-Be-2.0/app/userauth/cmd/rpc/userinfo/pb"
+	"MuXiFresh-Be-2.0/app/task/cmd/rpc/submission/submissionclient"
+	"MuXiFresh-Be-2.0/app/user/cmd/rpc/user/userclient"
 	"MuXiFresh-Be-2.0/common/ctxData"
 	"MuXiFresh-Be-2.0/common/globalKey"
 	"context"
@@ -31,7 +31,7 @@ func NewGetAllSubmissionStatusLogic(ctx context.Context, svcCtx *svc.ServiceCont
 
 func (l *GetAllSubmissionStatusLogic) GetAllSubmissionStatus(req *types.GetAllSubmissionStatusReq) (resp *types.GetAllSubmissionStatusResp, err error) {
 	//管理员身份认证
-	getUserTypeResp, err := l.svcCtx.UserInfoClient.GetUserType(l.ctx, &pb2.GetUserTypeReq{
+	getUserTypeResp, err := l.svcCtx.UserClient.GetUserType(l.ctx, &userclient.GetUserTypeReq{
 		UserId: ctxData.GetUserIdFromCtx(l.ctx),
 	})
 	if err != nil {
@@ -41,7 +41,7 @@ func (l *GetAllSubmissionStatusLogic) GetAllSubmissionStatus(req *types.GetAllSu
 		return nil, errors.New("permission denied")
 	}
 	//get
-	getAllStatusResp, err := l.svcCtx.SubmissionClient.GetAllSubmissionStatus(l.ctx, &pb.GetAllSubmissionStatusReq{
+	getAllStatusResp, err := l.svcCtx.SubmissionClient.GetAllSubmissionStatus(l.ctx, &submissionclient.GetAllSubmissionStatusReq{
 		AssignmentID: req.AssignmentID,
 		Page:         int64(req.Page),
 	})

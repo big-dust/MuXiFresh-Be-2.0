@@ -38,10 +38,10 @@ type GetAllSubmissionStatusReq struct {
 }
 
 type Completion struct {
-	Name    string `json:"nickname"`
-	Grade   string `json:"grade"`
-	College string `json:"college"`
-	Status  string `json:"status,options=[yes,no]"`
+	Name   string `json:"nickname"`
+	Grade  string `json:"grade"`
+	School string `json:"school"`
+	Status string `json:"status,options=[yes,no]"`
 }
 
 type GetAllSubmissionStatusResp struct {

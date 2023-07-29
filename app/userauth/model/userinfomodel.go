@@ -4,6 +4,9 @@ import (
 	"context"
 	"github.com/zeromicro/go-zero/core/stores/mon"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
+	"time"
 )
 
 var _ UserInfoModel = (*customUserInfoModel)(nil)
@@ -14,6 +17,8 @@ type (
 	UserInfoModel interface {
 		userInfoModel
 		FindByStudentID(ctx context.Context, studentID string) (*UserInfo, error)
+		UpdateByEmail(ctx context.Context, data *UserInfo) (*mongo.UpdateResult, error)
+		FindByUserType(ctx context.Context, userType string, limit int64, offset int64) ([]*UserInfo, error)
 	}
 
 	customUserInfoModel struct {
@@ -36,6 +41,27 @@ func (m *defaultUserInfoModel) FindByStudentID(ctx context.Context, studentID st
 	switch err {
 	case nil:
 		return &data, nil
+	case mon.ErrNotFound:
+		return nil, ErrNotFound
+	default:
+		return nil, err
+	}
+}
+
+func (m *defaultUserInfoModel) UpdateByEmail(ctx context.Context, data *UserInfo) (*mongo.UpdateResult, error) {
+	data.UpdateAt = time.Now()
+
+	res, err := m.conn.UpdateOne(ctx, bson.M{"email": data.Email}, bson.M{"$set": data})
+	return res, err
+}
+
+func (m *defaultUserInfoModel) FindByUserType(ctx context.Context, userType string, limit int64, offset int64) ([]*UserInfo, error) {
+	var userInfos []*UserInfo
+
+	err := m.conn.Find(ctx, &userInfos, bson.M{"user_type": userType}, options.Find().SetSkip(offset).SetLimit(limit).SetSort(bson.D{{"nickname", 1}}))
+	switch err {
+	case nil:
+		return userInfos, nil
 	case mon.ErrNotFound:
 		return nil, ErrNotFound
 	default:

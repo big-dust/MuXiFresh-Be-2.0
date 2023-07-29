@@ -23,7 +23,7 @@
 #    linux: sed -i 's/,omitempty//g'  ./rpc/pb/*.pb.go
 
 # sql 生成
-# goctl model mysql ddl -src="./deploy/sql/user.sql" -dir="./app/usercenter/model" -cache --home ./template
+# goctl model mysql ddl -src="./deploy/sql/user.sql" -dir="./app/usercenter(example)/model" -cache --home ./template
 
 # 创建kafka的topic
 # kafka-topics.sh --create --zookeeper zookeeper:2181 --replication-factor 1 -partitions 1 --topic {topic}

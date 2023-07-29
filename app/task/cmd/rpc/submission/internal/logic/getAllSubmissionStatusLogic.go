@@ -34,10 +34,10 @@ func (l *GetAllSubmissionStatusLogic) GetAllSubmissionStatus(in *pb.GetAllSubmis
 			return nil, err
 		}
 		completions = append(completions, &pb.Completion{
-			Name:    entryForm.Name,
-			Grade:   entryForm.Grade,
-			College: entryForm.College,
-			Status:  submission.Status,
+			Name:   entryForm.Name,
+			Grade:  entryForm.Grade,
+			School: entryForm.School,
+			Status: submission.Status,
 		})
 	}
 	return &pb.GetAllSubmissionStatusResp{

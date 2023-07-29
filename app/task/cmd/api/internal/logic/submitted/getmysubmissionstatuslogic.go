@@ -1,7 +1,7 @@
 package submitted
 
 import (
-	"MuXiFresh-Be-2.0/app/task/cmd/rpc/submission/pb"
+	"MuXiFresh-Be-2.0/app/task/cmd/rpc/submission/submissionclient"
 	"MuXiFresh-Be-2.0/common/ctxData"
 	"context"
 
@@ -26,7 +26,7 @@ func NewGetMySubmissionStatusLogic(ctx context.Context, svcCtx *svc.ServiceConte
 }
 
 func (l *GetMySubmissionStatusLogic) GetMySubmissionStatus(req *types.GetMySubmissionStatusReq) (resp *types.GetMySubmissionStatusResp, err error) {
-	getMyStatusResp, err := l.svcCtx.SubmissionClient.GetMySubmissionStatus(l.ctx, &pb.GetMySubmissionStatusReq{
+	getMyStatusResp, err := l.svcCtx.SubmissionClient.GetMySubmissionStatus(l.ctx, &submissionclient.GetMySubmissionStatusReq{
 		AssignmentID: req.AssignmentID,
 		UserId:       ctxData.GetUserIdFromCtx(l.ctx),
 	})
