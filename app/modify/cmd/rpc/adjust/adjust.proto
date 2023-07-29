@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package adjust;
+option go_package="./adjust";
+
+message AdjustAdmissionstatusReq{
+  string AdmissionStatus = 1;
+}
+
+message AdjustAdmissionstatusResp{
+  bool Flag = 1;
+}
+
+
+service Modify {
+  rpc AdjustAdmissionstatus(AdjustAdmissionstatusReq) returns(AdjustAdmissionstatusResp);
+}

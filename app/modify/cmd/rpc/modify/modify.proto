@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package modify;
+option go_package="./modify";
+
+message ModifytheUsertypeReq{
+  string Email = 1;
+  string UserType = 2;
+}
+
+message ModifytheUsertypeResp{
+  bool Flag = 1;
+}
+message ModifytheUseravatarReq{
+  string Avatar = 1;
+}
+
+message ModifytheUseravatarResp{
+  bool Flag = 1;
+}
+message ModifytheUsernameReq{
+  string NickName = 1;
+}
+
+message ModifytheUsernameResp{
+  bool Flag = 1;
+}
+
+service Modify {
+  rpc ModifytheUsertype(ModifytheUsertypeReq) returns(ModifytheUsertypeResp);
+  rpc ModifytheUseravatar(ModifytheUseravatarReq) returns(ModifytheUseravatarResp);
+  rpc ModifytheUsername(ModifytheUsernameReq) returns(ModifytheUsernameResp);
+}
