@@ -1,14 +1,13 @@
 package logic
 
 import (
-	"MuxiFresh2.0/MuXiFresh-Be-2.0/app/schedule/model"
-	"MuxiFresh2.0/MuXiFresh-Be-2.0/common/ctxData"
+	"MuXiFresh-Be-2.0/app/schedule/model"
 	"context"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"time"
 
-	"MuxiFresh2.0/MuXiFresh-Be-2.0/app/schedule/rpc/internal/svc"
-	"MuxiFresh2.0/MuXiFresh-Be-2.0/app/schedule/rpc/pb"
+	"MuXiFresh-Be-2.0/app/schedule/rpc/internal/svc"
+	"MuXiFresh-Be-2.0/app/schedule/rpc/pb"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -28,8 +27,7 @@ func NewCreateLogic(ctx context.Context, svcCtx *svc.ServiceContext) *CreateLogi
 }
 
 func (l *CreateLogic) Create(in *pb.CreateReq) (*pb.CreateResp, error) {
-	userid := ctxData.GetUserIdFromCtx(l.ctx)
-	uid, err := primitive.ObjectIDFromHex(userid)
+	uid, err := primitive.ObjectIDFromHex(in.UserId)
 	if err != nil {
 		return nil, err
 	}

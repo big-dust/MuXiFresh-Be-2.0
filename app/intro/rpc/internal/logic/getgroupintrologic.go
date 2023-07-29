@@ -4,8 +4,8 @@ import (
 	"context"
 	"strings"
 
-	"MuxiFresh2.0/MuXiFresh-Be-2.0/app/intro/rpc/internal/svc"
-	"MuxiFresh2.0/MuXiFresh-Be-2.0/app/intro/rpc/pb"
+	"MuXiFresh-Be-2.0/app/intro/rpc/internal/svc"
+	"MuXiFresh-Be-2.0/app/intro/rpc/pb"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )

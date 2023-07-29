@@ -1,13 +1,13 @@
 package logic
 
 import (
-	"MuxiFresh2.0/MuXiFresh-Be-2.0/app/schedule/rpc/scheduleclient"
-	"MuxiFresh2.0/MuXiFresh-Be-2.0/common/ctxData"
-	"MuxiFresh2.0/MuXiFresh-Be-2.0/common/globalKey"
+	"MuXiFresh-Be-2.0/app/schedule/rpc/scheduleclient"
+	"MuXiFresh-Be-2.0/common/ctxData"
+	"MuXiFresh-Be-2.0/common/globalKey"
 	"context"
 
-	"MuxiFresh2.0/MuXiFresh-Be-2.0/app/schedule/api/internal/svc"
-	"MuxiFresh2.0/MuXiFresh-Be-2.0/app/schedule/api/internal/types"
+	"MuXiFresh-Be-2.0/app/schedule/api/internal/svc"
+	"MuXiFresh-Be-2.0/app/schedule/api/internal/types"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )

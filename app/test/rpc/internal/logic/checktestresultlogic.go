@@ -1,8 +1,8 @@
 package logic
 
 import (
-	"MuxiFresh2.0/MuXiFresh-Be-2.0/app/test/rpc/internal/svc"
-	"MuxiFresh2.0/MuXiFresh-Be-2.0/app/test/rpc/pb"
+	"MuXiFresh-Be-2.0/app/test/rpc/internal/svc"
+	"MuXiFresh-Be-2.0/app/test/rpc/pb"
 	"context"
 
 	"github.com/zeromicro/go-zero/core/logx"

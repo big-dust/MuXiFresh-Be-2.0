@@ -1,8 +1,8 @@
 package svc
 
 import (
-	"MuxiFresh2.0/MuXiFresh-Be-2.0/app/test/api/internal/config"
-	"MuxiFresh2.0/MuXiFresh-Be-2.0/app/test/rpc/testclient"
+	"MuXiFresh-Be-2.0/app/test/api/internal/config"
+	"MuXiFresh-Be-2.0/app/test/rpc/testclient"
 	"github.com/zeromicro/go-zero/zrpc"
 )
 

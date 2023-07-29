@@ -1,9 +1,9 @@
 package logic
 
 import (
-	"MuxiFresh2.0/MuXiFresh-Be-2.0/app/form/model"
-	"MuxiFresh2.0/MuXiFresh-Be-2.0/app/form/rpc/internal/svc"
-	"MuxiFresh2.0/MuXiFresh-Be-2.0/app/form/rpc/pb"
+	"MuXiFresh-Be-2.0/app/form/model"
+	"MuXiFresh-Be-2.0/app/form/rpc/internal/svc"
+	"MuXiFresh-Be-2.0/app/form/rpc/pb"
 	"context"
 	"fmt"
 	"github.com/zeromicro/go-zero/core/logx"

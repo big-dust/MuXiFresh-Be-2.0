@@ -1,9 +1,9 @@
 package svc
 
 import (
-	formmodel "MuxiFresh2.0/MuXiFresh-Be-2.0/app/form/model"
-	"MuxiFresh2.0/MuXiFresh-Be-2.0/app/schedule/model"
-	"MuxiFresh2.0/MuXiFresh-Be-2.0/app/schedule/rpc/internal/config"
+	formmodel "MuXiFresh-Be-2.0/app/form/model"
+	"MuXiFresh-Be-2.0/app/schedule/model"
+	"MuXiFresh-Be-2.0/app/schedule/rpc/internal/config"
 )
 
 type ServiceContext struct {

@@ -4,7 +4,7 @@ package handler
 import (
 	"net/http"
 
-	"MuxiFresh2.0/MuXiFresh-Be-2.0/app/intro/api/internal/svc"
+	"MuXiFresh-Be-2.0/app/intro/api/internal/svc"
 
 	"github.com/zeromicro/go-zero/rest"
 )

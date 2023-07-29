@@ -1,9 +1,9 @@
 package svc
 
 import (
-	"MuxiFresh2.0/MuXiFresh-Be-2.0/app/form/model"
-	"MuxiFresh2.0/MuXiFresh-Be-2.0/app/schedule/api/internal/config"
-	"MuxiFresh2.0/MuXiFresh-Be-2.0/app/schedule/rpc/scheduleclient"
+	"MuXiFresh-Be-2.0/app/form/model"
+	"MuXiFresh-Be-2.0/app/schedule/api/internal/config"
+	"MuXiFresh-Be-2.0/app/schedule/rpc/scheduleclient"
 	"github.com/zeromicro/go-zero/zrpc"
 )
 

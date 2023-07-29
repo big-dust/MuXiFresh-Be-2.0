@@ -1,9 +1,9 @@
 package handler
 
 import (
-	"MuxiFresh2.0/MuXiFresh-Be-2.0/app/intro/api/internal/logic"
-	"MuxiFresh2.0/MuXiFresh-Be-2.0/app/intro/api/internal/svc"
-	"MuxiFresh2.0/MuXiFresh-Be-2.0/app/intro/api/internal/types"
+	"MuXiFresh-Be-2.0/app/intro/api/internal/logic"
+	"MuXiFresh-Be-2.0/app/intro/api/internal/svc"
+	"MuXiFresh-Be-2.0/app/intro/api/internal/types"
 	"greet/response"
 	"net/http"
 )
