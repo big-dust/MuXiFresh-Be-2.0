@@ -2,7 +2,7 @@
 package types
 
 type CreateReq struct {
-	Authorization string `json:"Authorization"`
+	Authorization string `header:"Authorization"`
 }
 
 type CreateResp struct {

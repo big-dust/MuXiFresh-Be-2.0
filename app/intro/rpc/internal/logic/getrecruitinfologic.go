@@ -1,12 +1,12 @@
 package logic
 
 import (
-	"MuxiFresh2.0/MuXiFresh-Be-2.0/app/intro/model"
+	"MuXiFresh-Be-2.0/app/intro/model"
 	"context"
 	"time"
 
-	"MuxiFresh2.0/MuXiFresh-Be-2.0/app/intro/rpc/internal/svc"
-	"MuxiFresh2.0/MuXiFresh-Be-2.0/app/intro/rpc/pb"
+	"MuXiFresh-Be-2.0/app/intro/rpc/internal/svc"
+	"MuXiFresh-Be-2.0/app/intro/rpc/pb"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )

@@ -9,8 +9,9 @@ info (
 
 //生成进度表
 type CreateReq {
-	Authorization string `json:"Authorization"`
+	Authorization string `header:"Authorization"`
 }
+
 type CreateResp {
 	Flag bool `json:"flag"`
 }

@@ -1,12 +1,12 @@
 package logic
 
 import (
-	"MuxiFresh2.0/MuXiFresh-Be-2.0/app/form/rpc/entryformclient"
-	"MuxiFresh2.0/MuXiFresh-Be-2.0/common/ctxData"
+	"MuXiFresh-Be-2.0/app/form/rpc/entryformclient"
+	"MuXiFresh-Be-2.0/common/ctxData"
 	"context"
 
-	"MuxiFresh2.0/MuXiFresh-Be-2.0/app/form/api/internal/svc"
-	"MuxiFresh2.0/MuXiFresh-Be-2.0/app/form/api/internal/types"
+	"MuXiFresh-Be-2.0/app/form/api/internal/svc"
+	"MuXiFresh-Be-2.0/app/form/api/internal/types"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )

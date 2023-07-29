@@ -1,11 +1,11 @@
 package logic
 
 import (
-	"MuxiFresh2.0/MuXiFresh-Be-2.0/app/schedule/rpc/scheduleclient"
+	"MuXiFresh-Be-2.0/app/schedule/api/internal/svc"
+	"MuXiFresh-Be-2.0/app/schedule/api/internal/types"
+	"MuXiFresh-Be-2.0/app/schedule/rpc/scheduleclient"
+	"MuXiFresh-Be-2.0/common/ctxData"
 	"context"
-
-	"MuxiFresh2.0/MuXiFresh-Be-2.0/app/schedule/api/internal/svc"
-	"MuxiFresh2.0/MuXiFresh-Be-2.0/app/schedule/api/internal/types"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -25,8 +25,9 @@ func NewCreateScheduleLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Cr
 }
 
 func (l *CreateScheduleLogic) CreateSchedule(req *types.CreateReq) (resp *types.CreateResp, err error) {
+	userId := ctxData.GetUserIdFromCtx(l.ctx)
 	_, err = l.svcCtx.ScheduleClient.Create(l.ctx, &scheduleclient.CreateReq{
-		Token: req.Authorization,
+		UserId: userId,
 	})
 	if err != nil {
 		return nil, err

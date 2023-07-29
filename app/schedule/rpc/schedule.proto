@@ -4,7 +4,7 @@ package schedule;
 option go_package="./pb";
 
 message CreateReq{
-  string Token = 1;
+  string UserId = 1;
 }
 message CreateResp{
   bool Flag = 1;

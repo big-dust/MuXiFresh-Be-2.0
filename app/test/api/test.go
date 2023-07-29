@@ -4,9 +4,9 @@ import (
 	"flag"
 	"fmt"
 
-	"MuxiFresh2.0/MuXiFresh-Be-2.0/app/test/api/internal/config"
-	"MuxiFresh2.0/MuXiFresh-Be-2.0/app/test/api/internal/handler"
-	"MuxiFresh2.0/MuXiFresh-Be-2.0/app/test/api/internal/svc"
+	"MuXiFresh-Be-2.0/app/test/api/internal/config"
+	"MuXiFresh-Be-2.0/app/test/api/internal/handler"
+	"MuXiFresh-Be-2.0/app/test/api/internal/svc"
 
 	"github.com/zeromicro/go-zero/core/conf"
 	"github.com/zeromicro/go-zero/rest"

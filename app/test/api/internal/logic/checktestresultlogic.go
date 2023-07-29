@@ -1,12 +1,12 @@
 package logic
 
 import (
-	"MuxiFresh2.0/MuXiFresh-Be-2.0/app/test/rpc/testclient"
+	"MuXiFresh-Be-2.0/app/test/rpc/testclient"
 	"context"
 	"strings"
 
-	"MuxiFresh2.0/MuXiFresh-Be-2.0/app/test/api/internal/svc"
-	"MuxiFresh2.0/MuXiFresh-Be-2.0/app/test/api/internal/types"
+	"MuXiFresh-Be-2.0/app/test/api/internal/svc"
+	"MuXiFresh-Be-2.0/app/test/api/internal/types"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )

@@ -6,7 +6,7 @@ package entryformclient
 import (
 	"context"
 
-	"MuxiFresh2.0/MuXiFresh-Be-2.0/app/form/rpc/pb"
+	"MuXiFresh-Be-2.0/app/form/rpc/pb"
 
 	"github.com/zeromicro/go-zero/zrpc"
 	"google.golang.org/grpc"

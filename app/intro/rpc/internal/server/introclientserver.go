@@ -6,9 +6,9 @@ package server
 import (
 	"context"
 
-	"MuxiFresh2.0/MuXiFresh-Be-2.0/app/intro/rpc/internal/logic"
-	"MuxiFresh2.0/MuXiFresh-Be-2.0/app/intro/rpc/internal/svc"
-	"MuxiFresh2.0/MuXiFresh-Be-2.0/app/intro/rpc/pb"
+	"MuXiFresh-Be-2.0/app/intro/rpc/internal/logic"
+	"MuXiFresh-Be-2.0/app/intro/rpc/internal/svc"
+	"MuXiFresh-Be-2.0/app/intro/rpc/pb"
 )
 
 type IntroClientServer struct {

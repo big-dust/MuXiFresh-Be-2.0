@@ -4,9 +4,9 @@ import (
 	"flag"
 	"fmt"
 
-	"MuxiFresh2.0/MuXiFresh-Be-2.0/app/schedule/api/internal/config"
-	"MuxiFresh2.0/MuXiFresh-Be-2.0/app/schedule/api/internal/handler"
-	"MuxiFresh2.0/MuXiFresh-Be-2.0/app/schedule/api/internal/svc"
+	"MuXiFresh-Be-2.0/app/schedule/api/internal/config"
+	"MuXiFresh-Be-2.0/app/schedule/api/internal/handler"
+	"MuXiFresh-Be-2.0/app/schedule/api/internal/svc"
 
 	"github.com/zeromicro/go-zero/core/conf"
 	"github.com/zeromicro/go-zero/rest"

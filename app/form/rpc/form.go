@@ -4,10 +4,10 @@ import (
 	"flag"
 	"fmt"
 
-	"MuxiFresh2.0/MuXiFresh-Be-2.0/app/form/rpc/internal/config"
-	"MuxiFresh2.0/MuXiFresh-Be-2.0/app/form/rpc/internal/server"
-	"MuxiFresh2.0/MuXiFresh-Be-2.0/app/form/rpc/internal/svc"
-	"MuxiFresh2.0/MuXiFresh-Be-2.0/app/form/rpc/pb"
+	"MuXiFresh-Be-2.0/app/form/rpc/internal/config"
+	"MuXiFresh-Be-2.0/app/form/rpc/internal/server"
+	"MuXiFresh-Be-2.0/app/form/rpc/internal/svc"
+	"MuXiFresh-Be-2.0/app/form/rpc/pb"
 
 	"github.com/zeromicro/go-zero/core/conf"
 	"github.com/zeromicro/go-zero/core/service"

@@ -6,7 +6,7 @@ package scheduleclient
 import (
 	"context"
 
-	"MuxiFresh2.0/MuXiFresh-Be-2.0/app/schedule/rpc/pb"
+	"MuXiFresh-Be-2.0/app/schedule/rpc/pb"
 
 	"github.com/zeromicro/go-zero/zrpc"
 	"google.golang.org/grpc"

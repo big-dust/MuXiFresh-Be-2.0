@@ -1,8 +1,8 @@
 package svc
 
 import (
-	"MuxiFresh2.0/MuXiFresh-Be-2.0/app/intro/model"
-	"MuxiFresh2.0/MuXiFresh-Be-2.0/app/intro/rpc/internal/config"
+	"MuXiFresh-Be-2.0/app/intro/model"
+	"MuXiFresh-Be-2.0/app/intro/rpc/internal/config"
 )
 
 type ServiceContext struct {
