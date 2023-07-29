@@ -1,7 +1,7 @@
 package logic
 
 import (
-	"MuXiFresh-Be-2.0/app/userauth/cmd/rpc/accountCenter/pb"
+	"MuXiFresh-Be-2.0/app/userauth/cmd/rpc/accountCenter/accountcenterclient"
 	"MuXiFresh-Be-2.0/common/ctxData"
 	"context"
 	"github.com/golang-jwt/jwt/v4"
@@ -29,7 +29,7 @@ func NewLoginLogic(ctx context.Context, svcCtx *svc.ServiceContext) *LoginLogic 
 
 func (l *LoginLogic) Login(req *types.LoginReq) (resp *types.LoginResp, err error) {
 
-	loginResp, err := l.svcCtx.ActCenterClient.Login(l.ctx, &pb.LoginVerifyReq{
+	loginResp, err := l.svcCtx.ActCenterClient.Login(l.ctx, &accountcenterclient.LoginVerifyReq{
 		Email:    req.UserName,
 		Password: req.Password,
 	})

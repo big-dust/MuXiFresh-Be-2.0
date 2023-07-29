@@ -3,8 +3,8 @@ package submitted
 import (
 	"MuXiFresh-Be-2.0/app/task/cmd/api/internal/svc"
 	"MuXiFresh-Be-2.0/app/task/cmd/api/internal/types"
-	"MuXiFresh-Be-2.0/app/task/cmd/rpc/submission/pb"
-	pb2 "MuXiFresh-Be-2.0/app/userauth/cmd/rpc/userinfo/pb"
+	"MuXiFresh-Be-2.0/app/task/cmd/rpc/submission/submissionclient"
+	"MuXiFresh-Be-2.0/app/user/cmd/rpc/user/userclient"
 	"MuXiFresh-Be-2.0/common/ctxData"
 	"MuXiFresh-Be-2.0/common/globalKey"
 	"context"
@@ -31,7 +31,7 @@ func (l *GetSubmissionInfoLogic) GetSubmissionInfo(req *types.GetSubmissionInfoR
 	var userId string
 	if req.UserID != globalKey.Empty {
 		//管理员身份认证
-		getUserTypeResp, err := l.svcCtx.UserInfoClient.GetUserType(l.ctx, &pb2.GetUserTypeReq{
+		getUserTypeResp, err := l.svcCtx.UserClient.GetUserType(l.ctx, &userclient.GetUserTypeReq{
 			UserId: ctxData.GetUserIdFromCtx(l.ctx),
 		})
 		if err != nil {
@@ -45,7 +45,7 @@ func (l *GetSubmissionInfoLogic) GetSubmissionInfo(req *types.GetSubmissionInfoR
 		userId = ctxData.GetUserIdFromCtx(l.ctx)
 	}
 
-	getSubmissionInfoResp, err := l.svcCtx.SubmissionClient.GetSubmissionInfo(l.ctx, &pb.GetSubmissionInfoReq{
+	getSubmissionInfoResp, err := l.svcCtx.SubmissionClient.GetSubmissionInfo(l.ctx, &submissionclient.GetSubmissionInfoReq{
 		AssignmentID: req.AssignmentID,
 		UserId:       userId,
 	})

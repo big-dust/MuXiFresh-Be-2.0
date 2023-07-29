@@ -1,0 +1,72 @@
+syntax = "v1"
+
+info(
+	title: "user"
+	desc: "user information"
+	author: "Bigdust"
+	email: "3264085417@qq.com"
+)
+
+//获取用户信息
+type GetUserInfoReq {
+	Authorization string `header:"Authorization"`
+	UserId        string `path:"id"`
+}
+
+type GetUserInfoResp {
+	Avatar    string `json:"avatar"`
+	NickName  string `json:"nickname"`
+	Email     string `json:"email"`
+	Group     string `json:"group"`
+	StudentID string `json:"student_id"`
+}
+//修改用户信息
+type SetUserInfoReq {
+	Authorization string `header:"Authorization"`
+	Avatar        string `json:"avatar"`
+	NickName      string `json:"nickname"`
+}
+type SetUserInfoResp {
+	Flag bool `json:"flag"`
+}
+//修改用户类型
+type SetUserTypeReq {
+	Authorization string `header:"Authorization"`
+	Email         string `json:"email"`
+	UserType      string `json:"user_type,options=[freshman,normal,admin,super_admin]"`
+}
+type SetUserTypeResp {
+	Flag bool `json:"flag"`
+}
+//管理员列表
+type GetAdminListReq {
+	Authorization string `header:"Authorization"`
+	UserType      string `json:"user_type,options=[super_admin,admin]"`
+	Page          int64  `json:"page"`
+}
+type One {
+	UserId   string `json:"user_id"`
+	Avatar   string `json:"avatar"`
+	Nickname string `json:"nickname"`
+}
+type GetAdminListResp {
+	List []One `json:"list"`
+}
+@server(
+	jwt: JwtAuth
+	prefix: /api/v2
+)
+service user {
+	@doc"获取用户信息"
+	@handler GetUserInfo
+	get /users/:id (GetUserInfoReq) returns (GetUserInfoResp)
+	@doc"修改用户信息"
+	@handler SetUserInfo
+	post /users/:id (SetUserInfoReq) returns (SetUserInfoResp)
+	@doc"修改用户类型"
+	@handler SetUserType
+	post /users/:id/type (SetUserTypeReq) returns (SetUserTypeResp)
+	@doc"管理员/超管列表"
+	@handler GetAdminList
+	get /admin-list (GetAdminListReq) returns (GetAdminListResp)
+}

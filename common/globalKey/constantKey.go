@@ -13,4 +13,7 @@ const (
 	SuperAdmin   = "super_admin"
 	Normal       = "normal"
 	Freshman     = "freshman"
+	Internship   = "实习中"
+	Formal       = "已转正"
+	Registered   = "已报名"
 )
