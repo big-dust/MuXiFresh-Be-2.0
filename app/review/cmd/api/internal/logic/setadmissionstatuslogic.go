@@ -3,7 +3,7 @@ package logic
 import (
 	"MuXiFresh-Be-2.0/app/review/cmd/api/internal/svc"
 	"MuXiFresh-Be-2.0/app/review/cmd/api/internal/types"
-	"MuXiFresh-Be-2.0/app/review/model"
+	"MuXiFresh-Be-2.0/app/schedule/model"
 	pb2 "MuXiFresh-Be-2.0/app/user/cmd/rpc/user/pb"
 	externalModel "MuXiFresh-Be-2.0/app/userauth/model"
 	"MuXiFresh-Be-2.0/common/ctxData"

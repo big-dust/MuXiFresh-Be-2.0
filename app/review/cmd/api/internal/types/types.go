@@ -12,7 +12,7 @@ type Row struct {
 	ScheduleID string `json:"schedule_id"`
 	Name       string `json:"name"`
 	Grade      string `json:"grader"`
-	College    string `json:"college"`
+	School     string `json:"school"`
 	Group      string `json:"group"`
 	Status     string `json:"status"`
 }

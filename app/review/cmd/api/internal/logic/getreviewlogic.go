@@ -3,7 +3,7 @@ package logic
 import (
 	"MuXiFresh-Be-2.0/app/review/cmd/api/internal/svc"
 	"MuXiFresh-Be-2.0/app/review/cmd/api/internal/types"
-	pb2 "MuXiFresh-Be-2.0/app/user/cmd/rpc/user/pb"
+	"MuXiFresh-Be-2.0/app/user/cmd/rpc/user/userclient"
 	"MuXiFresh-Be-2.0/common/ctxData"
 	"MuXiFresh-Be-2.0/common/globalKey"
 	"context"
@@ -29,7 +29,7 @@ func NewGetReviewLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetRevi
 
 func (l *GetReviewLogic) GetReview(req *types.GetReviewReq) (resp *types.GetReviewResp, err error) {
 
-	getUserTypeResp, err := l.svcCtx.UserClient.GetUserType(l.ctx, &pb2.GetUserTypeReq{
+	getUserTypeResp, err := l.svcCtx.UserClient.GetUserType(l.ctx, &userclient.GetUserTypeReq{
 		UserId: ctxData.GetUserIdFromCtx(l.ctx),
 	})
 	if err != nil {
@@ -54,7 +54,7 @@ func (l *GetReviewLogic) GetReview(req *types.GetReviewReq) (resp *types.GetRevi
 			ScheduleID: schedule.ID.String()[10:34],
 			Name:       entryForm.Name,
 			Grade:      entryForm.Grade,
-			College:    entryForm.College,
+			School:     entryForm.School,
 			Group:      entryForm.Group,
 			Status:     schedule.AdmissionStatus,
 		})

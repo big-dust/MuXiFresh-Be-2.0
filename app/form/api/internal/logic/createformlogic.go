@@ -1,8 +1,8 @@
 package logic
 
 import (
-	"MuXiFresh-Be-2.0/app/form/model"
 	"MuXiFresh-Be-2.0/app/form/rpc/entryformclient"
+	externalModel "MuXiFresh-Be-2.0/app/userauth/model"
 	"MuXiFresh-Be-2.0/common/ctxData"
 	"context"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -57,7 +57,7 @@ func (l *CreateFormLogic) CreateForm(req *types.CreateReq) (resp *types.CreateRe
 		return nil, err
 	}
 
-	l.svcCtx.UserInfoModelClient.Update(l.ctx, &model.UserInfo{
+	_, err = l.svcCtx.UserInfoModelClient.Update(l.ctx, &externalModel.UserInfo{
 		ID:          u,
 		EntryFormID: f,
 		UpdateAt:    time.Now(),
