@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+package accountCenter;
+option go_package="./pb";
+
+message RegisterDataReq {
+  string Email = 1;
+  string Password = 2;
+}
+
+message RegisterDataResp {
+  string  ID = 1;
+}
+
+message LoginVerifyReq {
+  string Email = 1;
+  string Password = 2;
+}
+
+message LoginVerifyResp {
+  string ID = 1;
+}
+
+message PassChangeReq {
+  string Email = 1;
+  string Password = 2;
+}
+
+message PassChangeResp {
+  bool Flag =1;
+}
+message CcnuLoginReq {
+  string StudentID = 1;
+  string Password = 2;
+}
+message CcnuLoginResp{
+   string UserinfoID = 1;
+}
+message BindingStudentIDReq {
+  string UserId = 1;
+  string StudentID = 2;
+  string Password = 3;
+}
+message BindingStudentIDResp {
+  bool Flag =1;
+}
+service accountCenterClient {
+  rpc Register(RegisterDataReq) returns(RegisterDataResp);
+  rpc Login(LoginVerifyReq) returns(LoginVerifyResp);
+  rpc PassChange(PassChangeReq) returns(PassChangeResp);
+  rpc CcnuLogin(CcnuLoginReq) returns(CcnuLoginResp);
+  rpc BindStudentID(BindingStudentIDReq) returns(BindingStudentIDResp);
+}

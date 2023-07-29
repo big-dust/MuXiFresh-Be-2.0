@@ -1,0 +1,493 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "MuxiFreshAPI",
+    "description": "the first part of MuxiFresh",
+    "version": ""
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "api/v2/authorize-password-change": {
+      "post": {
+        "summary": "授权修改密码",
+        "operationId": "AuthPassChange",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/AuthPassChangeResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": "授权修改密码",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AuthPassChangeReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "user-auth"
+        ]
+      }
+    },
+    "api/v2/get-captcha": {
+      "get": {
+        "summary": "获取人机验证图",
+        "operationId": "GetCaptcha",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetCaptchaResp"
+            }
+          }
+        },
+        "requestBody": {},
+        "tags": [
+          "user-auth"
+        ]
+      }
+    },
+    "api/v2/get-qntoken": {
+      "get": {
+        "summary": "获取七牛云token",
+        "operationId": "GetQNToken",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetQNTokenResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "user-auth"
+        ]
+      }
+    },
+    "api/v2/login": {
+      "post": {
+        "summary": "登录",
+        "operationId": "Login",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/LoginResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": "登录",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/LoginReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "user-auth"
+        ]
+      }
+    },
+    "api/v2/password-change": {
+      "post": {
+        "summary": "修改密码",
+        "operationId": "PassChange",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/PassChangeResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": "修改密码",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PassChangeReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "user-auth"
+        ]
+      }
+    },
+    "api/v2/register": {
+      "post": {
+        "summary": "注册",
+        "operationId": "Register",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/RegisterResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": "注册",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/RegisterReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "user-auth"
+        ]
+      }
+    },
+    "api/v2/send-verification-code": {
+      "post": {
+        "summary": "发邮箱验证码",
+        "operationId": "SendVerificationCode",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/SendEmailCodeResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": "发邮箱验证码",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SendEmailCodeReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "user-auth"
+        ]
+      }
+    },
+    "api/v2/verify-captcha": {
+      "post": {
+        "summary": "进行验证人机",
+        "operationId": "VerifyCaptcha",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/VerifyCaptchaResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": "进行验证人机",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/VerifyCaptchaReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "user-auth"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "AuthPassChangeReq": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "verify_code": {
+          "type": "string"
+        }
+      },
+      "title": "AuthPassChangeReq",
+      "required": [
+        "email",
+        "verify_code"
+      ]
+    },
+    "AuthPassChangeResp": {
+      "type": "object",
+      "properties": {
+        "auth_ch_pass_token": {
+          "type": "string"
+        }
+      },
+      "title": "AuthPassChangeResp",
+      "required": [
+        "auth_ch_pass_token"
+      ]
+    },
+    "GetCaptchaResp": {
+      "type": "object",
+      "properties": {
+        "image_base64": {
+          "type": "string"
+        },
+        "image_id": {
+          "type": "string"
+        }
+      },
+      "title": "GetCaptchaResp",
+      "required": [
+        "image_base64",
+        "image_id"
+      ]
+    },
+    "GetQNTokenReq": {
+      "type": "object",
+      "properties": {
+        "Token": {
+          "type": "string"
+        }
+      },
+      "title": "GetQNTokenReq",
+      "required": [
+        "Authorization"
+      ]
+    },
+    "GetQNTokenResp": {
+      "type": "object",
+      "properties": {
+        "QiniuToken": {
+          "type": "string"
+        }
+      },
+      "title": "GetQNTokenResp",
+      "required": [
+        "QiniuToken"
+      ]
+    },
+    "LoginReq": {
+      "type": "object",
+      "properties": {
+        "user_name": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      },
+      "title": "LoginReq",
+      "required": [
+        "user_name",
+        "password"
+      ]
+    },
+    "LoginResp": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string"
+        }
+      },
+      "title": "LoginResp",
+      "required": [
+        "token"
+      ]
+    },
+    "PassChangeReq": {
+      "type": "object",
+      "properties": {
+        "password": {
+          "type": "string"
+        },
+        "AuthChPassToken": {
+          "type": "string"
+        }
+      },
+      "title": "PassChangeReq",
+      "required": [
+        "password",
+        "auth_ch_pass_token"
+      ]
+    },
+    "PassChangeResp": {
+      "type": "object",
+      "properties": {
+        "flag": {
+          "type": "boolean",
+          "format": "boolean"
+        }
+      },
+      "title": "PassChangeResp",
+      "required": [
+        "flag"
+      ]
+    },
+    "RegisterReq": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "verify_code": {
+          "type": "string"
+        }
+      },
+      "title": "RegisterReq",
+      "required": [
+        "email",
+        "password",
+        "verify_code"
+      ]
+    },
+    "RegisterResp": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string"
+        }
+      },
+      "title": "RegisterResp",
+      "required": [
+        "token"
+      ]
+    },
+    "SendEmailCodeReq": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        }
+      },
+      "title": "SendEmailCodeReq",
+      "required": [
+        "email",
+        "type"
+      ]
+    },
+    "SendEmailCodeResp": {
+      "type": "object",
+      "properties": {
+        "flag": {
+          "type": "boolean",
+          "format": "boolean"
+        }
+      },
+      "title": "SendEmailCodeResp",
+      "required": [
+        "flag"
+      ]
+    },
+    "VerifyCaptchaReq": {
+      "type": "object",
+      "properties": {
+        "image_id": {
+          "type": "string"
+        },
+        "verify_code": {
+          "type": "string"
+        }
+      },
+      "title": "VerifyCaptchaReq",
+      "required": [
+        "image_id",
+        "verify_code"
+      ]
+    },
+    "VerifyCaptchaResp": {
+      "type": "object",
+      "properties": {
+        "flag": {
+          "type": "boolean",
+          "format": "boolean"
+        }
+      },
+      "title": "VerifyCaptchaResp",
+      "required": [
+        "flag"
+      ]
+    },
+    "VerifyTokenReq": {
+      "type": "object",
+      "properties": {
+        "Token": {
+          "type": "string"
+        }
+      },
+      "title": "VerifyTokenReq",
+      "required": [
+        "Authorization"
+      ]
+    },
+    "VerifyTokenResp": {
+      "type": "object",
+      "properties": {
+        "flag": {
+          "type": "boolean",
+          "format": "boolean"
+        }
+      },
+      "title": "VerifyTokenResp",
+      "required": [
+        "flag"
+      ]
+    }
+  },
+  "securityDefinitions": {
+    "apiKey": {
+      "type": "apiKey",
+      "description": "Enter JWT Bearer token **_only_**",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
+  "security": [
+    {
+      "apiKey": []
+    }
+  ]
+}

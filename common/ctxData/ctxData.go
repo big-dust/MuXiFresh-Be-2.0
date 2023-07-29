@@ -5,12 +5,12 @@ import (
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
-var (
+const (
 	CtxKeyJwtEmail  = "jwtEmail"
 	CtxKeyJwtUserID = "jwtUserId"
 )
 
-func GetUidFromCtx(ctx context.Context) string {
+func GetEmailFromCtx(ctx context.Context) string {
 	email, ok := ctx.Value(CtxKeyJwtEmail).(string)
 	if !ok {
 		logx.WithContext(ctx).Errorf("GetEmailFromCtx failed")

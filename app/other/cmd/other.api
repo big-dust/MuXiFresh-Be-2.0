@@ -1,0 +1,49 @@
+syntax = "v1"
+
+info(
+	title: "other"
+	desc: "api( get userinfo )and( review )"
+	author: "BIGDUST"
+	email: "3264085417@qq.com"
+)
+
+type GetUserInfoReq {
+	Authorization string `header:"Authorization"`
+	UserId        string `path:"id"`
+}
+
+type GetUserInfoResp {
+	Avatar    string `json:"avatar"`
+	NickName  string `json:"nickname"`
+	Email     string `json:"email"`
+	Group     string `json:"group"`
+	StudentID string `json:"student_id"`
+}
+type GetReviewReq {
+	Authorization string `header:"Authorization"`
+	Year          int    `json:"year"`
+	Group         string `json:"group"`
+	Page          int64  `json:"page"`
+}
+type Row {
+	Name    string `json:"name"`
+	Grade   string `json:"grader"`
+	College string `json:"college"`
+	Group   string `json:"group"`
+	Status  string `json:"status"`
+}
+type GetReviewResp {
+	Rows []Row `json:"rows"`
+}
+@server(
+	perfix: /api/v2
+	jwt: JwtAuth
+)
+service other {
+	@doc"获取用户信息"
+	@handler GetUserInfo
+	get /users/:id (GetUserInfoReq) returns (GetUserInfoResp)
+	@doc"审阅界面"
+	@handler GetReview
+	get /review (GetReviewReq) returns (GetReviewResp)
+}

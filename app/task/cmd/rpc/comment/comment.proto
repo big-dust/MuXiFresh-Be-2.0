@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+package comment;
+option go_package="./pb";
+
+//get
+message GetSubmissionCommentReq {
+  string  SubmissionID = 1;
+}
+
+message Comment {
+  string CommentID = 1;
+  string Avatar = 2;
+  string NickName = 3;
+  string Content = 4;
+}
+
+message GetSubmissionCommentResp {
+  repeated Comment Comments = 1;
+}
+//set
+message SetSubmissionCommentReq{
+  string UserId = 1;
+  string SubmissionID = 2;
+  string Content  = 3;
+}
+message SetSubmissionCommentResp{
+  bool Flag = 1;
+}
+//del
+message DelSubmissionCommentReq {
+  string CommentID = 1;
+}
+message DelSubmissionCommentResp {
+  bool Flag = 1;
+}
+//is
+message IsMyCommentReq {
+  string UserId = 1;
+  string CommentID = 2;
+}
+message IsMyCommentResp {
+  bool Flag = 1;
+}
+service commentClient {
+  rpc GetSubmissionComment(GetSubmissionCommentReq) returns(GetSubmissionCommentResp);
+  rpc SetSubmissionComment(SetSubmissionCommentReq) returns(SetSubmissionCommentResp);
+  rpc DelSubmissionComment(DelSubmissionCommentReq) returns(DelSubmissionCommentResp);
+  rpc IsMyComment(IsMyCommentReq) returns(IsMyCommentResp);
+}

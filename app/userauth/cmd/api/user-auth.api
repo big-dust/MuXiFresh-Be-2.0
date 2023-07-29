@@ -1,0 +1,168 @@
+syntax = "v1"
+
+info (
+	title: "MuxiFreshAPI"
+	desc: "the first part of MuxiFresh"
+	author: "BIGDUST"
+	email: "3264085417@qq.com"
+)
+
+//注册
+type RegisterReq {
+	Email      string `json:"email"`
+	Password   string `json:"password"`
+	VerifyCode string `json:"verify_code"`
+}
+
+type RegisterResp {
+	Token string `json:"token"`
+}
+//登录
+type LoginReq {
+	UserName string `json:"user_name"`
+	Password string `json:"password"`
+}
+type LoginResp {
+	Token string `json:"token"`
+}
+
+//授权修改密码
+type AuthPassChangeReq {
+	Email      string `json:"email"`
+	VerifyCode string `json:"verify_code"`
+}
+
+type AuthPassChangeResp {
+	AuthChPassToken string `json:"auth_ch_pass_token"`
+}
+//修改密码
+type PassChangeReq {
+	Password        string `json:"password"`
+	AuthChPassToken string `header:"Authorization"`
+}
+type PassChangeResp {
+	Flag bool `json:"flag"`
+}
+//token验证
+type VerifyTokenReq {
+	Token string `header:"Authorization"`
+}
+type VerifyTokenResp {
+	Flag bool `json:"flag"`
+}
+//发邮箱验证码
+type SendEmailCodeReq {
+	Email string `json:"email"`
+	Type  string `json:"type,options=[auth_register,auth_ch_pass]"`
+}
+type SendEmailCodeResp {
+	Flag bool `json:"flag"`
+}
+//获取人机验证图
+type GetCaptchaResp {
+	ImageBase64 string `json:"image_base64"`
+	ImageID     string `json:"image_id"`
+}
+//进行验证人机
+type VerifyCaptchaReq {
+	ImageID    string `json:"image_id"`
+	VerifyCode string `json:"verify_code"`
+}
+
+type VerifyCaptchaResp {
+	Flag bool `json:"flag"`
+}
+//获取七牛云token
+type (
+	GetQNTokenReq {
+		Token string `header:"Authorization"`
+	}
+	GetQNTokenResp {
+		QNToken string `json:"QiniuToken"`
+	}
+)
+
+@server(
+	prefix: api/v2
+)
+service  user-auth{
+	@doc"注册"
+	@handler Register
+	post /register(RegisterReq) returns(RegisterResp)
+	@doc"登录"
+	@handler Login
+	post /login(LoginReq) returns(LoginResp)
+	@doc"授权修改密码"
+	@handler AuthPassChange
+	post /authorize-password-change (AuthPassChangeReq)returns(AuthPassChangeResp)
+
+	@doc"发邮箱验证码"
+	@handler SendVerificationCode
+	post /send-verification-code(SendEmailCodeReq) returns(SendEmailCodeResp)
+	@doc"获取人机验证图"
+	@handler GetCaptcha
+	get /get-captcha() returns(GetCaptchaResp)
+	@doc"进行验证人机"
+	@handler VerifyCaptcha
+	post /verify-captcha(VerifyCaptchaReq) returns(VerifyCaptchaResp)
+}
+
+@server (
+	prefix: api/v2
+	jwt:JwtAuth
+)
+service user-auth{
+	@doc"获取七牛云token"
+	@handler GetQNToken
+	get /get-qntoken (GetQNTokenReq)returns(GetQNTokenResp)
+}
+
+@server (
+	prefix: api/v2
+	jwt:JwtAuthChPass
+)
+
+service user-auth{
+	@doc"修改密码"
+	@handler PassChange
+	post /password-change (PassChangeReq)returns(PassChangeResp)
+}
+
+type BindStudentIDReq {
+	StdudentID string `json:"student_id"`
+	Password   string `json:"password"`
+}
+
+type BindStudentIDResp {
+	Flag bool `json:"flag"`
+}
+
+type ccnuLoginReq {
+	StdudentID string `json:"student_id"`
+	Password   string `json:"password"`
+}
+
+type ccnuLoginResp {
+	Token string `json:"token"`
+}
+
+@server (
+	prefix: api/v2
+	jwt:JwtAuth
+	group: ccnulogin
+)
+service user-auth{
+	@doc"学号绑改"
+	@handler BindStudentID
+	post /bind-student-id (BindStudentIDReq)returns(BindStudentIDResp)
+}
+
+@server (
+	prefix: api/v2
+	group: ccnulogin
+)
+service user-auth{
+	@doc"学号登录"
+	@handler ccnuLogin
+	post /ccnuLogin (ccnuLoginReq)returns (ccnuLoginResp)
+}

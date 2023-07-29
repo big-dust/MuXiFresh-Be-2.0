@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package userinfo;
+option go_package="./pb";
+
+message GetUserTypeReq {
+  string UserId = 1;
+}
+message GetUserTypeResp {
+  string UserType =1;
+}
+service userInfoClient {
+  rpc GetUserType(GetUserTypeReq) returns(GetUserTypeResp);
+}
