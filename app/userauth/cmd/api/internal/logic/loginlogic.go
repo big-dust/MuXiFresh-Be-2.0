@@ -4,6 +4,8 @@ import (
 	"MuXiFresh-Be-2.0/app/userauth/cmd/rpc/accountCenter/accountcenterclient"
 	"MuXiFresh-Be-2.0/common/ctxData"
 	"context"
+	MD5 "crypto/md5"
+	"encoding/hex"
 	"github.com/golang-jwt/jwt/v4"
 	"time"
 
@@ -28,10 +30,13 @@ func NewLoginLogic(ctx context.Context, svcCtx *svc.ServiceContext) *LoginLogic 
 }
 
 func (l *LoginLogic) Login(req *types.LoginReq) (resp *types.LoginResp, err error) {
+	md5 := MD5.New()
+	md5.Write([]byte(req.Password))
+	HashPassword := hex.EncodeToString(md5.Sum(nil))
 
 	loginResp, err := l.svcCtx.ActCenterClient.Login(l.ctx, &accountcenterclient.LoginVerifyReq{
 		Email:    req.UserName,
-		Password: req.Password,
+		Password: HashPassword,
 	})
 	if err != nil {
 		return nil, err

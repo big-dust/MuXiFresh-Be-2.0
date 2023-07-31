@@ -3,7 +3,7 @@ syntax = "v1"
 info (
 	title: "Task Part"
 	desc: "task part fo MuxiFresh-Be-2.0"
-	author: "BIGDUST and Ciel"
+	author: "big-dust"
 	email: "3264085417@qq.com"
 )
 //作业提交状态

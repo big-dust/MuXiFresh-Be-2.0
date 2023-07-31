@@ -6,6 +6,8 @@ import (
 	"MuXiFresh-Be-2.0/common/ctxData"
 	"MuXiFresh-Be-2.0/common/globalKey"
 	"context"
+	MD5 "crypto/md5"
+	"encoding/hex"
 	"fmt"
 	"github.com/golang-jwt/jwt/v4"
 	"time"
@@ -35,10 +37,14 @@ func (l *RegisterLogic) Register(req *types.RegisterReq) (resp *types.RegisterRe
 	if ok := code.VerifyEm(globalKey.AuthRegister, req.Email, req.VerifyCode); !ok {
 		return nil, fmt.Errorf("verify code failed")
 	}
+	
+	md5 := MD5.New()
+	md5.Write([]byte(req.Password))
+	HashPassword := hex.EncodeToString(md5.Sum(nil))
 	//写入数据库
 	registerDataResp, err := l.svcCtx.ActCenterClient.Register(l.ctx, &accountcenterclient.RegisterDataReq{
 		Email:    req.Email,
-		Password: req.Password,
+		Password: HashPassword,
 	})
 	if err != nil {
 		return nil, err
