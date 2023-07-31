@@ -2,6 +2,7 @@ package logic
 
 import (
 	"MuXiFresh-Be-2.0/app/schedule/model"
+	userauthModel "MuXiFresh-Be-2.0/app/userauth/model"
 	"context"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"time"
@@ -31,12 +32,23 @@ func (l *CreateLogic) Create(in *pb.CreateReq) (*pb.CreateResp, error) {
 	if err != nil {
 		return nil, err
 	}
-	err = l.svcCtx.ScheduleClient.Insert(l.ctx, &model.Schedule{
+	scheduleID, err := l.svcCtx.ScheduleClient.InsertGetID(l.ctx, &model.Schedule{
 		UserID:          uid,
 		EntryFormStatus: "未提交",
 		AdmissionStatus: "未报名",
 		UpdateAt:        time.Now(),
 		CreateAt:        time.Now(),
+	})
+	if err != nil {
+		return nil, err
+	}
+	sid, err := primitive.ObjectIDFromHex(scheduleID[10:34])
+	if err != nil {
+		return nil, err
+	}
+	_, err = l.svcCtx.UserInfoClient.Update(l.ctx, &userauthModel.UserInfo{
+		ID:         uid,
+		ScheduleID: sid,
 	})
 	if err != nil {
 		return nil, err

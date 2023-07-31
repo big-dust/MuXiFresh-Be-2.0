@@ -2,6 +2,7 @@ package logic
 
 import (
 	"MuXiFresh-Be-2.0/app/form/rpc/entryformclient"
+	schedulemodel "MuXiFresh-Be-2.0/app/schedule/model"
 	externalModel "MuXiFresh-Be-2.0/app/userauth/model"
 	"MuXiFresh-Be-2.0/common/ctxData"
 	"context"
@@ -64,6 +65,14 @@ func (l *CreateFormLogic) CreateForm(req *types.CreateReq) (resp *types.CreateRe
 		ID:          u,
 		EntryFormID: f,
 		UpdateAt:    time.Now(),
+	})
+	if err != nil {
+		return nil, err
+	}
+	_, err = l.svcCtx.ScheduleModel.UpdateByUserId(l.ctx, &schedulemodel.Schedule{
+		UserID:          u,
+		EntryFormStatus: "已提交",
+		AdmissionStatus: "已报名",
 	})
 	if err != nil {
 		return nil, err

@@ -47,6 +47,7 @@ func (l *SetUserTypeLogic) SetUserType(req *types.SetUserTypeReq) (resp *types.S
 	if err != nil {
 		return nil, err
 	}
+
 	return &types.SetUserTypeResp{
 		Flag: setUserTypeResp.Flag,
 	}, nil

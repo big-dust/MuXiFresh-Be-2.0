@@ -24,12 +24,12 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 			{
 				Method:  http.MethodPost,
-				Path:    "/users/:id",
+				Path:    "/users",
 				Handler: SetUserInfoHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPost,
-				Path:    "/users/:id/type",
+				Path:    "/users/type",
 				Handler: SetUserTypeHandler(serverCtx),
 			},
 		},

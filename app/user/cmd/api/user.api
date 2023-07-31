@@ -41,8 +41,8 @@ type SetUserTypeResp {
 //管理员列表
 type GetAdminListReq {
 	Authorization string `header:"Authorization"`
-	UserType      string `json:"user_type,options=[super_admin,admin]"`
-	Page          int64  `json:"page"`
+	UserType      string `form:"user_type,options=[super_admin,admin]"`
+	Page          int64  `form:"page"`
 }
 type One {
 	UserId   string `json:"user_id"`
@@ -65,8 +65,8 @@ service user {
 	get /users/:id (GetUserInfoReq) returns (GetUserInfoResp)
 	@doc"修改用户信息"
 	@handler SetUserInfo
-	post /users/:id (SetUserInfoReq) returns (SetUserInfoResp)
+	post /users (SetUserInfoReq) returns (SetUserInfoResp)
 	@doc"修改用户类型"
 	@handler SetUserType
-	post /users/:id/type (SetUserTypeReq) returns (SetUserTypeResp)
+	post /users/type (SetUserTypeReq) returns (SetUserTypeResp)
 }

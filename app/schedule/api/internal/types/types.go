@@ -10,8 +10,8 @@ type CreateResp struct {
 }
 
 type CheckReq struct {
-	Authorization string `json:"Authorization"`
-	ScheduleID    string `json:"Schedule_id"`
+	Authorization string `header:"Authorization"`
+	ScheduleID    string `json:"schedule_id"`
 }
 
 type CheckResp struct {
