@@ -2,6 +2,7 @@ package logic
 
 import (
 	"MuXiFresh-Be-2.0/app/task/model"
+	"MuXiFresh-Be-2.0/common/globalKey"
 	"context"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"time"
@@ -32,7 +33,7 @@ func (l *SetSubmissionLogic) SetSubmission(in *pb.SetSubmissionReq) (*pb.SetSubm
 	if err != nil {
 		return nil, err
 	}
-	
+
 	assignmentID, err := primitive.ObjectIDFromHex(in.AssignmentID)
 	if err != nil {
 		return nil, err
@@ -42,6 +43,7 @@ func (l *SetSubmissionLogic) SetSubmission(in *pb.SetSubmissionReq) (*pb.SetSubm
 		UserId:       userId,
 		AssignmentID: assignmentID,
 		Urls:         in.Urls,
+		Status:       globalKey.WaitComment,
 		UpdateAt:     time.Now(),
 		CreateAt:     time.Now(),
 	}

@@ -78,6 +78,7 @@ type GetQNTokenResp struct {
 }
 
 type BindStudentIDReq struct {
+	Token      string `header:"Authorization"`
 	StdudentID string `json:"student_id"`
 	Password   string `json:"password"`
 }

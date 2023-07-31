@@ -44,7 +44,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Handler: VerifyCaptchaHandler(serverCtx),
 			},
 		},
-		rest.WithPrefix("/api/v2"),
+		rest.WithPrefix("/api/v2/auth"),
 	)
 
 	server.AddRoutes(
@@ -56,7 +56,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 		},
 		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),
-		rest.WithPrefix("/api/v2"),
+		rest.WithPrefix("/api/v2/auth"),
 	)
 
 	server.AddRoutes(
@@ -68,7 +68,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 		},
 		rest.WithJwt(serverCtx.Config.JwtAuthChPass.AccessSecret),
-		rest.WithPrefix("/api/v2"),
+		rest.WithPrefix("/api/v2/auth"),
 	)
 
 	server.AddRoutes(
@@ -80,7 +80,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 		},
 		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),
-		rest.WithPrefix("/api/v2"),
+		rest.WithPrefix("/api/v2/auth"),
 	)
 
 	server.AddRoutes(
@@ -91,6 +91,6 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Handler: ccnulogin.CcnuLoginHandler(serverCtx),
 			},
 		},
-		rest.WithPrefix("/api/v2"),
+		rest.WithPrefix("/api/v2/auth"),
 	)
 }

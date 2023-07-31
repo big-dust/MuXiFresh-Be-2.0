@@ -28,6 +28,11 @@ func NewBindStudentIDLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Bin
 }
 
 func (l *BindStudentIDLogic) BindStudentID(in *pb.BindingStudentIDReq) (*pb.BindingStudentIDResp, error) {
+	//是否绑定
+	_, err := l.svcCtx.UserInfoClient.FindByStudentID(l.ctx, in.StudentID)
+	if err == nil {
+		return nil, errors.New("already bind")
+	}
 	//一站式登录
 	if !tool.CCNULogin(in.StudentID, in.Password) {
 		return nil, errors.New("student_id or password is wrong")

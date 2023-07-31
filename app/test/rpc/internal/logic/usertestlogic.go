@@ -1,7 +1,7 @@
 package logic
 
 import (
-	"MuXiFresh-Be-2.0/app/form/model"
+	userauthModel "MuXiFresh-Be-2.0/app/userauth/model"
 	"context"
 	"strings"
 	"time"
@@ -164,7 +164,7 @@ func (l *UserTestLogic) UserTest(in *pb.TestReq) (*pb.TestResp, error) {
 
 	}
 
-	_, err := l.svcCtx.UserInfoClient.Update(l.ctx, &model.UserInfo{
+	_, err := l.svcCtx.UserInfoClient.Update(l.ctx, &userauthModel.UserInfo{
 		TestChoice: in.Choice,
 		TestResult: struct {
 			LeQunXing   int64

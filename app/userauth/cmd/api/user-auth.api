@@ -83,7 +83,7 @@ type (
 )
 
 @server(
-	prefix: api/v2
+	prefix: api/v2/auth
 )
 service  user-auth{
 	@doc"注册"
@@ -108,7 +108,7 @@ service  user-auth{
 }
 
 @server (
-	prefix: api/v2
+	prefix: api/v2/auth
 	jwt:JwtAuth
 )
 service user-auth{
@@ -118,7 +118,7 @@ service user-auth{
 }
 
 @server (
-	prefix: api/v2
+	prefix: api/v2/auth
 	jwt:JwtAuthChPass
 )
 
@@ -129,6 +129,7 @@ service user-auth{
 }
 
 type BindStudentIDReq {
+	Token      string `header:"Authorization"`
 	StdudentID string `json:"student_id"`
 	Password   string `json:"password"`
 }
@@ -147,7 +148,7 @@ type ccnuLoginResp {
 }
 
 @server (
-	prefix: api/v2
+	prefix: api/v2/auth
 	jwt:JwtAuth
 	group: ccnulogin
 )
@@ -158,7 +159,7 @@ service user-auth{
 }
 
 @server (
-	prefix: api/v2
+	prefix: api/v2/auth
 	group: ccnulogin
 )
 service user-auth{

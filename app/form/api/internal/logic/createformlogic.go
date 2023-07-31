@@ -48,6 +48,9 @@ func (l *CreateFormLogic) CreateForm(req *types.CreateReq) (resp *types.CreateRe
 		SelfIntro:     req.SelfIntro,
 		ExtraQuestion: req.ExtraQuestion,
 	})
+	if err != nil {
+		return nil, err
+	}
 	u, err := primitive.ObjectIDFromHex(userId)
 	if err != nil {
 		return nil, err

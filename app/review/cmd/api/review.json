@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "/review": {
+    "/api/v2/review": {
       "get": {
         "summary": "审阅界面",
         "operationId": "GetReview",
@@ -62,7 +62,7 @@
         ]
       }
     },
-    "/review/admission_status": {
+    "/api/v2/review/admission_status": {
       "post": {
         "summary": "调整录取状态",
         "operationId": "SetAdmissionStatus",
@@ -175,7 +175,7 @@
         "schedule_id": {
           "type": "string"
         },
-        "new_status，options=[已报名": {
+        "new_status": {
           "type": "string"
         }
       },
@@ -183,7 +183,7 @@
       "required": [
         "Authorization",
         "schedule_id",
-        "new_status，options=[已报名"
+        "new_status"
       ]
     },
     "SetAdmissionStatusResp": {

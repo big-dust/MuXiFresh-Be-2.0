@@ -73,8 +73,13 @@ func (m *customEntryFormModel) FindByGroup(ctx context.Context, group string, st
 			"$lte": endDate,   // 小于等于结束时间
 		},
 	}, options.Find().SetSkip(offset).SetLimit(limit).SetSort(bson.D{{"name", 1}}))
-	if err != nil {
+
+	switch err {
+	case nil:
+		return entryForms, nil
+	case mon.ErrNotFound:
+		return nil, ErrNotFound
+	default:
 		return nil, err
 	}
-	return entryForms, nil
 }
