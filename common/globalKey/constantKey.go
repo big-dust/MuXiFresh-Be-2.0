@@ -16,4 +16,5 @@ const (
 	Internship   = "实习中"
 	Formal       = "已转正"
 	Registered   = "已报名"
+	WaitComment  = "wait_review"
 )

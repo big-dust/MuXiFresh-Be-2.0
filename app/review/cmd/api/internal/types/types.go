@@ -3,9 +3,9 @@ package types
 
 type GetReviewReq struct {
 	Authorization string `header:"Authorization"`
-	Year          int    `json:"year"`
-	Group         string `json:"group"`
-	Page          int64  `json:"page"`
+	Year          int    `form:"year"`
+	Group         string `form:"group"`
+	Page          int64  `form:"page"`
 }
 
 type Row struct {
@@ -24,7 +24,7 @@ type GetReviewResp struct {
 type SetAdmissionStatusReq struct {
 	Authorization string `header:"Authorization"`
 	ScheduleID    string `json:"schedule_id"`
-	NewStatus     string `json:"new_status，options=[已报名,实习期,已转正]"`
+	NewStatus     string `json:"new_status,options=[已报名,实习期,已转正]"`
 }
 
 type SetAdmissionStatusResp struct {

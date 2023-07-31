@@ -57,6 +57,9 @@ type GetAdminListResp {
 	prefix: /api/v2
 )
 service user {
+	@doc"管理员/超管列表"
+	@handler GetAdminList
+	get /users/admin-list (GetAdminListReq) returns (GetAdminListResp)
 	@doc"获取用户信息"
 	@handler GetUserInfo
 	get /users/:id (GetUserInfoReq) returns (GetUserInfoResp)
@@ -66,7 +69,4 @@ service user {
 	@doc"修改用户类型"
 	@handler SetUserType
 	post /users/:id/type (SetUserTypeReq) returns (SetUserTypeResp)
-	@doc"管理员/超管列表"
-	@handler GetAdminList
-	get /admin-list (GetAdminListReq) returns (GetAdminListResp)
 }

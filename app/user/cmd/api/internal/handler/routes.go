@@ -14,6 +14,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 		[]rest.Route{
 			{
 				Method:  http.MethodGet,
+				Path:    "/users/admin-list",
+				Handler: GetAdminListHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
 				Path:    "/users/:id",
 				Handler: GetUserInfoHandler(serverCtx),
 			},
@@ -26,11 +31,6 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Method:  http.MethodPost,
 				Path:    "/users/:id/type",
 				Handler: SetUserTypeHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodGet,
-				Path:    "/admin-list",
-				Handler: GetAdminListHandler(serverCtx),
 			},
 		},
 		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),
