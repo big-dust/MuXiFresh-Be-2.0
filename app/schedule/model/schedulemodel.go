@@ -2,9 +2,12 @@ package model
 
 import (
 	"context"
+	"fmt"
 	"github.com/zeromicro/go-zero/core/stores/mon"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"go.mongodb.org/mongo-driver/mongo"
+	"time"
 )
 
 var _ ScheduleModel = (*customScheduleModel)(nil)
@@ -15,6 +18,8 @@ type (
 	ScheduleModel interface {
 		scheduleModel
 		FindOneByUserId(ctx context.Context, userId string) (*Schedule, error)
+		UpdateByUserId(ctx context.Context, data *Schedule) (*mongo.UpdateResult, error)
+		InsertGetID(ctx context.Context, data *Schedule) (string, error)
 	}
 
 	customScheduleModel struct {
@@ -47,4 +52,22 @@ func (m *customScheduleModel) FindOneByUserId(ctx context.Context, userId string
 	default:
 		return nil, err
 	}
+}
+
+func (m *defaultScheduleModel) UpdateByUserId(ctx context.Context, data *Schedule) (*mongo.UpdateResult, error) {
+	data.UpdateAt = time.Now()
+
+	res, err := m.conn.UpdateOne(ctx, bson.M{"user_id": data.UserID}, bson.M{"$set": data})
+	return res, err
+}
+
+func (m *defaultScheduleModel) InsertGetID(ctx context.Context, data *Schedule) (string, error) {
+	if data.ID.IsZero() {
+		data.ID = primitive.NewObjectID()
+		data.CreateAt = time.Now()
+		data.UpdateAt = time.Now()
+	}
+
+	result, err := m.conn.InsertOne(ctx, data)
+	return fmt.Sprint(result.InsertedID), err
 }

@@ -34,7 +34,7 @@ func (l *GetUserInfoLogic) GetUserInfo(req *types.GetUserInfoReq) (resp *types.G
 	})
 
 	userId := ctxData.GetUserIdFromCtx(l.ctx)
-	if userId != globalKey.Empty {
+	if req.UserId != globalKey.Empty {
 		//管理员认证
 		if err != nil {
 			return nil, err
@@ -49,7 +49,9 @@ func (l *GetUserInfoLogic) GetUserInfo(req *types.GetUserInfoReq) (resp *types.G
 		UserId:   userId,
 		UserType: getUserTypeResp.UserType,
 	})
-
+	if err != nil {
+		return nil, err
+	}
 	return &types.GetUserInfoResp{
 		Avatar:    userInfo.Avatar,
 		NickName:  userInfo.NickName,

@@ -2,6 +2,7 @@ package logic
 
 import (
 	"MuXiFresh-Be-2.0/app/test/rpc/testclient"
+	"MuXiFresh-Be-2.0/app/user/cmd/rpc/user/userclient"
 	"context"
 	"strings"
 
@@ -26,12 +27,14 @@ func NewCheckTestResultLogic(ctx context.Context, svcCtx *svc.ServiceContext) *C
 }
 
 func (l *CheckTestResultLogic) CheckTestResult(req *types.TestInfoReq) (resp *types.TestInfoResp, err error) {
-	ut, err := l.svcCtx.TestClient.JudgeUserType(l.ctx, &testclient.UserTypeReq{
-		Token: req.Authorization,
+	ut, err := l.svcCtx.UserClient.GetUserType(l.ctx, &userclient.GetUserTypeReq{
+		UserId: req.UserID,
 	})
-	if (strings.Compare(ut.Type, "admin") == 0) || (strings.Compare(ut.Type, "super_admin") == 0) {
+	if err != nil {
+		return nil, err
+	}
+	if (strings.Compare(ut.UserType, "admin") == 0) || (strings.Compare(ut.UserType, "super_admin") == 0) {
 		r, err := l.svcCtx.TestClient.CheckTestResult(l.ctx, &testclient.TestInfoReq{
-			Token:  req.Authorization,
 			UserID: req.UserID,
 		})
 		if err != nil {

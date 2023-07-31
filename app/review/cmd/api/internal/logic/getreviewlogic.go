@@ -59,5 +59,7 @@ func (l *GetReviewLogic) GetReview(req *types.GetReviewReq) (resp *types.GetRevi
 			Status:     schedule.AdmissionStatus,
 		})
 	}
-	return
+	return &types.GetReviewResp{
+		Rows: rows,
+	}, nil
 }

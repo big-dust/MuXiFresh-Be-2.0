@@ -68,7 +68,7 @@ func (m *customEntryFormModel) FindByGroup(ctx context.Context, group string, st
 	var entryForms []*EntryForm
 	err := m.conn.Find(ctx, &entryForms, bson.M{
 		"group": group,
-		"createdAt": bson.M{
+		"createAt": bson.M{
 			"$gte": startDate, // 大于等于起始时间
 			"$lte": endDate,   // 小于等于结束时间
 		},

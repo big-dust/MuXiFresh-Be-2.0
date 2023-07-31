@@ -36,8 +36,8 @@ type SetUserTypeResp struct {
 
 type GetAdminListReq struct {
 	Authorization string `header:"Authorization"`
-	UserType      string `json:"user_type,options=[super_admin,admin]"`
-	Page          int64  `json:"page"`
+	UserType      string `form:"user_type,options=[super_admin,admin]"`
+	Page          int64  `form:"page"`
 }
 
 type One struct {

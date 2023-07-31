@@ -1,7 +1,6 @@
 package logic
 
 import (
-	"MuXiFresh-Be-2.0/common/ctxData"
 	"context"
 
 	"MuXiFresh-Be-2.0/app/schedule/rpc/internal/svc"
@@ -25,19 +24,17 @@ func NewCheckLogic(ctx context.Context, svcCtx *svc.ServiceContext) *CheckLogic 
 }
 
 func (l *CheckLogic) Check(in *pb.CheckReq) (*pb.CheckResp, error) {
-	userid := ctxData.GetUserIdFromCtx(l.ctx)
-	u, err2 := l.svcCtx.UserInfoClient.FindOne(l.ctx, userid)
-	if err2 != nil {
-		return nil, err2
+
+	f, err := l.svcCtx.EntryFormClient.FindOneByUserId(l.ctx, in.UserId)
+	if err != nil {
+		return nil, err
 	}
-	f, err2 := l.svcCtx.EntryFormClient.FindOne(l.ctx, u.EntryFormID.String()[10:34])
-	if err2 != nil {
-		return nil, err2
-	}
+
 	s, err := l.svcCtx.ScheduleClient.FindOne(l.ctx, in.ScheduleID)
 	if err != nil {
 		return nil, err
 	}
+
 	return &pb.CheckResp{
 		Name:            f.Name,
 		School:          f.School,

@@ -11,7 +11,7 @@ message CreateResp{
 }
 
 message CheckReq{
-  string Token = 1;
+  string UserId = 1;
   string ScheduleID = 2;
 }
 
