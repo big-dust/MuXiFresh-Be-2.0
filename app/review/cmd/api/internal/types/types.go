@@ -3,9 +3,13 @@ package types
 
 type GetReviewReq struct {
 	Authorization string `header:"Authorization"`
-	Year          int    `form:"year"`
-	Group         string `form:"group"`
-	Page          int64  `form:"page"`
+	Year          int    `json:"year"`
+	Group         string `json:"group"`
+	Page          int64  `json:"page"`
+	Season        string `json:"season,options=[autumn,spring]"`
+	Grade         string `json:"grade,optional"`
+	School        string `json:"school,optional"`
+	Status        string `json:"status,optional"`
 }
 
 type Row struct {
