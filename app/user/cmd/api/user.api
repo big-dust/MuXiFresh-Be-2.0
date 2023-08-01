@@ -10,7 +10,6 @@ info(
 //获取用户信息
 type GetUserInfoReq {
 	Authorization string `header:"Authorization"`
-	UserId        string `path:"id"`
 }
 
 type GetUserInfoResp {
@@ -60,9 +59,9 @@ service user {
 	@doc"管理员/超管列表"
 	@handler GetAdminList
 	get /users/admin-list (GetAdminListReq) returns (GetAdminListResp)
-	@doc"获取用户信息"
+	@doc"获取我的信息"
 	@handler GetUserInfo
-	get /users/:id (GetUserInfoReq) returns (GetUserInfoResp)
+	get /users (GetUserInfoReq) returns (GetUserInfoResp)
 	@doc"修改用户信息"
 	@handler SetUserInfo
 	post /users (SetUserInfoReq) returns (SetUserInfoResp)

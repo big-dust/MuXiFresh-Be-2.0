@@ -3,7 +3,6 @@ package types
 
 type GetUserInfoReq struct {
 	Authorization string `header:"Authorization"`
-	UserId        string `path:"id"`
 }
 
 type GetUserInfoResp struct {

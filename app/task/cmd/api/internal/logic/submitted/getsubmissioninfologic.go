@@ -29,7 +29,7 @@ func NewGetSubmissionInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) 
 
 func (l *GetSubmissionInfoLogic) GetSubmissionInfo(req *types.GetSubmissionInfoReq) (resp *types.GetSubmissionInfoResp, err error) {
 	var userId string
-	if req.UserID != globalKey.Empty {
+	if req.UserID != globalKey.Myself {
 		//管理员身份认证
 		getUserTypeResp, err := l.svcCtx.UserClient.GetUserType(l.ctx, &userclient.GetUserTypeReq{
 			UserId: ctxData.GetUserIdFromCtx(l.ctx),

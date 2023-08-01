@@ -8,7 +8,7 @@ const (
 	NotSubmitted = "未提交"
 	Submitted    = "已提交"
 	Reviewed     = "已审阅"
-	Empty        = "empty"
+	Myself       = "myself"
 	Admin        = "admin"
 	SuperAdmin   = "super_admin"
 	Normal       = "normal"
