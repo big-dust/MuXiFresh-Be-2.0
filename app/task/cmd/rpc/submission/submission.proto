@@ -37,10 +37,11 @@ message GetAllSubmissionStatusReq{
   int64 Page = 2;
 }
 message Completion {
-  string Name = 1;
-  string Grade = 2;
-  string School = 3;
-  string Status = 4;
+  string UserId = 1;
+  string Name = 2;
+  string Grade = 3;
+  string School = 4;
+  string Status = 5;
 }
 message GetAllSubmissionStatusResp{
   repeated Completion Completions = 1;
