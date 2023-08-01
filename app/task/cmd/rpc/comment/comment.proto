@@ -12,7 +12,8 @@ message Comment {
   string CommentID = 1;
   string Avatar = 2;
   string NickName = 3;
-  string Content = 4;
+  string Group = 4;
+  string Content = 5;
 }
 
 message GetSubmissionCommentResp {

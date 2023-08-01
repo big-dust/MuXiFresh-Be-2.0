@@ -34,11 +34,12 @@ type GetSubmissionInfoResp struct {
 type GetAllSubmissionStatusReq struct {
 	Authorization string `header:"Authorization"`
 	AssignmentID  string `path:"id"`
-	Page          int    `form:"page"`
+	Page          int64  `form:"page"`
 }
 
 type Completion struct {
-	Name   string `json:"nickname"`
+	UserId string `json:"user_id"`
+	Name   string `json:"name"`
 	Grade  string `json:"grade"`
 	School string `json:"school"`
 	Status string `json:"status,options=[yes,no]"`
@@ -95,6 +96,7 @@ type Comment struct {
 	CommentID string `json:"comment_id"`
 	Avatar    string `json:"avatar"`
 	Nickname  string `json:"nickname"`
+	Group     string `json:"group"`
 	Content   string `json:"content"`
 }
 
