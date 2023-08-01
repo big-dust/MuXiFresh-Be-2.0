@@ -18,7 +18,7 @@ type (
 		entryFormModel
 		InsertReturnID(ctx context.Context, data *EntryForm) (interface{}, error)
 		FindOneByUserId(ctx context.Context, userId string) (*EntryForm, error)
-		FindByGroup(ctx context.Context, group string, startDate time.Time, endDate time.Time, limit int64, offset int64) ([]*EntryForm, error)
+		FindByGroup(ctx context.Context, group string, school string, grade string, startDate time.Time, endDate time.Time, limit int64, offset int64) ([]*EntryForm, error)
 	}
 
 	customEntryFormModel struct {
@@ -64,15 +64,22 @@ func (m *customEntryFormModel) FindOneByUserId(ctx context.Context, userId strin
 	}
 }
 
-func (m *customEntryFormModel) FindByGroup(ctx context.Context, group string, startDate time.Time, endDate time.Time, limit int64, offset int64) ([]*EntryForm, error) {
+func (m *customEntryFormModel) FindByGroup(ctx context.Context, group string, school string, grade string, startDate time.Time, endDate time.Time, limit int64, offset int64) ([]*EntryForm, error) {
 	var entryForms []*EntryForm
-	err := m.conn.Find(ctx, &entryForms, bson.M{
-		"group": group,
-		"createAt": bson.M{
-			"$gte": startDate, // 大于等于起始时间
-			"$lte": endDate,   // 小于等于结束时间
-		},
-	}, options.Find().SetSkip(offset).SetLimit(limit).SetSort(bson.D{{"name", 1}}))
+	filter := bson.D{}
+	//必选
+	filter = append(filter, bson.E{Key: "group", Value: group}, bson.E{Key: "createAt", Value: bson.M{
+		"$gte": startDate, // 大于等于起始时间
+		"$lte": endDate,   // 小于等于结束时间
+	}})
+	//可选项
+	if school != "" {
+		filter = append(filter, bson.E{Key: "school", Value: school})
+	}
+	if grade != "" {
+		filter = append(filter, bson.E{Key: "grade", Value: grade})
+	}
+	err := m.conn.Find(ctx, &entryForms, filter, options.Find().SetSkip(offset).SetLimit(limit).SetSort(bson.D{{"name", 1}}))
 
 	switch err {
 	case nil:
