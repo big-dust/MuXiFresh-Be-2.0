@@ -27,32 +27,30 @@ func NewGetUserInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetUs
 
 func (l *GetUserInfoLogic) GetUserInfo(in *pb.GetUserInfoReq) (*pb.GetUserInfoResp, error) {
 
+	group := "尚未报名"
+
 	userInfo, err := l.svcCtx.UserInfoModel.FindOne(l.ctx, in.UserId)
 	if err != nil {
 		return nil, err
 	}
 
-	group := "尚未报名"
-
 	if !userInfo.EntryFormID.IsZero() {
 		group = "简历审阅中"
-	}
-
-	schedule, err := l.svcCtx.ScheduleModel.FindOne(l.ctx, userInfo.ScheduleID.String()[10:34])
-	if err != nil {
-		return nil, err
-	}
-
-	if schedule.AdmissionStatus == globalKey.Internship || in.UserType != globalKey.Freshman {
-		entryForm, err := l.svcCtx.EntryFormModel.FindOneByUserId(l.ctx, in.UserId)
+		schedule, err := l.svcCtx.ScheduleModel.FindOne(l.ctx, userInfo.ScheduleID.String()[10:34])
 		if err != nil {
 			return nil, err
 		}
-		identity := "实习生"
-		if in.UserType != globalKey.Freshman {
-			identity = "成员"
+		if schedule.AdmissionStatus != globalKey.Registered {
+			entryForm, err := l.svcCtx.EntryFormModel.FindOneByUserId(l.ctx, in.UserId)
+			if err != nil {
+				return nil, err
+			}
+			identity := "实习生"
+			if schedule.AdmissionStatus != globalKey.Internship {
+				identity = "成员"
+			}
+			group = entryForm.Grade + "级" + convert.GroupCvtChinese(entryForm.Group) + identity
 		}
-		group = entryForm.Grade + "级" + convert.GroupCvtChinese(entryForm.Group) + identity
 	}
 
 	return &pb.GetUserInfoResp{
