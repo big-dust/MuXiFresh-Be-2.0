@@ -18,7 +18,7 @@ type (
 		userInfoModel
 		FindByStudentID(ctx context.Context, studentID string) (*UserInfo, error)
 		UpdateByEmail(ctx context.Context, data *UserInfo) (*mongo.UpdateResult, error)
-		FindByUserType(ctx context.Context, userType string, limit int64, offset int64) ([]*UserInfo, error)
+		FindByUserType(ctx context.Context, userType string) ([]*UserInfo, error)
 	}
 
 	customUserInfoModel struct {
@@ -55,10 +55,10 @@ func (m *defaultUserInfoModel) UpdateByEmail(ctx context.Context, data *UserInfo
 	return res, err
 }
 
-func (m *defaultUserInfoModel) FindByUserType(ctx context.Context, userType string, limit int64, offset int64) ([]*UserInfo, error) {
+func (m *defaultUserInfoModel) FindByUserType(ctx context.Context, userType string) ([]*UserInfo, error) {
 	var userInfos []*UserInfo
 
-	err := m.conn.Find(ctx, &userInfos, bson.M{"user_type": userType}, options.Find().SetSkip(offset).SetLimit(limit).SetSort(bson.D{{"nickname", 1}}))
+	err := m.conn.Find(ctx, &userInfos, bson.M{"user_type": userType}, options.Find().SetSort(bson.D{{"nickname", 1}}))
 	switch err {
 	case nil:
 		return userInfos, nil

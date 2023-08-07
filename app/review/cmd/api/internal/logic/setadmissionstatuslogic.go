@@ -57,12 +57,18 @@ func (l *SetAdmissionStatusLogic) SetAdmissionStatus(req *types.SetAdmissionStat
 		if err != nil {
 			return nil, err
 		}
-		_, err = l.svcCtx.UserInfoModel.Update(l.ctx, &externalModel.UserInfo{
-			ID:       schedule.UserID,
-			UserType: globalKey.Normal,
-		})
+		userInfo, err := l.svcCtx.UserInfoModel.FindOne(l.ctx, schedule.UserID.String()[10:34])
 		if err != nil {
 			return nil, err
+		}
+		if userInfo.UserType != globalKey.SuperAdmin && userInfo.UserType != globalKey.Admin {
+			_, err = l.svcCtx.UserInfoModel.Update(l.ctx, &externalModel.UserInfo{
+				ID:       schedule.UserID,
+				UserType: globalKey.Normal,
+			})
+			if err != nil {
+				return nil, err
+			}
 		}
 	}
 

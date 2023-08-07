@@ -18,7 +18,7 @@ type (
 		entryFormModel
 		InsertReturnID(ctx context.Context, data *EntryForm) (interface{}, error)
 		FindOneByUserId(ctx context.Context, userId string) (*EntryForm, error)
-		FindByGroup(ctx context.Context, group string, school string, grade string, startDate time.Time, endDate time.Time, limit int64, offset int64) ([]*EntryForm, error)
+		FindByGroup(ctx context.Context, group string, school string, grade string, startDate time.Time, endDate time.Time) ([]*EntryForm, error)
 	}
 
 	customEntryFormModel struct {
@@ -64,7 +64,7 @@ func (m *customEntryFormModel) FindOneByUserId(ctx context.Context, userId strin
 	}
 }
 
-func (m *customEntryFormModel) FindByGroup(ctx context.Context, group string, school string, grade string, startDate time.Time, endDate time.Time, limit int64, offset int64) ([]*EntryForm, error) {
+func (m *customEntryFormModel) FindByGroup(ctx context.Context, group string, school string, grade string, startDate time.Time, endDate time.Time) ([]*EntryForm, error) {
 	var entryForms []*EntryForm
 	filter := bson.D{}
 	//必选
@@ -79,7 +79,7 @@ func (m *customEntryFormModel) FindByGroup(ctx context.Context, group string, sc
 	if grade != "" {
 		filter = append(filter, bson.E{Key: "grade", Value: grade})
 	}
-	err := m.conn.Find(ctx, &entryForms, filter, options.Find().SetSkip(offset).SetLimit(limit).SetSort(bson.D{{"name", 1}}))
+	err := m.conn.Find(ctx, &entryForms, filter, options.Find().SetSort(bson.D{{"name", 1}}))
 
 	switch err {
 	case nil:

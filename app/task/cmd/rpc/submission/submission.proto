@@ -34,14 +34,15 @@ message GetSubmissionInfoResp{
 //all status
 message GetAllSubmissionStatusReq{
   string AssignmentID = 1;
-  int64 Page = 2;
 }
 message Completion {
   string UserId = 1;
   string Name = 2;
-  string Grade = 3;
-  string School = 4;
-  string Status = 5;
+  string Avatar = 3;
+  string Email = 4;
+  string Grade = 5;
+  string School = 6;
+  string Status = 7;
 }
 message GetAllSubmissionStatusResp{
   repeated Completion Completions = 1;

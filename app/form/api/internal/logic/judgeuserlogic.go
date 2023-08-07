@@ -30,8 +30,12 @@ func (l *JudgeUserLogic) JudgeUser(req *types.ClickReq) (resp *types.ClickResp, 
 	if err != nil {
 		return nil, err
 	}
+	status := "已交表"
+	if userInfo.EntryFormID.IsZero() {
+		status = "未交表"
+	}
 	return &types.ClickResp{
 		UserType:   userInfo.UserType,
-		FormStatus: userInfo.EntryFormID.String(),
+		FormStatus: status,
 	}, nil
 }

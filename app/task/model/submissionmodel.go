@@ -16,7 +16,7 @@ type (
 	SubmissionModel interface {
 		submissionModel
 		FindByUserIdAndAssignmentID(ctx context.Context, userId, assignmentID string) (*Submission, error)
-		FindByAssignmentID(ctx context.Context, assignmentID string, limit int64, offset int64) ([]*Submission, error)
+		FindByAssignmentID(ctx context.Context, assignmentID string) ([]*Submission, error)
 	}
 
 	customSubmissionModel struct {
@@ -53,13 +53,13 @@ func (m *customSubmissionModel) FindByUserIdAndAssignmentID(ctx context.Context,
 	}
 }
 
-func (m *customSubmissionModel) FindByAssignmentID(ctx context.Context, assignmentID string, limit int64, offset int64) ([]*Submission, error) {
+func (m *customSubmissionModel) FindByAssignmentID(ctx context.Context, assignmentID string) ([]*Submission, error) {
 	var submissions []*Submission
 	aid, err := primitive.ObjectIDFromHex(assignmentID)
 	if err != nil {
 		return nil, err
 	}
-	err = m.conn.Find(ctx, &submissions, bson.M{"assignment_id": aid}, options.Find().SetSkip(offset).SetLimit(limit).SetSort(bson.D{{"_id", 1}}))
+	err = m.conn.Find(ctx, &submissions, bson.M{"assignment_id": aid}, options.Find().SetSort(bson.D{{"_id", 1}}))
 	switch err {
 	case nil:
 		return submissions, nil

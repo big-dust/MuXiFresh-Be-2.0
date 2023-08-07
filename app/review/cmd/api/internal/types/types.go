@@ -5,7 +5,6 @@ type GetReviewReq struct {
 	Authorization string `header:"Authorization"`
 	Year          int    `json:"year"`
 	Group         string `json:"group"`
-	Page          int64  `json:"page"`
 	Season        string `json:"season,options=[autumn,spring]"`
 	Grade         string `json:"grade,optional"`
 	School        string `json:"school,optional"`
@@ -13,12 +12,13 @@ type GetReviewReq struct {
 }
 
 type Row struct {
-	ScheduleID string `json:"schedule_id"`
-	Name       string `json:"name"`
-	Grade      string `json:"grader"`
-	School     string `json:"school"`
-	Group      string `json:"group"`
-	Status     string `json:"status"`
+	ScheduleID      string `json:"schedule_id"`
+	Name            string `json:"name"`
+	Grade           string `json:"grader"`
+	School          string `json:"school"`
+	Group           string `json:"group"`
+	ExamStuatus     string `json:"exam_status"`
+	AdmissionStatus string `json:"admission_status"`
 }
 
 type GetReviewResp struct {

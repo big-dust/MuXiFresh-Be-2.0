@@ -43,7 +43,6 @@ func (l *GetAdminListLogic) GetAdminList(req *types.GetAdminListReq) (resp *type
 
 	getAdminListResp, err := l.svcCtx.UserClient.GetAdminList(l.ctx, &userclient.GetAdminListReq{
 		UserType: req.UserType,
-		Page:     req.Page,
 	})
 	if err != nil {
 		return nil, err

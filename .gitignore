@@ -1,1 +1,21 @@
 *.yaml
+datahub/*
+.idea
+# 二进制
+app/form/api/form
+app/form/rpc/form
+app/intro/api/intro
+app/intro/rpc/intro
+app/review/cmd/api/review
+app/schedule/api/schedule
+app/schedule/rpc/schedule
+app/task/cmd/api/task
+app/task/cmd/rpc/assignment/assignment
+app/task/cmd/rpc/comment/comment
+app/task/cmd/rpc/submission/submission
+app/test/api/test
+app/test/rpc/test
+app/user/cmd/api/user
+app/user/cmd/rpc/user/user
+app/userauth/cmd/api/user-auth
+app/userauth/cmd/rpc/accountCenter/accountCenter

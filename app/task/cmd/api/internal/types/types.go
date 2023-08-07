@@ -34,12 +34,13 @@ type GetSubmissionInfoResp struct {
 type GetAllSubmissionStatusReq struct {
 	Authorization string `header:"Authorization"`
 	AssignmentID  string `path:"id"`
-	Page          int64  `form:"page"`
 }
 
 type Completion struct {
 	UserId string `json:"user_id"`
 	Name   string `json:"name"`
+	Avatar string `json:"avatar"`
+	Email  string `json:"email"`
 	Grade  string `json:"grade"`
 	School string `json:"school"`
 	Status string `json:"status,options=[yes,no]"`

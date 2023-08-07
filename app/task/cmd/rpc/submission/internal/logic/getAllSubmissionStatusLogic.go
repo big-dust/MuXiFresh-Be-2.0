@@ -23,19 +23,24 @@ func NewGetAllSubmissionStatusLogic(ctx context.Context, svcCtx *svc.ServiceCont
 
 func (l *GetAllSubmissionStatusLogic) GetAllSubmissionStatus(in *pb.GetAllSubmissionStatusReq) (*pb.GetAllSubmissionStatusResp, error) {
 
-	submissions, err := l.svcCtx.SubmissionModel.FindByAssignmentID(l.ctx, in.AssignmentID, l.svcCtx.Config.Limit, (in.Page-1)*l.svcCtx.Config.Limit)
+	submissions, err := l.svcCtx.SubmissionModel.FindByAssignmentID(l.ctx, in.AssignmentID)
 	if err != nil {
 		return nil, err
 	}
 	var completions []*pb.Completion
 	for _, submission := range submissions {
-		entryForm, err := l.svcCtx.EntryFormModel.FindOneByUserId(l.ctx, submission.UserId.String()[10:34])
+		userId := submission.UserId.String()[10:34]
+
+		entryForm, err := l.svcCtx.EntryFormModel.FindOneByUserId(l.ctx, userId)
 		if err != nil {
 			return nil, err
 		}
+
 		completions = append(completions, &pb.Completion{
 			UserId: entryForm.UserId.String()[10:34],
 			Name:   entryForm.Name,
+			Avatar: entryForm.Avatar,
+			Email:  entryForm.Email,
 			Grade:  entryForm.Grade,
 			School: entryForm.School,
 			Status: submission.Status,

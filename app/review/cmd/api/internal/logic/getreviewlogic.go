@@ -28,7 +28,7 @@ func NewGetReviewLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetRevi
 }
 
 func (l *GetReviewLogic) GetReview(req *types.GetReviewReq) (resp *types.GetReviewResp, err error) {
-
+	//管理员认证
 	getUserTypeResp, err := l.svcCtx.UserClient.GetUserType(l.ctx, &userclient.GetUserTypeReq{
 		UserId: ctxData.GetUserIdFromCtx(l.ctx),
 	})
@@ -39,32 +39,52 @@ func (l *GetReviewLogic) GetReview(req *types.GetReviewReq) (resp *types.GetRevi
 		return nil, errors.New("permission denied")
 	}
 	//秋招
-	startTime := time.Date(req.Year, time.August, 1, 0, 0, 0, 0, time.UTC)
+	startTime := time.Date(req.Year, time.July, 1, 0, 0, 0, 0, time.UTC)
 	endTime := time.Date(req.Year, time.December, 31, 23, 59, 59, 999999999, time.UTC)
-	if req.Season == "autumn" {
+
+	if req.Season == "spring" {
 		startTime = time.Date(req.Year, time.January, 1, 0, 0, 0, 0, time.UTC)
-		endTime = time.Date(req.Year, time.July, 31, 23, 59, 59, 999999999, time.UTC)
+		endTime = time.Date(req.Year, time.June, 31, 23, 59, 59, 999999999, time.UTC)
 	}
-	entryForms, err := l.svcCtx.EntryFormModel.FindByGroup(l.ctx, req.Group, req.School, req.Grade, startTime, endTime, l.svcCtx.Config.Limit, (req.Page-1)*l.svcCtx.Config.Limit)
+
+	entryForms, err := l.svcCtx.EntryFormModel.FindByGroup(l.ctx, req.Group, req.School, req.Grade, startTime, endTime)
+
 	if err != nil {
 		return nil, err
 	}
 	var rows []types.Row
 	for _, entryForm := range entryForms {
-		schedule, err := l.svcCtx.ScheduleClient.FindOneByUserId(l.ctx, entryForm.UserId.String()[10:34])
+
+		userId := entryForm.UserId.String()[10:34]
+		//录取进度
+		schedule, err := l.svcCtx.ScheduleClient.FindOneByUserId(l.ctx, userId)
 		if err != nil {
 			return nil, err
 		}
+
 		if req.Status != "" && schedule.AdmissionStatus != req.Status {
 			continue
 		}
+		//测验情况
+		userInfo, err := l.svcCtx.UserInfoModel.FindOne(l.ctx, userId)
+		if err != nil {
+			return nil, err
+
+		}
+		examStatus := "已提交"
+
+		if userInfo.TestChoice == nil {
+			examStatus = "未提交"
+		}
+
 		rows = append(rows, types.Row{
-			ScheduleID: schedule.ID.String()[10:34],
-			Name:       entryForm.Name,
-			Grade:      entryForm.Grade,
-			School:     entryForm.School,
-			Group:      entryForm.Group,
-			Status:     schedule.AdmissionStatus,
+			ScheduleID:      schedule.ID.String()[10:34],
+			Name:            entryForm.Name,
+			Grade:           entryForm.Grade,
+			School:          entryForm.School,
+			Group:           entryForm.Group,
+			ExamStuatus:     examStatus,
+			AdmissionStatus: schedule.AdmissionStatus,
 		})
 	}
 	return &types.GetReviewResp{
