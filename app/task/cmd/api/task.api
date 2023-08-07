@@ -45,11 +45,12 @@ type (
 	GetAllSubmissionStatusReq {
 		Authorization string `header:"Authorization"`
 		AssignmentID  string `path:"id"`
-		Page          int64  `form:"page"`
 	}
 	Completion {
 		UserId string `json:"user_id"`
 		Name   string `json:"name"`
+		Avatar string `json:"avatar"`
+		Email  string `json:"email"`
 		Grade  string `json:"grade"`
 		School string `json:"school"`
 		Status string `json:"status,options=[yes,no]"`

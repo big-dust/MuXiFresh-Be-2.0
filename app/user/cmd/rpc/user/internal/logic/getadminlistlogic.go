@@ -22,7 +22,7 @@ func NewGetAdminListLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetA
 }
 
 func (l *GetAdminListLogic) GetAdminList(in *pb.GetAdminListReq) (*pb.GetAdminListResp, error) {
-	userInfos, err := l.svcCtx.UserInfoModel.FindByUserType(l.ctx, in.UserType, l.svcCtx.Config.Limit, (in.Page-1)*l.svcCtx.Config.Limit)
+	userInfos, err := l.svcCtx.UserInfoModel.FindByUserType(l.ctx, in.UserType)
 	if err != nil {
 		return nil, err
 	}

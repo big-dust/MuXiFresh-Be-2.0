@@ -43,7 +43,6 @@ func (l *GetAllSubmissionStatusLogic) GetAllSubmissionStatus(req *types.GetAllSu
 	//get
 	getAllStatusResp, err := l.svcCtx.SubmissionClient.GetAllSubmissionStatus(l.ctx, &submissionclient.GetAllSubmissionStatusReq{
 		AssignmentID: req.AssignmentID,
-		Page:         req.Page,
 	})
 	if err != nil {
 		return nil, err

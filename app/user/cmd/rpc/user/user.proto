@@ -34,7 +34,6 @@ message SetUserTypeResp{
 
 message GetAdminListReq{
   string UserType =1;
-  int64  Page =2;
 }
 message One {
   string UserId =1;
