@@ -83,6 +83,7 @@ func (l *GetReviewLogic) GetReview(req *types.GetReviewReq) (resp *types.GetRevi
 			Grade:           entryForm.Grade,
 			School:          entryForm.School,
 			Group:           entryForm.Group,
+			FormID:          entryForm.ID.String()[10:34],
 			ExamStuatus:     examStatus,
 			AdmissionStatus: schedule.AdmissionStatus,
 		})

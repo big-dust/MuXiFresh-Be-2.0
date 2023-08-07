@@ -17,6 +17,7 @@ type Row struct {
 	Grade           string `json:"grader"`
 	School          string `json:"school"`
 	Group           string `json:"group"`
+	FormID          string `json:"form_id"`
 	ExamStuatus     string `json:"exam_status"`
 	AdmissionStatus string `json:"admission_status"`
 }
