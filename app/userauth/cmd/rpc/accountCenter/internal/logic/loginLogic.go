@@ -24,7 +24,7 @@ func NewLoginLogic(ctx context.Context, svcCtx *svc.ServiceContext) *LoginLogic 
 }
 
 func (l *LoginLogic) Login(in *pb.LoginVerifyReq) (*pb.LoginVerifyResp, error) {
-	userAuth, err := l.svcCtx.UserAuthClient.FindByEmPass(l.ctx, in.Email, in.Password)
+	userAuth, err := l.svcCtx.UserAuthClient.FindOneByEmailAndPassword(l.ctx, in.Email, in.Password)
 	if err != nil {
 		return nil, err
 	}

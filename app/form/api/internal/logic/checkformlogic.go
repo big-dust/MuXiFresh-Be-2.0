@@ -28,7 +28,7 @@ func NewCheckFormLogic(ctx context.Context, svcCtx *svc.ServiceContext) *CheckFo
 
 func (l *CheckFormLogic) CheckForm(req *types.CheckReq) (resp *types.CheckResp, err error) {
 	//确定formid
-	if req.EntryFormID == globalKey.NULL {
+	if req.EntryFormID == globalKey.Myself {
 		userid := ctxData.GetUserIdFromCtx(l.ctx)
 		userInfo, err := l.svcCtx.UserInfoModelClient.FindOne(l.ctx, userid)
 		if err != nil {
@@ -46,14 +46,9 @@ func (l *CheckFormLogic) CheckForm(req *types.CheckReq) (resp *types.CheckResp, 
 	return &types.CheckResp{
 		FormId:        req.EntryFormID,
 		Avatar:        r.Avatar,
-		Name:          r.Name,
-		StuNumber:     r.StuNumber,
-		School:        r.School,
 		Major:         r.Major,
 		Grade:         r.Grade,
 		Gender:        r.Gender,
-		Email:         r.Email,
-		QQ:            r.QQ,
 		Phone:         r.Phone,
 		Group:         r.Group,
 		Reason:        r.Reason,

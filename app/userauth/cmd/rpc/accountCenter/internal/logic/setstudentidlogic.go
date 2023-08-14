@@ -1,8 +1,6 @@
 package logic
 
 import (
-	"MuXiFresh-Be-2.0/app/userauth/cmd/rpc/accountCenter/internal/svc"
-	"MuXiFresh-Be-2.0/app/userauth/cmd/rpc/accountCenter/pb"
 	"MuXiFresh-Be-2.0/app/userauth/model"
 	"MuXiFresh-Be-2.0/common/tool"
 	"context"
@@ -10,28 +8,32 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"time"
 
+	"MuXiFresh-Be-2.0/app/userauth/cmd/rpc/accountCenter/internal/svc"
+	"MuXiFresh-Be-2.0/app/userauth/cmd/rpc/accountCenter/pb"
+
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
-type BindStudentIDLogic struct {
+type SetStudentIDLogic struct {
 	ctx    context.Context
 	svcCtx *svc.ServiceContext
 	logx.Logger
 }
 
-func NewBindStudentIDLogic(ctx context.Context, svcCtx *svc.ServiceContext) *BindStudentIDLogic {
-	return &BindStudentIDLogic{
+func NewSetStudentIDLogic(ctx context.Context, svcCtx *svc.ServiceContext) *SetStudentIDLogic {
+	return &SetStudentIDLogic{
 		ctx:    ctx,
 		svcCtx: svcCtx,
 		Logger: logx.WithContext(ctx),
 	}
 }
 
-func (l *BindStudentIDLogic) BindStudentID(in *pb.BindingStudentIDReq) (*pb.BindingStudentIDResp, error) {
+func (l *SetStudentIDLogic) SetStudentID(in *pb.SetStudentIDReq) (*pb.SetStudentIDResp, error) {
+
 	//是否绑定
 	_, err := l.svcCtx.UserInfoClient.FindByStudentID(l.ctx, in.StudentID)
 	if err == nil {
-		return nil, errors.New("already bind")
+		return nil, errors.New("the student_id  already bind")
 	}
 	//一站式登录
 	if !tool.CCNULogin(in.StudentID, in.Password) {
@@ -50,7 +52,7 @@ func (l *BindStudentIDLogic) BindStudentID(in *pb.BindingStudentIDReq) (*pb.Bind
 	if err != nil {
 		return nil, err
 	}
-	return &pb.BindingStudentIDResp{
+	return &pb.SetStudentIDResp{
 		Flag: true,
 	}, nil
 }

@@ -15,35 +15,35 @@ import (
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
-type AuthPassChangeLogic struct {
+type AuthSetPasswordLogic struct {
 	logx.Logger
 	ctx    context.Context
 	svcCtx *svc.ServiceContext
 }
 
-func NewAuthPassChangeLogic(ctx context.Context, svcCtx *svc.ServiceContext) *AuthPassChangeLogic {
-	return &AuthPassChangeLogic{
+func NewAuthSetPasswordLogic(ctx context.Context, svcCtx *svc.ServiceContext) *AuthSetPasswordLogic {
+	return &AuthSetPasswordLogic{
 		Logger: logx.WithContext(ctx),
 		ctx:    ctx,
 		svcCtx: svcCtx,
 	}
 }
 
-func (l *AuthPassChangeLogic) AuthPassChange(req *types.AuthPassChangeReq) (resp *types.AuthPassChangeResp, err error) {
-	if ok := code.VerifyEm(globalKey.AuthChPass, req.Email, req.VerifyCode); !ok {
+func (l *AuthSetPasswordLogic) AuthSetPassword(req *types.AuthSetPasswordReq) (resp *types.AuthSetPasswordResp, err error) {
+
+	if ok := code.VerifyEmailCode(globalKey.SetPassword, req.Email, req.VerifyCode); !ok {
 		return nil, fmt.Errorf("verify code failed")
 	}
 	//gen auth token
-	authChPassToken, err := l.getJwtToken(l.svcCtx.Config.JwtAuthChPass.AccessSecret, time.Now().Unix(), l.svcCtx.Config.JwtAuthChPass.AccessExpire, req.Email)
+	AuthSetPasswordToken, err := l.getJwtToken(l.svcCtx.Config.JwtAuthChPass.AccessSecret, time.Now().Unix(), l.svcCtx.Config.JwtAuthChPass.AccessExpire, req.Email)
 	if err != nil {
 		return nil, err
 	}
-	return &types.AuthPassChangeResp{
-		AuthChPassToken: authChPassToken,
+	return &types.AuthSetPasswordResp{
+		AuthSetPasswordToken: AuthSetPasswordToken,
 	}, nil
 }
-
-func (l *AuthPassChangeLogic) getJwtToken(secretKey string, iat, seconds int64, email string) (string, error) {
+func (l *AuthSetPasswordLogic) getJwtToken(secretKey string, iat, seconds int64, email string) (string, error) {
 	claims := make(jwt.MapClaims)
 	claims["exp"] = iat + seconds
 	claims["iat"] = iat

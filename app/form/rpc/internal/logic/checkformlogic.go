@@ -30,14 +30,9 @@ func (l *CheckFormLogic) CheckForm(in *pb.CheckReq) (*pb.CheckResp, error) {
 	}
 	return &pb.CheckResp{
 		Avatar:        r.Avatar,
-		Name:          r.Name,
-		StuNumber:     r.StuNumber,
-		School:        r.School,
 		Major:         r.Major,
 		Grade:         r.Grade,
 		Gender:        r.Gender,
-		Email:         r.Email,
-		QQ:            r.Name,
 		Phone:         r.Phone,
 		Group:         r.Group,
 		Reason:        r.Reason,

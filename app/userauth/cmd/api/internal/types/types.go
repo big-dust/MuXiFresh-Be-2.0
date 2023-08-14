@@ -20,21 +20,21 @@ type LoginResp struct {
 	Token string `json:"token"`
 }
 
-type AuthPassChangeReq struct {
+type AuthSetPasswordReq struct {
 	Email      string `json:"email"`
 	VerifyCode string `json:"verify_code"`
 }
 
-type AuthPassChangeResp struct {
-	AuthChPassToken string `json:"auth_ch_pass_token"`
+type AuthSetPasswordResp struct {
+	AuthSetPasswordToken string `json:"auth_set_password_token"`
 }
 
-type PassChangeReq struct {
-	Password        string `json:"password"`
-	AuthChPassToken string `header:"Authorization"`
+type SetPasswordReq struct {
+	Password      string `json:"password"`
+	Authorization string `header:"Authorization"`
 }
 
-type PassChangeResp struct {
+type SetPasswordResp struct {
 	Flag bool `json:"flag"`
 }
 
@@ -48,7 +48,7 @@ type VerifyTokenResp struct {
 
 type SendEmailCodeReq struct {
 	Email string `json:"email"`
-	Type  string `json:"type,options=[auth_register,auth_ch_pass]"`
+	Type  string `json:"type,options=[register,set_password,set_email]"`
 }
 
 type SendEmailCodeResp struct {
@@ -70,20 +70,30 @@ type VerifyCaptchaResp struct {
 }
 
 type GetQNTokenReq struct {
-	Token string `header:"Authorization"`
+	Authorization string `header:"Authorization"`
 }
 
 type GetQNTokenResp struct {
 	QNToken string `json:"QiniuToken"`
 }
 
-type BindStudentIDReq struct {
-	Token      string `header:"Authorization"`
-	StdudentID string `json:"student_id"`
-	Password   string `json:"password"`
+type SetEmailReq struct {
+	Authorization string `header:"Authorization"`
+	Email         string `json:"email"`
+	VerifyCode    string `json:"verify_code"`
 }
 
-type BindStudentIDResp struct {
+type SetEmailResp struct {
+	Flag bool `json:"flag"`
+}
+
+type SetStudentIDReq struct {
+	Authorization string `header:"Authorization"`
+	StdudentID    string `json:"student_id"`
+	Password      string `json:"password"`
+}
+
+type SetStudentIDResp struct {
 	Flag bool `json:"flag"`
 }
 

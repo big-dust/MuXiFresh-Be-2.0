@@ -7,23 +7,47 @@ info(
 	email: "3264085417@qq.com"
 )
 
-//获取用户信息
+//获取我的信息
+type GetMyInfoReq {
+	Authorization string `header:"Authorization"`
+}
+
+type GetMyInfoResp {
+	Avatar    string `json:"avatar"`
+	NickName  string `json:"nickname"`
+	Name      string `json:"name"`
+	School    string `json:"school"`
+	Group     string `json:"group"`
+	Email     string `json:"email"`
+	StudentID string `json:"student_id"`
+	QQ        string `json:"qq"`
+}
+
+//获取指定用户信息
 type GetUserInfoReq {
 	Authorization string `header:"Authorization"`
+	UserId        string `path:"id"`
 }
 
 type GetUserInfoResp {
 	Avatar    string `json:"avatar"`
 	NickName  string `json:"nickname"`
-	Email     string `json:"email"`
+	Name      string `json:"name"`
+	School    string `json:"school"`
 	Group     string `json:"group"`
+	Email     string `json:"email"`
 	StudentID string `json:"student_id"`
+	QQ        string `json:"qq"`
 }
-//修改用户信息
+
+//修改我的信息
 type SetUserInfoReq {
 	Authorization string `header:"Authorization"`
 	Avatar        string `json:"avatar"`
-	NickName      string `json:"nickname"`
+	Nickname      string `json:"nickname"`
+	Name          string `json:"name"`
+	School        string `json:"school"`
+	QQ            string `json:"qq"`
 }
 type SetUserInfoResp {
 	Flag bool `json:"flag"`
@@ -40,12 +64,14 @@ type SetUserTypeResp {
 //管理员列表
 type GetAdminListReq {
 	Authorization string `header:"Authorization"`
-	UserType      string `form:"user_type,options=[super_admin,admin]"`
+	UserType      string `form:"user_type,options=[super_admin,admin,normal]"`
 }
 type One {
 	UserId   string `json:"user_id"`
 	Avatar   string `json:"avatar"`
 	Nickname string `json:"nickname"`
+	Name     string `json:"name"`
+	Email    string `json:"email"`
 }
 type GetAdminListResp {
 	List []One `json:"list"`
@@ -59,8 +85,11 @@ service user {
 	@handler GetAdminList
 	get /users/admin-list (GetAdminListReq) returns (GetAdminListResp)
 	@doc"获取我的信息"
+	@handler GetMyInfo
+	get /users/my-info (GetMyInfoReq) returns (GetMyInfoResp)
+	@doc"获取指定用户信息"
 	@handler GetUserInfo
-	get /users (GetUserInfoReq) returns (GetUserInfoResp)
+	get /users/info/:id (GetUserInfoReq) returns (GetUserInfoResp)
 	@doc"修改用户信息"
 	@handler SetUserInfo
 	post /users (SetUserInfoReq) returns (SetUserInfoResp)

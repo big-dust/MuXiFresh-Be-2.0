@@ -27,20 +27,20 @@ type LoginResp {
 }
 
 //授权修改密码
-type AuthPassChangeReq {
+type AuthSetPasswordReq {
 	Email      string `json:"email"`
 	VerifyCode string `json:"verify_code"`
 }
 
-type AuthPassChangeResp {
-	AuthChPassToken string `json:"auth_ch_pass_token"`
+type AuthSetPasswordResp {
+	AuthSetPasswordToken string `json:"auth_set_password_token"`
 }
 //修改密码
-type PassChangeReq {
-	Password        string `json:"password"`
-	AuthChPassToken string `header:"Authorization"`
+type SetPasswordReq {
+	Password      string `json:"password"`
+	Authorization string `header:"Authorization"`
 }
-type PassChangeResp {
+type SetPasswordResp {
 	Flag bool `json:"flag"`
 }
 //token验证
@@ -53,7 +53,7 @@ type VerifyTokenResp {
 //发邮箱验证码
 type SendEmailCodeReq {
 	Email string `json:"email"`
-	Type  string `json:"type,options=[auth_register,auth_ch_pass]"`
+	Type  string `json:"type,options=[register,set_password,set_email]"`
 }
 type SendEmailCodeResp {
 	Flag bool `json:"flag"`
@@ -75,7 +75,7 @@ type VerifyCaptchaResp {
 //获取七牛云token
 type (
 	GetQNTokenReq {
-		Token string `header:"Authorization"`
+		Authorization string `header:"Authorization"`
 	}
 	GetQNTokenResp {
 		QNToken string `json:"QiniuToken"`
@@ -93,8 +93,8 @@ service  user-auth{
 	@handler Login
 	post /login(LoginReq) returns(LoginResp)
 	@doc"授权修改密码"
-	@handler AuthPassChange
-	post /authorize-password-change (AuthPassChangeReq)returns(AuthPassChangeResp)
+	@handler AuthSetPassword
+	post /auth-set-password (AuthSetPasswordReq)returns(AuthSetPasswordResp)
 
 	@doc"发邮箱验证码"
 	@handler SendVerificationCode
@@ -107,6 +107,16 @@ service  user-auth{
 	post /verify-captcha(VerifyCaptchaReq) returns(VerifyCaptchaResp)
 }
 
+type SetEmailReq {
+	Authorization string `header:"Authorization"`
+	Email         string `json:"email"`
+	VerifyCode    string `json:"verify_code"`
+}
+
+type SetEmailResp {
+	Flag bool `json:"flag"`
+}
+
 @server (
 	prefix: api/v2/auth
 	jwt:JwtAuth
@@ -115,6 +125,9 @@ service user-auth{
 	@doc"获取七牛云token"
 	@handler GetQNToken
 	get /get-qntoken (GetQNTokenReq)returns(GetQNTokenResp)
+	@doc"邮箱修改"
+	@handler SetEmail
+	post /email	(SetEmailReq)returns(SetEmailResp)
 }
 
 @server (
@@ -124,27 +137,18 @@ service user-auth{
 
 service user-auth{
 	@doc"修改密码"
-	@handler PassChange
-	post /password-change (PassChangeReq)returns(PassChangeResp)
+	@handler SetPassword
+	post /set-password (SetPasswordReq)returns(SetPasswordResp)
 }
 
-type BindStudentIDReq {
-	Token      string `header:"Authorization"`
-	StdudentID string `json:"student_id"`
-	Password   string `json:"password"`
+type SetStudentIDReq {
+	Authorization string `header:"Authorization"`
+	StdudentID    string `json:"student_id"`
+	Password      string `json:"password"`
 }
 
-type BindStudentIDResp {
+type SetStudentIDResp {
 	Flag bool `json:"flag"`
-}
-
-type ccnuLoginReq {
-	StdudentID string `json:"student_id"`
-	Password   string `json:"password"`
-}
-
-type ccnuLoginResp {
-	Token string `json:"token"`
 }
 
 @server (
@@ -154,8 +158,17 @@ type ccnuLoginResp {
 )
 service user-auth{
 	@doc"学号绑改"
-	@handler BindStudentID
-	post /bind-student-id (BindStudentIDReq)returns(BindStudentIDResp)
+	@handler SetStudentID
+	post /set-student-id (SetStudentIDReq)returns(SetStudentIDResp)
+}
+
+type ccnuLoginReq {
+	StdudentID string `json:"student_id"`
+	Password   string `json:"password"`
+}
+
+type ccnuLoginResp {
+	Token string `json:"token"`
 }
 
 @server (

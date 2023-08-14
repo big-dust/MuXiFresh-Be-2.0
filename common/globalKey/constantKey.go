@@ -1,8 +1,9 @@
 package globalKey
 
 const (
-	AuthRegister = "auth_register"
-	AuthChPass   = "auth_ch_pass"
+	Register     = "register"
+	SetPassword  = "set_password"
+	SetEmail     = "set_email"
 	Captcha      = "captcha"
 	NULL         = ""
 	NotSubmitted = "未提交"

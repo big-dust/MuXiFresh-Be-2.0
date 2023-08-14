@@ -16,7 +16,36 @@
     "application/json"
   ],
   "paths": {
-    "/api/v2/admin-list": {
+    "/api/v2/users": {
+      "post": {
+        "summary": "修改用户信息",
+        "operationId": "SetUserInfo",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/SetUserInfoResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": "修改我的信息",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SetUserInfoReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "user"
+        ]
+      }
+    },
+    "/api/v2/users/admin-list": {
       "get": {
         "summary": "管理员/超管列表",
         "operationId": "GetAdminList",
@@ -40,13 +69,6 @@
             "in": "query",
             "required": true,
             "type": "string"
-          },
-          {
-            "name": "page",
-            "in": "query",
-            "required": true,
-            "type": "integer",
-            "format": "int64"
           }
         ],
         "requestBody": {},
@@ -55,9 +77,9 @@
         ]
       }
     },
-    "/api/v2/users/{id}": {
+    "/api/v2/users/info/{id}": {
       "get": {
-        "summary": "获取用户信息",
+        "summary": "获取指定用户信息",
         "operationId": "GetUserInfo",
         "responses": {
           "200": {
@@ -85,33 +107,26 @@
         "tags": [
           "user"
         ]
-      },
-      "post": {
-        "summary": "修改用户信息",
-        "operationId": "SetUserInfo",
+      }
+    },
+    "/api/v2/users/my-info": {
+      "get": {
+        "summary": "获取我的信息",
+        "operationId": "GetMyInfo",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/SetUserInfoResp"
+              "$ref": "#/definitions/GetMyInfoResp"
             }
           }
         },
         "parameters": [
           {
-            "name": "id",
-            "in": "path",
+            "name": "Authorization",
+            "in": "query",
             "required": true,
             "type": "string"
-          },
-          {
-            "name": "body",
-            "description": "修改用户信息",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/SetUserInfoReq"
-            }
           }
         ],
         "requestBody": {},
@@ -120,7 +135,7 @@
         ]
       }
     },
-    "/api/v2/users/{id}/type": {
+    "/api/v2/users/type": {
       "post": {
         "summary": "修改用户类型",
         "operationId": "SetUserType",
@@ -133,12 +148,6 @@
           }
         },
         "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "body",
             "description": "修改用户类型",
@@ -165,17 +174,12 @@
         },
         "user_type": {
           "type": "string"
-        },
-        "page": {
-          "type": "integer",
-          "format": "int64"
         }
       },
       "title": "GetAdminListReq",
       "required": [
         "Authorization",
-        "user_type",
-        "page"
+        "user_type"
       ]
     },
     "GetAdminListResp": {
@@ -191,6 +195,58 @@
       "title": "GetAdminListResp",
       "required": [
         "list"
+      ]
+    },
+    "GetMyInfoReq": {
+      "type": "object",
+      "properties": {
+        "Authorization": {
+          "type": "string"
+        }
+      },
+      "title": "GetMyInfoReq",
+      "required": [
+        "Authorization"
+      ]
+    },
+    "GetMyInfoResp": {
+      "type": "object",
+      "properties": {
+        "avatar": {
+          "type": "string"
+        },
+        "nickname": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "school": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "group": {
+          "type": "string"
+        },
+        "student_id": {
+          "type": "string"
+        },
+        "qq": {
+          "type": "string"
+        }
+      },
+      "title": "GetMyInfoResp",
+      "required": [
+        "avatar",
+        "nickname",
+        "name",
+        "school",
+        "email",
+        "group",
+        "student_id",
+        "qq"
       ]
     },
     "GetUserInfoReq": {
@@ -218,6 +274,12 @@
         "nickname": {
           "type": "string"
         },
+        "name": {
+          "type": "string"
+        },
+        "school": {
+          "type": "string"
+        },
         "email": {
           "type": "string"
         },
@@ -226,15 +288,21 @@
         },
         "student_id": {
           "type": "string"
+        },
+        "qq": {
+          "type": "string"
         }
       },
       "title": "GetUserInfoResp",
       "required": [
         "avatar",
         "nickname",
+        "name",
+        "school",
         "email",
         "group",
-        "student_id"
+        "student_id",
+        "qq"
       ]
     },
     "One": {
@@ -268,13 +336,21 @@
         },
         "nickname": {
           "type": "string"
+        },
+        "school": {
+          "type": "string"
+        },
+        "qq": {
+          "type": "string"
         }
       },
       "title": "SetUserInfoReq",
       "required": [
         "Authorization",
         "avatar",
-        "nickname"
+        "nickname",
+        "school",
+        "qq"
       ]
     },
     "SetUserInfoResp": {

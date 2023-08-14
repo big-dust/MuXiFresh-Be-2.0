@@ -11,23 +11,23 @@ import (
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
-type BindStudentIDLogic struct {
+type SetStudentIDLogic struct {
 	logx.Logger
 	ctx    context.Context
 	svcCtx *svc.ServiceContext
 }
 
-func NewBindStudentIDLogic(ctx context.Context, svcCtx *svc.ServiceContext) *BindStudentIDLogic {
-	return &BindStudentIDLogic{
+func NewSetStudentIDLogic(ctx context.Context, svcCtx *svc.ServiceContext) *SetStudentIDLogic {
+	return &SetStudentIDLogic{
 		Logger: logx.WithContext(ctx),
 		ctx:    ctx,
 		svcCtx: svcCtx,
 	}
 }
 
-func (l *BindStudentIDLogic) BindStudentID(req *types.BindStudentIDReq) (resp *types.BindStudentIDResp, err error) {
+func (l *SetStudentIDLogic) SetStudentID(req *types.SetStudentIDReq) (resp *types.SetStudentIDResp, err error) {
 
-	bindResp, err := l.svcCtx.ActCenterClient.BindStudentID(l.ctx, &accountcenterclient.BindingStudentIDReq{
+	SetResp, err := l.svcCtx.AccountCenterClient.SetStudentID(l.ctx, &accountcenterclient.SetStudentIDReq{
 		UserId:    ctxData.GetUserIdFromCtx(l.ctx),
 		StudentID: req.StdudentID,
 		Password:  req.Password,
@@ -35,7 +35,7 @@ func (l *BindStudentIDLogic) BindStudentID(req *types.BindStudentIDReq) (resp *t
 	if err != nil {
 		return nil, err
 	}
-	return &types.BindStudentIDResp{
-		Flag: bindResp.Flag,
+	return &types.SetStudentIDResp{
+		Flag: SetResp.Flag,
 	}, nil
 }

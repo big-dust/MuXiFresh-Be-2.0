@@ -4,10 +4,10 @@ import (
 	"MuXiFresh-Be-2.0/app/user/cmd/rpc/user/internal/svc"
 	"MuXiFresh-Be-2.0/app/user/cmd/rpc/user/pb"
 	"MuXiFresh-Be-2.0/app/userauth/model"
+	"MuXiFresh-Be-2.0/common/globalKey"
 	"context"
-	"go.mongodb.org/mongo-driver/bson/primitive"
-
 	"github.com/zeromicro/go-zero/core/logx"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 type SetUserInfoLogic struct {
@@ -30,11 +30,17 @@ func (l *SetUserInfoLogic) SetUserInfo(in *pb.SetUserInfoReq) (*pb.SetUserInfoRe
 	if err != nil {
 		return nil, err
 	}
-	_, err = l.svcCtx.UserInfoModel.Update(l.ctx, &model.UserInfo{
-		ID:       uid,
-		Avatar:   in.Avatar,
-		NickName: in.NickName,
-	})
+	userInfo := &model.UserInfo{
+		ID:     uid,
+		Avatar: in.Avatar,
+		Name:   in.Name,
+		School: in.School,
+		QQ:     in.QQ,
+	}
+	if in.NickName != globalKey.NULL {
+		userInfo.NickName = in.NickName
+	}
+	_, err = l.svcCtx.UserInfoModel.Update(l.ctx, userInfo)
 	if err != nil {
 		return nil, err
 	}

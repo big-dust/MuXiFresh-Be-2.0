@@ -28,7 +28,7 @@ func NewCcnuLoginLogic(ctx context.Context, svcCtx *svc.ServiceContext) *CcnuLog
 }
 
 func (l *CcnuLoginLogic) CcnuLogin(req *types.CcnuLoginReq) (resp *types.CcnuLoginResp, err error) {
-	ccnuLoginResp, err := l.svcCtx.ActCenterClient.CcnuLogin(l.ctx, &accountcenterclient.CcnuLoginReq{
+	ccnuLoginResp, err := l.svcCtx.AccountCenterClient.CcnuLogin(l.ctx, &accountcenterclient.CcnuLoginReq{
 		StudentID: req.StdudentID,
 		Password:  req.Password,
 	})

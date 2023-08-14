@@ -4,6 +4,7 @@ import (
 	code "MuXiFresh-Be-2.0/app/userauth/cmd/api/internal/common/code"
 	"MuXiFresh-Be-2.0/app/userauth/cmd/api/internal/config"
 	"MuXiFresh-Be-2.0/common/globalKey"
+	"MuXiFresh-Be-2.0/common/tool"
 	"fmt"
 	"github.com/jinzhu/copier"
 	"github.com/jordan-wright/email"
@@ -25,11 +26,11 @@ func Load(c config.Config) {
 }
 
 func Send(Email string, Type string) error {
-	if Type != globalKey.AuthRegister && Type != globalKey.AuthChPass {
+	if Type != globalKey.Register && Type != globalKey.SetPassword && Type != globalKey.SetEmail {
 		return fmt.Errorf("invalid email type")
 	}
 	//生成一个验证码
-	randCode := code.RandStringBytes(8)
+	randCode := tool.RandStringBytes(8)
 	html := randCode
 	subject := fmt.Sprintf("%v验证码", Type)
 	//发送
@@ -45,6 +46,6 @@ func Send(Email string, Type string) error {
 		return err
 	}
 	//存到redis
-	err = code.SetEm(Type, Email, randCode)
+	err = code.SetEmailCode(Type, Email, randCode)
 	return err
 }

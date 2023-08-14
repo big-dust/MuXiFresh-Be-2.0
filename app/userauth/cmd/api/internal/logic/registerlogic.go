@@ -34,15 +34,15 @@ func NewRegisterLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Register
 
 func (l *RegisterLogic) Register(req *types.RegisterReq) (resp *types.RegisterResp, err error) {
 	//verify code
-	if ok := code.VerifyEm(globalKey.AuthRegister, req.Email, req.VerifyCode); !ok {
+	if ok := code.VerifyEmailCode(globalKey.Register, req.Email, req.VerifyCode); !ok {
 		return nil, fmt.Errorf("verify code failed")
 	}
-	
+
 	md5 := MD5.New()
 	md5.Write([]byte(req.Password))
 	HashPassword := hex.EncodeToString(md5.Sum(nil))
 	//写入数据库
-	registerDataResp, err := l.svcCtx.ActCenterClient.Register(l.ctx, &accountcenterclient.RegisterDataReq{
+	registerDataResp, err := l.svcCtx.AccountCenterClient.Register(l.ctx, &accountcenterclient.RegisterDataReq{
 		Email:    req.Email,
 		Password: HashPassword,
 	})

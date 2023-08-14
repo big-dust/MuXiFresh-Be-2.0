@@ -5,20 +5,26 @@ option go_package="./pb";
 
 message GetUserInfoReq {
   string UserId =1;
-  string UserType =2;
 }
 message GetUserInfoResp {
   string Avatar =1;
   string NickName  =2;
-  string Email =3;
-  string Group =4;
-  string StudentID =5;
+  string Name =3;
+  string School =4;
+  string Group =5;
+  string Email =6;
+  string StudentID =7;
+  string QQ =8;
+
 }
 
 message SetUserInfoReq {
   string UserId =1;
   string Avatar =2;
   string NickName =3;
+  string Name =4 ;
+  string School =5;
+  string QQ =6;
 }
 message SetUserInfoResp {
   bool Flag =1;
@@ -39,6 +45,8 @@ message One {
   string UserId =1;
   string Nickname =2;
   string Avatar =3;
+  string Name =4;
+  string Email =5;
 }
 message GetAdminListResp{
   repeated One List =1;

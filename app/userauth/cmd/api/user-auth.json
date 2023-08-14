@@ -16,15 +16,15 @@
     "application/json"
   ],
   "paths": {
-    "api/v2/authorize-password-change": {
+    "api/v2/auth/auth-set-password": {
       "post": {
         "summary": "授权修改密码",
-        "operationId": "AuthPassChange",
+        "operationId": "AuthSetPassword",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/AuthPassChangeResp"
+              "$ref": "#/definitions/AuthSetPasswordResp"
             }
           }
         },
@@ -35,7 +35,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/AuthPassChangeReq"
+              "$ref": "#/definitions/AuthSetPasswordReq"
             }
           }
         ],
@@ -45,35 +45,7 @@
         ]
       }
     },
-    "api/v2/bind-student-id": {
-      "post": {
-        "summary": "学号绑改",
-        "operationId": "BindStudentID",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/BindStudentIDResp"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/BindStudentIDReq"
-            }
-          }
-        ],
-        "requestBody": {},
-        "tags": [
-          "ccnulogin"
-        ]
-      }
-    },
-    "api/v2/ccnuLogin": {
+    "api/v2/auth/ccnuLogin": {
       "post": {
         "summary": "学号登录",
         "operationId": "ccnuLogin",
@@ -101,7 +73,35 @@
         ]
       }
     },
-    "api/v2/get-captcha": {
+    "api/v2/auth/email": {
+      "post": {
+        "summary": "邮箱修改",
+        "operationId": "SetEmail",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/SetEmailResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SetEmailReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "user-auth"
+        ]
+      }
+    },
+    "api/v2/auth/get-captcha": {
       "get": {
         "summary": "获取人机验证图",
         "operationId": "GetCaptcha",
@@ -119,7 +119,7 @@
         ]
       }
     },
-    "api/v2/get-qntoken": {
+    "api/v2/auth/get-qntoken": {
       "get": {
         "summary": "获取七牛云token",
         "operationId": "GetQNToken",
@@ -145,7 +145,7 @@
         ]
       }
     },
-    "api/v2/login": {
+    "api/v2/auth/login": {
       "post": {
         "summary": "登录",
         "operationId": "Login",
@@ -174,36 +174,7 @@
         ]
       }
     },
-    "api/v2/password-change": {
-      "post": {
-        "summary": "修改密码",
-        "operationId": "PassChange",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/PassChangeResp"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "body",
-            "description": "修改密码",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/PassChangeReq"
-            }
-          }
-        ],
-        "requestBody": {},
-        "tags": [
-          "user-auth"
-        ]
-      }
-    },
-    "api/v2/register": {
+    "api/v2/auth/register": {
       "post": {
         "summary": "注册",
         "operationId": "Register",
@@ -232,7 +203,7 @@
         ]
       }
     },
-    "api/v2/send-verification-code": {
+    "api/v2/auth/send-verification-code": {
       "post": {
         "summary": "发邮箱验证码",
         "operationId": "SendVerificationCode",
@@ -261,7 +232,64 @@
         ]
       }
     },
-    "api/v2/verify-captcha": {
+    "api/v2/auth/set-password": {
+      "post": {
+        "summary": "修改密码",
+        "operationId": "SetPassword",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/SetPasswordResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": "修改密码",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SetPasswordReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "user-auth"
+        ]
+      }
+    },
+    "api/v2/auth/set-student-id": {
+      "post": {
+        "summary": "学号绑改",
+        "operationId": "SetStudentID",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/SetStudentIDResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SetStudentIDReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "ccnulogin"
+        ]
+      }
+    },
+    "api/v2/auth/verify-captcha": {
       "post": {
         "summary": "进行验证人机",
         "operationId": "VerifyCaptcha",
@@ -292,7 +320,7 @@
     }
   },
   "definitions": {
-    "AuthPassChangeReq": {
+    "AuthSetPasswordReq": {
       "type": "object",
       "properties": {
         "email": {
@@ -302,51 +330,22 @@
           "type": "string"
         }
       },
-      "title": "AuthPassChangeReq",
+      "title": "AuthSetPasswordReq",
       "required": [
         "email",
         "verify_code"
       ]
     },
-    "AuthPassChangeResp": {
+    "AuthSetPasswordResp": {
       "type": "object",
       "properties": {
-        "auth_ch_pass_token": {
+        "auth_set_password_token": {
           "type": "string"
         }
       },
-      "title": "AuthPassChangeResp",
+      "title": "AuthSetPasswordResp",
       "required": [
-        "auth_ch_pass_token"
-      ]
-    },
-    "BindStudentIDReq": {
-      "type": "object",
-      "properties": {
-        "student_id": {
-          "type": "string"
-        },
-        "password": {
-          "type": "string"
-        }
-      },
-      "title": "BindStudentIDReq",
-      "required": [
-        "student_id",
-        "password"
-      ]
-    },
-    "BindStudentIDResp": {
-      "type": "object",
-      "properties": {
-        "flag": {
-          "type": "boolean",
-          "format": "boolean"
-        }
-      },
-      "title": "BindStudentIDResp",
-      "required": [
-        "flag"
+        "auth_set_password_token"
       ]
     },
     "GetCaptchaResp": {
@@ -368,7 +367,7 @@
     "GetQNTokenReq": {
       "type": "object",
       "properties": {
-        "Token": {
+        "Authorization": {
           "type": "string"
         }
       },
@@ -415,35 +414,6 @@
       "title": "LoginResp",
       "required": [
         "token"
-      ]
-    },
-    "PassChangeReq": {
-      "type": "object",
-      "properties": {
-        "password": {
-          "type": "string"
-        },
-        "AuthChPassToken": {
-          "type": "string"
-        }
-      },
-      "title": "PassChangeReq",
-      "required": [
-        "password",
-        "Authorization"
-      ]
-    },
-    "PassChangeResp": {
-      "type": "object",
-      "properties": {
-        "flag": {
-          "type": "boolean",
-          "format": "boolean"
-        }
-      },
-      "title": "PassChangeResp",
-      "required": [
-        "flag"
       ]
     },
     "RegisterReq": {
@@ -503,6 +473,101 @@
         }
       },
       "title": "SendEmailCodeResp",
+      "required": [
+        "flag"
+      ]
+    },
+    "SetEmailReq": {
+      "type": "object",
+      "properties": {
+        "Authorization": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "verify_code": {
+          "type": "string"
+        }
+      },
+      "title": "SetEmailReq",
+      "required": [
+        "Authorization",
+        "email",
+        "verify_code"
+      ]
+    },
+    "SetEmailResp": {
+      "type": "object",
+      "properties": {
+        "flag": {
+          "type": "boolean",
+          "format": "boolean"
+        }
+      },
+      "title": "SetEmailResp",
+      "required": [
+        "flag"
+      ]
+    },
+    "SetPasswordReq": {
+      "type": "object",
+      "properties": {
+        "password": {
+          "type": "string"
+        },
+        "Authorization": {
+          "type": "string"
+        }
+      },
+      "title": "SetPasswordReq",
+      "required": [
+        "password",
+        "Authorization"
+      ]
+    },
+    "SetPasswordResp": {
+      "type": "object",
+      "properties": {
+        "flag": {
+          "type": "boolean",
+          "format": "boolean"
+        }
+      },
+      "title": "SetPasswordResp",
+      "required": [
+        "flag"
+      ]
+    },
+    "SetStudentIDReq": {
+      "type": "object",
+      "properties": {
+        "Authorization": {
+          "type": "string"
+        },
+        "student_id": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      },
+      "title": "SetStudentIDReq",
+      "required": [
+        "Authorization",
+        "student_id",
+        "password"
+      ]
+    },
+    "SetStudentIDResp": {
+      "type": "object",
+      "properties": {
+        "flag": {
+          "type": "boolean",
+          "format": "boolean"
+        }
+      },
+      "title": "SetStudentIDResp",
       "required": [
         "flag"
       ]
