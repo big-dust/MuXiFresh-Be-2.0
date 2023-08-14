@@ -3,6 +3,7 @@ package logic
 import (
 	"MuXiFresh-Be-2.0/app/userauth/model"
 	"MuXiFresh-Be-2.0/common/globalKey"
+	"MuXiFresh-Be-2.0/common/tool"
 	"context"
 	"time"
 
@@ -29,7 +30,7 @@ func NewRegisterLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Register
 func (l *RegisterLogic) Register(in *pb.RegisterDataReq) (*pb.RegisterDataResp, error) {
 	userInfo := &model.UserInfo{
 		Avatar:    l.svcCtx.Config.DefaultUserInfo.Avatar,
-		NickName:  l.svcCtx.Config.DefaultUserInfo.NickName,
+		NickName:  l.svcCtx.Config.DefaultUserInfo.NickName + "_" + tool.RandStringBytes(6),
 		Email:     in.Email,
 		StudentID: globalKey.NULL,
 		UserType:  globalKey.SuperAdmin,

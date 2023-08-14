@@ -25,8 +25,8 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 			{
 				Method:  http.MethodPost,
-				Path:    "/authorize-password-change",
-				Handler: AuthPassChangeHandler(serverCtx),
+				Path:    "/auth-set-password",
+				Handler: AuthSetPasswordHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPost,
@@ -54,6 +54,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/get-qntoken",
 				Handler: GetQNTokenHandler(serverCtx),
 			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/email",
+				Handler: SetEmailHandler(serverCtx),
+			},
 		},
 		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),
 		rest.WithPrefix("/api/v2/auth"),
@@ -63,8 +68,8 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 		[]rest.Route{
 			{
 				Method:  http.MethodPost,
-				Path:    "/password-change",
-				Handler: PassChangeHandler(serverCtx),
+				Path:    "/set-password",
+				Handler: SetPasswordHandler(serverCtx),
 			},
 		},
 		rest.WithJwt(serverCtx.Config.JwtAuthChPass.AccessSecret),
@@ -75,8 +80,8 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 		[]rest.Route{
 			{
 				Method:  http.MethodPost,
-				Path:    "/bind-student-id",
-				Handler: ccnulogin.BindStudentIDHandler(serverCtx),
+				Path:    "/set-student-id",
+				Handler: ccnulogin.SetStudentIDHandler(serverCtx),
 			},
 		},
 		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),

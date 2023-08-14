@@ -1,24 +1,24 @@
 package handler
 
 import (
-	logic "MuXiFresh-Be-2.0/app/userauth/cmd/api/internal/logic/ccnulogin"
+	"MuXiFresh-Be-2.0/app/userauth/cmd/api/internal/logic"
 	"MuXiFresh-Be-2.0/app/userauth/cmd/api/internal/svc"
 	"MuXiFresh-Be-2.0/app/userauth/cmd/api/internal/types"
-	"MuXiFresh-Be-2.0/common/greet/response"
 	"github.com/zeromicro/go-zero/rest/httpx"
+	"greet/response"
 	"net/http"
 )
 
-func BindStudentIDHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
+func SetEmailHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		var req types.BindStudentIDReq
+		var req types.SetEmailReq
 		if err := httpx.Parse(r, &req); err != nil {
 			httpx.Error(w, err)
 			return
 		}
 
-		l := logic.NewBindStudentIDLogic(r.Context(), svcCtx)
-		resp, err := l.BindStudentID(&req)
+		l := logic.NewSetEmailLogic(r.Context(), svcCtx)
+		resp, err := l.SetEmail(&req)
 		response.Response(w, resp, err)
 
 	}

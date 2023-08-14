@@ -33,8 +33,7 @@ func (l *LoginLogic) Login(req *types.LoginReq) (resp *types.LoginResp, err erro
 	md5 := MD5.New()
 	md5.Write([]byte(req.Password))
 	HashPassword := hex.EncodeToString(md5.Sum(nil))
-
-	loginResp, err := l.svcCtx.ActCenterClient.Login(l.ctx, &accountcenterclient.LoginVerifyReq{
+	loginResp, err := l.svcCtx.AccountCenterClient.Login(l.ctx, &accountcenterclient.LoginVerifyReq{
 		Email:    req.UserName,
 		Password: HashPassword,
 	})

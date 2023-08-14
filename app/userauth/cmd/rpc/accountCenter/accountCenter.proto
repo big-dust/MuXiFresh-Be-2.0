@@ -21,33 +21,44 @@ message LoginVerifyResp {
   string ID = 1;
 }
 
-message PassChangeReq {
+message SetPasswordReq {
   string Email = 1;
   string Password = 2;
 }
 
-message PassChangeResp {
+message SetPasswordResp {
   bool Flag =1;
 }
-message CcnuLoginReq {
+message ccnuLoginReq {
   string StudentID = 1;
   string Password = 2;
 }
-message CcnuLoginResp{
+message ccnuLoginResp{
    string UserinfoID = 1;
 }
-message BindingStudentIDReq {
+message SetStudentIDReq {
   string UserId = 1;
   string StudentID = 2;
   string Password = 3;
 }
-message BindingStudentIDResp {
+message SetStudentIDResp {
   bool Flag =1;
 }
+
+message SetEmailReq {
+  string Email = 1;
+  string UserId = 2;
+}
+
+message SetEmailResp {
+  bool Flag = 1;
+}
+
 service accountCenterClient {
   rpc Register(RegisterDataReq) returns(RegisterDataResp);
   rpc Login(LoginVerifyReq) returns(LoginVerifyResp);
-  rpc PassChange(PassChangeReq) returns(PassChangeResp);
-  rpc CcnuLogin(CcnuLoginReq) returns(CcnuLoginResp);
-  rpc BindStudentID(BindingStudentIDReq) returns(BindingStudentIDResp);
+  rpc SetPassword(SetPasswordReq) returns(SetPasswordResp);
+  rpc ccnuLogin(ccnuLoginReq) returns(ccnuLoginResp);
+  rpc SetStudentID(SetStudentIDReq) returns(SetStudentIDResp);
+  rpc SetEmail(SetEmailReq) returns(SetEmailResp);
 }

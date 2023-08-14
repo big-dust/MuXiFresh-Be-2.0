@@ -14,14 +14,9 @@ type CreateReq struct {
 	Authorization string `header:"Authorization"`
 	FormId        string `json:"form_id,optional"`
 	Avatar        string `json:"avatar"`
-	Name          string `json:"name"`
-	StuNumber     string `json:"stu_number"`
-	School        string `json:"school"`
 	Major         string `json:"major"`
 	Grade         string `json:"grade"`
 	Gender        string `json:"gender"`
-	Email         string `json:"email"`
-	QQ            string `json:"qq"`
 	Phone         string `json:"phone"`
 	Group         string `json:"group,options=[Product,Design,Frontend,Backend,Android]"`
 	Reason        string `json:"reason"`
@@ -36,20 +31,15 @@ type CreateResp struct {
 
 type CheckReq struct {
 	Authorization string `header:"Authorization"`
-	EntryFormID   string `json:"entry_form_id"`
+	EntryFormID   string `form:"entry_form_id"`
 }
 
 type CheckResp struct {
 	FormId        string `json:"form_id"`
 	Avatar        string `json:"avatar"`
-	Name          string `json:"name"`
-	StuNumber     string `json:"stu_number"`
-	School        string `json:"school"`
 	Major         string `json:"major"`
 	Grade         string `json:"grade"`
 	Gender        string `json:"gender"`
-	Email         string `json:"email"`
-	QQ            string `json:"qq"`
 	Phone         string `json:"phone"`
 	Group         string `json:"group"`
 	Reason        string `json:"reason"`

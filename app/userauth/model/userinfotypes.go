@@ -10,6 +10,9 @@ type UserInfo struct {
 	ID          primitive.ObjectID `bson:"_id,omitempty" json:"id,omitempty"`
 	Avatar      string             `bson:"avatar,omitempty" json:"avatar,omitempty"`
 	NickName    string             `bson:"nickname,omitempty" json:"nickname,omitempty"`
+	Name        string             `bson:"name,omitempty" json:"name,omitempty"`
+	School      string             `bson:"school,omitempty" json:"school,omitempty"`
+	QQ          string             `bson:"qq,omitempty" json:"qq,omitempty"`
 	Email       string             `bson:"email,omitempty" json:"email,omitempty"`
 	StudentID   string             `bson:"student_id,omitempty" json:"student_id,omitempty"`
 	UserType    string             `bson:"user_type,omitempty" json:"user_type,omitempty"`

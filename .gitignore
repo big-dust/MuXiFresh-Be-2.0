@@ -1,5 +1,6 @@
 *.yaml
-datahub/*
+gen_token
+datahub
 .idea
 # 二进制
 app/form/api/form

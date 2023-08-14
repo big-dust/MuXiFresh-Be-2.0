@@ -14,24 +14,19 @@ message ClickResp {
 
 //提交报名表
 message CreateReq {
-  string UserId = 17;
-  string FormId = 18;
+  string UserId = 12;
+  string FormId = 13;
   string Token = 1;
   string Avatar=2;
-  string  Name=3;
-  string  StuNumber=4;
-  string  School=5;
-  string  Major=6;
-  string  Grade=7;
-  string  Gender=8;
-  string  Email=9;
-  string  QQ=10;
-  string Phone=11;
-  string  Group=12;
-  string  Reason=13;
-  string  Knowledge=14;
-  string  SelfIntro=15;
-  string  ExtraQuestion=16;
+  string  Major=3;
+  string  Grade=4;
+  string  Gender=5;
+  string Phone=6;
+  string  Group=7;
+  string  Reason=8;
+  string  Knowledge=9;
+  string  SelfIntro=10;
+  string  ExtraQuestion=11;
 }
 message CreateResp {
     string FormID=1;
@@ -44,20 +39,15 @@ message CheckReq {
 }
 message CheckResp {
   string Avatar=1;
-  string  Name=2;
-  string  StuNumber=3;
-  string  School=4;
-  string  Major=5;
-  string  Grade=6;
-  string  Gender=7;
-  string  Email=8;
-  string  QQ=9;
-  string Phone=10;
-  string  Group=11;
-  string  Reason=12;
-  string  Knowledge=13;
-  string  SelfIntro=14;
-  string  ExtraQuestion=15;
+  string  Major=2;
+  string  Grade=3;
+  string  Gender=4;
+  string Phone=5;
+  string  Group=6;
+  string  Reason=7;
+  string  Knowledge=8;
+  string  SelfIntro=9;
+  string  ExtraQuestion=10;
 }
 
 service EntryFormClient {

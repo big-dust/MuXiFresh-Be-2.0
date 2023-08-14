@@ -1,12 +1,11 @@
 package logic
 
 import (
+	"MuXiFresh-Be-2.0/app/user/cmd/rpc/user/internal/svc"
+	"MuXiFresh-Be-2.0/app/user/cmd/rpc/user/pb"
 	"MuXiFresh-Be-2.0/common/convert"
 	"MuXiFresh-Be-2.0/common/globalKey"
 	"context"
-
-	"MuXiFresh-Be-2.0/app/user/cmd/rpc/user/internal/svc"
-	"MuXiFresh-Be-2.0/app/user/cmd/rpc/user/pb"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -27,13 +26,11 @@ func NewGetUserInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetUs
 
 func (l *GetUserInfoLogic) GetUserInfo(in *pb.GetUserInfoReq) (*pb.GetUserInfoResp, error) {
 
-	group := "尚未报名"
-
 	userInfo, err := l.svcCtx.UserInfoModel.FindOne(l.ctx, in.UserId)
 	if err != nil {
 		return nil, err
 	}
-
+	group := "尚未报名"
 	if !userInfo.EntryFormID.IsZero() {
 		group = "简历审阅中"
 		schedule, err := l.svcCtx.ScheduleModel.FindOne(l.ctx, userInfo.ScheduleID.String()[10:34])
@@ -52,12 +49,14 @@ func (l *GetUserInfoLogic) GetUserInfo(in *pb.GetUserInfoReq) (*pb.GetUserInfoRe
 			group = entryForm.Grade + "级" + convert.GroupCvtChinese(entryForm.Group) + identity
 		}
 	}
-
 	return &pb.GetUserInfoResp{
 		Avatar:    userInfo.Avatar,
 		NickName:  userInfo.NickName,
-		Email:     userInfo.Email,
+		Name:      userInfo.Name,
+		School:    userInfo.School,
 		Group:     group,
+		Email:     userInfo.Email,
 		StudentID: userInfo.StudentID,
+		QQ:        userInfo.QQ,
 	}, nil
 }

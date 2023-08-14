@@ -12,14 +12,15 @@ type GetReviewReq struct {
 }
 
 type Row struct {
-	ScheduleID      string `json:"schedule_id"`
 	Name            string `json:"name"`
 	Grade           string `json:"grader"`
 	School          string `json:"school"`
 	Group           string `json:"group"`
 	FormID          string `json:"form_id"`
 	ExamStuatus     string `json:"exam_status"`
+	UserId          string `json:"user_id"`
 	AdmissionStatus string `json:"admission_status"`
+	ScheduleID      string `json:"schedule_id"`
 }
 
 type GetReviewResp struct {

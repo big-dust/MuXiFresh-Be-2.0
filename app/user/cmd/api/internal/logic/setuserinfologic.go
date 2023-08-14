@@ -30,7 +30,10 @@ func (l *SetUserInfoLogic) SetUserInfo(req *types.SetUserInfoReq) (resp *types.S
 	setUserInfoResp, err := l.svcCtx.UserClient.SetUserInfo(l.ctx, &userclient.SetUserInfoReq{
 		UserId:   ctxData.GetUserIdFromCtx(l.ctx),
 		Avatar:   req.Avatar,
-		NickName: req.NickName,
+		NickName: req.Nickname,
+		Name:     req.Name,
+		School:   req.School,
+		QQ:       req.QQ,
 	})
 	if err != nil {
 		return nil, err

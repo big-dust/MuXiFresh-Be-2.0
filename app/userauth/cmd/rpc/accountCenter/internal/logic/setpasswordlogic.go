@@ -10,29 +10,30 @@ import (
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
-type PassChangeLogic struct {
+type SetPasswordLogic struct {
 	ctx    context.Context
 	svcCtx *svc.ServiceContext
 	logx.Logger
 }
 
-func NewPassChangeLogic(ctx context.Context, svcCtx *svc.ServiceContext) *PassChangeLogic {
-	return &PassChangeLogic{
+func NewSetPasswordLogic(ctx context.Context, svcCtx *svc.ServiceContext) *SetPasswordLogic {
+	return &SetPasswordLogic{
 		ctx:    ctx,
 		svcCtx: svcCtx,
 		Logger: logx.WithContext(ctx),
 	}
 }
 
-func (l *PassChangeLogic) PassChange(in *pb.PassChangeReq) (*pb.PassChangeResp, error) {
-	_, err := l.svcCtx.UserAuthClient.UpdateByEm(l.ctx, &model.UserAuth{
+func (l *SetPasswordLogic) SetPassword(in *pb.SetPasswordReq) (*pb.SetPasswordResp, error) {
+
+	_, err := l.svcCtx.UserAuthClient.UpdateByEmail(l.ctx, &model.UserAuth{
 		Email:    in.Email,
 		Password: in.Password,
 	})
 	if err != nil {
 		return nil, err
 	}
-	return &pb.PassChangeResp{
+	return &pb.SetPasswordResp{
 		Flag: true,
 	}, nil
 }

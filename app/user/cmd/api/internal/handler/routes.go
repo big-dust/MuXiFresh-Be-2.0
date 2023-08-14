@@ -19,7 +19,12 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 			{
 				Method:  http.MethodGet,
-				Path:    "/users",
+				Path:    "/users/my-info",
+				Handler: GetMyInfoHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/users/info/:id",
 				Handler: GetUserInfoHandler(serverCtx),
 			},
 			{

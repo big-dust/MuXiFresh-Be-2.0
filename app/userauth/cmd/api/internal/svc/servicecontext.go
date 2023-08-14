@@ -9,17 +9,17 @@ import (
 )
 
 type ServiceContext struct {
-	Config          config.Config
-	KqPusher        *kq.Pusher
-	RedisClient     *redis.Redis
-	ActCenterClient accountcenterclient.AccountCenterClient
+	Config              config.Config
+	KqPusher            *kq.Pusher
+	RedisClient         *redis.Redis
+	AccountCenterClient accountcenterclient.AccountCenterClient
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
 	return &ServiceContext{
-		Config:          c,
-		KqPusher:        kq.NewPusher(c.KqConf.Brokers, c.KqConf.Topic),
-		RedisClient:     redis.MustNewRedis(c.RedisConf),
-		ActCenterClient: accountcenterclient.NewAccountCenterClient(zrpc.MustNewClient(c.AccountCenterConf)),
+		Config:              c,
+		KqPusher:            kq.NewPusher(c.KqConf.Brokers, c.KqConf.Topic),
+		RedisClient:         redis.MustNewRedis(c.RedisConf),
+		AccountCenterClient: accountcenterclient.NewAccountCenterClient(zrpc.MustNewClient(c.AccountCenterConf)),
 	}
 }

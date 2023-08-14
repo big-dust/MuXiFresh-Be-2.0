@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.3.0
 // - protoc             v4.22.2
-// source: userinfo.proto
+// source: accountCenter.proto
 
 package pb
 
@@ -19,11 +19,12 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	AccountCenterClient_Register_FullMethodName      = "/accountCenter.accountCenterClient/Register"
-	AccountCenterClient_Login_FullMethodName         = "/accountCenter.accountCenterClient/Login"
-	AccountCenterClient_PassChange_FullMethodName    = "/accountCenter.accountCenterClient/PassChange"
-	AccountCenterClient_CcnuLogin_FullMethodName     = "/accountCenter.accountCenterClient/CcnuLogin"
-	AccountCenterClient_BindStudentID_FullMethodName = "/accountCenter.accountCenterClient/BindStudentID"
+	AccountCenterClient_Register_FullMethodName     = "/accountCenter.accountCenterClient/Register"
+	AccountCenterClient_Login_FullMethodName        = "/accountCenter.accountCenterClient/Login"
+	AccountCenterClient_SetPassword_FullMethodName  = "/accountCenter.accountCenterClient/SetPassword"
+	AccountCenterClient_CcnuLogin_FullMethodName    = "/accountCenter.accountCenterClient/ccnuLogin"
+	AccountCenterClient_SetStudentID_FullMethodName = "/accountCenter.accountCenterClient/SetStudentID"
+	AccountCenterClient_SetEmail_FullMethodName     = "/accountCenter.accountCenterClient/SetEmail"
 )
 
 // AccountCenterClientClient is the client API for AccountCenterClient service.
@@ -32,9 +33,10 @@ const (
 type AccountCenterClientClient interface {
 	Register(ctx context.Context, in *RegisterDataReq, opts ...grpc.CallOption) (*RegisterDataResp, error)
 	Login(ctx context.Context, in *LoginVerifyReq, opts ...grpc.CallOption) (*LoginVerifyResp, error)
-	PassChange(ctx context.Context, in *PassChangeReq, opts ...grpc.CallOption) (*PassChangeResp, error)
+	SetPassword(ctx context.Context, in *SetPasswordReq, opts ...grpc.CallOption) (*SetPasswordResp, error)
 	CcnuLogin(ctx context.Context, in *CcnuLoginReq, opts ...grpc.CallOption) (*CcnuLoginResp, error)
-	BindStudentID(ctx context.Context, in *BindingStudentIDReq, opts ...grpc.CallOption) (*BindingStudentIDResp, error)
+	SetStudentID(ctx context.Context, in *SetStudentIDReq, opts ...grpc.CallOption) (*SetStudentIDResp, error)
+	SetEmail(ctx context.Context, in *SetEmailReq, opts ...grpc.CallOption) (*SetEmailResp, error)
 }
 
 type accountCenterClientClient struct {
@@ -63,9 +65,9 @@ func (c *accountCenterClientClient) Login(ctx context.Context, in *LoginVerifyRe
 	return out, nil
 }
 
-func (c *accountCenterClientClient) PassChange(ctx context.Context, in *PassChangeReq, opts ...grpc.CallOption) (*PassChangeResp, error) {
-	out := new(PassChangeResp)
-	err := c.cc.Invoke(ctx, AccountCenterClient_PassChange_FullMethodName, in, out, opts...)
+func (c *accountCenterClientClient) SetPassword(ctx context.Context, in *SetPasswordReq, opts ...grpc.CallOption) (*SetPasswordResp, error) {
+	out := new(SetPasswordResp)
+	err := c.cc.Invoke(ctx, AccountCenterClient_SetPassword_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -81,9 +83,18 @@ func (c *accountCenterClientClient) CcnuLogin(ctx context.Context, in *CcnuLogin
 	return out, nil
 }
 
-func (c *accountCenterClientClient) BindStudentID(ctx context.Context, in *BindingStudentIDReq, opts ...grpc.CallOption) (*BindingStudentIDResp, error) {
-	out := new(BindingStudentIDResp)
-	err := c.cc.Invoke(ctx, AccountCenterClient_BindStudentID_FullMethodName, in, out, opts...)
+func (c *accountCenterClientClient) SetStudentID(ctx context.Context, in *SetStudentIDReq, opts ...grpc.CallOption) (*SetStudentIDResp, error) {
+	out := new(SetStudentIDResp)
+	err := c.cc.Invoke(ctx, AccountCenterClient_SetStudentID_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *accountCenterClientClient) SetEmail(ctx context.Context, in *SetEmailReq, opts ...grpc.CallOption) (*SetEmailResp, error) {
+	out := new(SetEmailResp)
+	err := c.cc.Invoke(ctx, AccountCenterClient_SetEmail_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -96,9 +107,10 @@ func (c *accountCenterClientClient) BindStudentID(ctx context.Context, in *Bindi
 type AccountCenterClientServer interface {
 	Register(context.Context, *RegisterDataReq) (*RegisterDataResp, error)
 	Login(context.Context, *LoginVerifyReq) (*LoginVerifyResp, error)
-	PassChange(context.Context, *PassChangeReq) (*PassChangeResp, error)
+	SetPassword(context.Context, *SetPasswordReq) (*SetPasswordResp, error)
 	CcnuLogin(context.Context, *CcnuLoginReq) (*CcnuLoginResp, error)
-	BindStudentID(context.Context, *BindingStudentIDReq) (*BindingStudentIDResp, error)
+	SetStudentID(context.Context, *SetStudentIDReq) (*SetStudentIDResp, error)
+	SetEmail(context.Context, *SetEmailReq) (*SetEmailResp, error)
 	mustEmbedUnimplementedAccountCenterClientServer()
 }
 
@@ -112,14 +124,17 @@ func (UnimplementedAccountCenterClientServer) Register(context.Context, *Registe
 func (UnimplementedAccountCenterClientServer) Login(context.Context, *LoginVerifyReq) (*LoginVerifyResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Login not implemented")
 }
-func (UnimplementedAccountCenterClientServer) PassChange(context.Context, *PassChangeReq) (*PassChangeResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method PassChange not implemented")
+func (UnimplementedAccountCenterClientServer) SetPassword(context.Context, *SetPasswordReq) (*SetPasswordResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetPassword not implemented")
 }
 func (UnimplementedAccountCenterClientServer) CcnuLogin(context.Context, *CcnuLoginReq) (*CcnuLoginResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CcnuLogin not implemented")
 }
-func (UnimplementedAccountCenterClientServer) BindStudentID(context.Context, *BindingStudentIDReq) (*BindingStudentIDResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method BindStudentID not implemented")
+func (UnimplementedAccountCenterClientServer) SetStudentID(context.Context, *SetStudentIDReq) (*SetStudentIDResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetStudentID not implemented")
+}
+func (UnimplementedAccountCenterClientServer) SetEmail(context.Context, *SetEmailReq) (*SetEmailResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetEmail not implemented")
 }
 func (UnimplementedAccountCenterClientServer) mustEmbedUnimplementedAccountCenterClientServer() {}
 
@@ -170,20 +185,20 @@ func _AccountCenterClient_Login_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AccountCenterClient_PassChange_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(PassChangeReq)
+func _AccountCenterClient_SetPassword_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SetPasswordReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AccountCenterClientServer).PassChange(ctx, in)
+		return srv.(AccountCenterClientServer).SetPassword(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: AccountCenterClient_PassChange_FullMethodName,
+		FullMethod: AccountCenterClient_SetPassword_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AccountCenterClientServer).PassChange(ctx, req.(*PassChangeReq))
+		return srv.(AccountCenterClientServer).SetPassword(ctx, req.(*SetPasswordReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -206,20 +221,38 @@ func _AccountCenterClient_CcnuLogin_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AccountCenterClient_BindStudentID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(BindingStudentIDReq)
+func _AccountCenterClient_SetStudentID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SetStudentIDReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AccountCenterClientServer).BindStudentID(ctx, in)
+		return srv.(AccountCenterClientServer).SetStudentID(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: AccountCenterClient_BindStudentID_FullMethodName,
+		FullMethod: AccountCenterClient_SetStudentID_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AccountCenterClientServer).BindStudentID(ctx, req.(*BindingStudentIDReq))
+		return srv.(AccountCenterClientServer).SetStudentID(ctx, req.(*SetStudentIDReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AccountCenterClient_SetEmail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SetEmailReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AccountCenterClientServer).SetEmail(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AccountCenterClient_SetEmail_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AccountCenterClientServer).SetEmail(ctx, req.(*SetEmailReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -240,18 +273,22 @@ var AccountCenterClient_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _AccountCenterClient_Login_Handler,
 		},
 		{
-			MethodName: "PassChange",
-			Handler:    _AccountCenterClient_PassChange_Handler,
+			MethodName: "SetPassword",
+			Handler:    _AccountCenterClient_SetPassword_Handler,
 		},
 		{
-			MethodName: "CcnuLogin",
+			MethodName: "ccnuLogin",
 			Handler:    _AccountCenterClient_CcnuLogin_Handler,
 		},
 		{
-			MethodName: "BindStudentID",
-			Handler:    _AccountCenterClient_BindStudentID_Handler,
+			MethodName: "SetStudentID",
+			Handler:    _AccountCenterClient_SetStudentID_Handler,
+		},
+		{
+			MethodName: "SetEmail",
+			Handler:    _AccountCenterClient_SetEmail_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "userinfo.proto",
+	Metadata: "accountCenter.proto",
 }
