@@ -11,7 +11,7 @@ type CreateResp struct {
 
 type CheckReq struct {
 	Authorization string `header:"Authorization"`
-	ScheduleID    string `json:"schedule_id"`
+	ScheduleID    string `form:"schedule_id"`
 }
 
 type CheckResp struct {

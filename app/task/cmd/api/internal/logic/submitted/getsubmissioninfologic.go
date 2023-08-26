@@ -29,7 +29,7 @@ func NewGetSubmissionInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) 
 
 func (l *GetSubmissionInfoLogic) GetSubmissionInfo(req *types.GetSubmissionInfoReq) (resp *types.GetSubmissionInfoResp, err error) {
 	var userId string
-	if req.UserID != globalKey.Myself {
+	if req.UserId != globalKey.Myself {
 		//管理员身份认证
 		getUserTypeResp, err := l.svcCtx.UserClient.GetUserType(l.ctx, &userclient.GetUserTypeReq{
 			UserId: ctxData.GetUserIdFromCtx(l.ctx),
@@ -40,7 +40,7 @@ func (l *GetSubmissionInfoLogic) GetSubmissionInfo(req *types.GetSubmissionInfoR
 		if getUserTypeResp.UserType != globalKey.Admin && getUserTypeResp.UserType != globalKey.SuperAdmin {
 			return nil, errors.New("permission denied")
 		}
-		userId = req.UserID
+		userId = req.UserId
 	} else {
 		userId = ctxData.GetUserIdFromCtx(l.ctx)
 	}

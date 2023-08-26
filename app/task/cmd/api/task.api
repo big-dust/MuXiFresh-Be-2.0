@@ -31,8 +31,8 @@ type (
 type (
 	GetSubmissionInfoReq {
 		Authorization string `header:"Authorization"`
-		AssignmentID  string `path:"assignedTaskID"`
-		UserID        string `path:"userID"`
+		AssignmentID  string `form:"assigned_task_id"`
+		UserId        string `form:"user_id"`
 	}
 
 	GetSubmissionInfoResp {
@@ -169,7 +169,7 @@ service task {
 	post /submitted (SetSubmissionReq)returns(SetSubmissionResp)
 	@doc"获取指定的作业提交"
 	@handler GetSubmissionInfo
-	get /submitted/:userID/:assignedTaskID (GetSubmissionInfoReq)returns (GetSubmissionInfoResp)
+	get /submitted (GetSubmissionInfoReq)returns (GetSubmissionInfoResp)
 	@doc"查看指定作业所有人完成情况"
 	@handler GetAllSubmissionStatus
 	get /assigned/:id/completion (GetAllSubmissionStatusReq)returns (GetAllSubmissionStatusResp)

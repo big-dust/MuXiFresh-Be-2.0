@@ -49,7 +49,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 			{
 				Method:  http.MethodGet,
-				Path:    "/submitted/:userID/:assignedTaskID",
+				Path:    "/submitted",
 				Handler: submitted.GetSubmissionInfoHandler(serverCtx),
 			},
 			{
