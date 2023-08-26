@@ -31,8 +31,3 @@ func (s *TestClientServer) CheckTestResult(ctx context.Context, in *pb.TestInfoR
 	l := logic.NewCheckTestResultLogic(ctx, s.svcCtx)
 	return l.CheckTestResult(in)
 }
-
-func (s *TestClientServer) JudgeUserType(ctx context.Context, in *pb.UserTypeReq) (*pb.UserTypeResp, error) {
-	l := logic.NewJudgeUserTypeLogic(ctx, s.svcCtx)
-	return l.JudgeUserType(in)
-}

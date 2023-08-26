@@ -24,7 +24,6 @@ const _ = grpc.SupportPackageIsVersion7
 type TestClientClient interface {
 	UserTest(ctx context.Context, in *TestReq, opts ...grpc.CallOption) (*TestResp, error)
 	CheckTestResult(ctx context.Context, in *TestInfoReq, opts ...grpc.CallOption) (*TestInfoResp, error)
-	JudgeUserType(ctx context.Context, in *UserTypeReq, opts ...grpc.CallOption) (*UserTypeResp, error)
 }
 
 type testClientClient struct {
@@ -53,22 +52,12 @@ func (c *testClientClient) CheckTestResult(ctx context.Context, in *TestInfoReq,
 	return out, nil
 }
 
-func (c *testClientClient) JudgeUserType(ctx context.Context, in *UserTypeReq, opts ...grpc.CallOption) (*UserTypeResp, error) {
-	out := new(UserTypeResp)
-	err := c.cc.Invoke(ctx, "/test.TestClient/JudgeUserType", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // TestClientServer is the server API for TestClient service.
 // All implementations must embed UnimplementedTestClientServer
 // for forward compatibility
 type TestClientServer interface {
 	UserTest(context.Context, *TestReq) (*TestResp, error)
 	CheckTestResult(context.Context, *TestInfoReq) (*TestInfoResp, error)
-	JudgeUserType(context.Context, *UserTypeReq) (*UserTypeResp, error)
 	mustEmbedUnimplementedTestClientServer()
 }
 
@@ -81,9 +70,6 @@ func (UnimplementedTestClientServer) UserTest(context.Context, *TestReq) (*TestR
 }
 func (UnimplementedTestClientServer) CheckTestResult(context.Context, *TestInfoReq) (*TestInfoResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CheckTestResult not implemented")
-}
-func (UnimplementedTestClientServer) JudgeUserType(context.Context, *UserTypeReq) (*UserTypeResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method JudgeUserType not implemented")
 }
 func (UnimplementedTestClientServer) mustEmbedUnimplementedTestClientServer() {}
 
@@ -134,24 +120,6 @@ func _TestClient_CheckTestResult_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
-func _TestClient_JudgeUserType_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UserTypeReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(TestClientServer).JudgeUserType(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/test.TestClient/JudgeUserType",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TestClientServer).JudgeUserType(ctx, req.(*UserTypeReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // TestClient_ServiceDesc is the grpc.ServiceDesc for TestClient service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -166,10 +134,6 @@ var TestClient_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CheckTestResult",
 			Handler:    _TestClient_CheckTestResult_Handler,
-		},
-		{
-			MethodName: "JudgeUserType",
-			Handler:    _TestClient_JudgeUserType_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

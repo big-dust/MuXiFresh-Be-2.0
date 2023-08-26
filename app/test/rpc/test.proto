@@ -4,8 +4,12 @@ package test;
 option go_package="./pb";
 
 //做测试
+message ChoiceItem {
+  int64 Number = 1;
+  string Data = 2;
+}
 message TestReq {
-  repeated string Choice = 1;
+  repeated ChoiceItem Choice = 1;
   string Token = 2;
 }
 message TestResp {
@@ -32,16 +36,7 @@ message TestInfoResp{
   repeated string Choice = 12;
 }
 
-//判断用户类型
-message UserTypeReq{
-  string Token = 1;
-}
-message UserTypeResp{
-  string Type = 1;
-}
-
 service TestClient {
   rpc UserTest(TestReq) returns(TestResp);
   rpc CheckTestResult(TestInfoReq) returns(TestInfoResp);
-  rpc JudgeUserType(UserTypeReq) returns(UserTypeResp);
 }

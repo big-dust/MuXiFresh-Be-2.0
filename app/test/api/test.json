@@ -17,7 +17,7 @@
   ],
   "paths": {
     "api/v2/user/test": {
-      "get": {
+      "post": {
         "summary": "做测验",
         "operationId": "UserTest",
         "responses": {
@@ -30,16 +30,12 @@
         },
         "parameters": [
           {
-            "name": "Authorization",
-            "in": "query",
+            "name": "body",
+            "in": "body",
             "required": true,
-            "type": "string"
-          },
-          {
-            "name": "choice",
-            "in": "query",
-            "required": true,
-            "type": "string"
+            "schema": {
+              "$ref": "#/definitions/TestReq"
+            }
           }
         ],
         "requestBody": {},
@@ -79,6 +75,23 @@
     }
   },
   "definitions": {
+    "ChoiceItem": {
+      "type": "object",
+      "properties": {
+        "number": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "data": {
+          "type": "string"
+        }
+      },
+      "title": "ChoiceItem",
+      "required": [
+        "number",
+        "data"
+      ]
+    },
     "TestInfoReq": {
       "type": "object",
       "properties": {
@@ -141,7 +154,7 @@
         "choice": {
           "type": "array",
           "items": {
-            "type": "string"
+            "$ref": "#/definitions/ChoiceItem"
           }
         }
       },
@@ -170,7 +183,7 @@
         "choice": {
           "type": "array",
           "items": {
-            "type": "string"
+            "$ref": "#/definitions/ChoiceItem"
           }
         }
       },

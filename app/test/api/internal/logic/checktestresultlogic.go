@@ -1,13 +1,11 @@
 package logic
 
 import (
-	"MuXiFresh-Be-2.0/app/test/rpc/testclient"
-	"MuXiFresh-Be-2.0/app/user/cmd/rpc/user/userclient"
-	"context"
-	"strings"
-
 	"MuXiFresh-Be-2.0/app/test/api/internal/svc"
 	"MuXiFresh-Be-2.0/app/test/api/internal/types"
+	"MuXiFresh-Be-2.0/app/test/rpc/testclient"
+	"MuXiFresh-Be-2.0/common/ctxData"
+	"context"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -27,33 +25,46 @@ func NewCheckTestResultLogic(ctx context.Context, svcCtx *svc.ServiceContext) *C
 }
 
 func (l *CheckTestResultLogic) CheckTestResult(req *types.TestInfoReq) (resp *types.TestInfoResp, err error) {
-	ut, err := l.svcCtx.UserClient.GetUserType(l.ctx, &userclient.GetUserTypeReq{
-		UserId: req.UserID,
+	var uid string
+	if req.UserID == "myself" {
+		uid = ctxData.GetUserIdFromCtx(l.ctx)
+	} else {
+		uid = req.UserID
+	}
+	_, err = l.svcCtx.TestClient.CheckTestResult(l.ctx, &testclient.TestInfoReq{
+		Token:  req.Authorization,
+		UserID: uid,
 	})
 	if err != nil {
 		return nil, err
 	}
-	if (strings.Compare(ut.UserType, "admin") == 0) || (strings.Compare(ut.UserType, "super_admin") == 0) {
-		r, err := l.svcCtx.TestClient.CheckTestResult(l.ctx, &testclient.TestInfoReq{
-			UserID: req.UserID,
-		})
-		if err != nil {
-			return nil, err
-		}
-		return &types.TestInfoResp{
-			Name:        r.Name,
-			Gender:      r.Gender,
-			Major:       r.Major,
-			Grade:       r.Grade,
-			LeQunXing:   r.LeQunXing,
-			YouHengXing: r.YouHengXing,
-			XingFenXing: r.XingFenXing,
-			CongHuiXing: r.CongHuiXing,
-			JiaoJiXing:  r.JiaoJiXing,
-			HuaiYiXing:  r.HuaiYiXing,
-			WenDingXing: r.WenDingXing,
-			Choice:      nil,
-		}, nil
+
+	userInfo, err := l.svcCtx.UserInfoClient.FindOne(l.ctx, uid)
+	if err != nil {
+		return nil, err
 	}
-	return nil, nil
+
+	formid := userInfo.EntryFormID
+
+	form, err := l.svcCtx.FormClient.FindOne(l.ctx, formid.String()[10:34])
+
+	typesChoice := make([]types.ChoiceItem, len(userInfo.TestChoice))
+	for i, item := range userInfo.TestChoice {
+		typesChoice[i] = types.ChoiceItem(item)
+	}
+
+	return &types.TestInfoResp{
+		Name:        userInfo.Name,
+		Gender:      form.Gender,
+		Major:       form.Major,
+		Grade:       form.Grade,
+		LeQunXing:   userInfo.TestResult.LeQunXing,
+		YouHengXing: userInfo.TestResult.YouHengXing,
+		XingFenXing: userInfo.TestResult.XingFenXing,
+		CongHuiXing: userInfo.TestResult.CongHuiXing,
+		JiaoJiXing:  userInfo.TestResult.JiaoJiXing,
+		HuaiYiXing:  userInfo.TestResult.HuaiYiXing,
+		WenDingXing: userInfo.TestResult.WenDingXing,
+		Choice:      typesChoice,
+	}, nil
 }

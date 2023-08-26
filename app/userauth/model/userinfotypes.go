@@ -6,6 +6,11 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
+type ChoiceItem struct {
+	Number int64  `bson:"number,omitempty" json:"number,omitempty"`
+	Data   string `bson:"data,omitempty" json:"data,omitempty"`
+}
+
 type UserInfo struct {
 	ID          primitive.ObjectID `bson:"_id,omitempty" json:"id,omitempty"`
 	Avatar      string             `bson:"avatar,omitempty" json:"avatar,omitempty"`
@@ -18,7 +23,7 @@ type UserInfo struct {
 	UserType    string             `bson:"user_type,omitempty" json:"user_type,omitempty"`
 	EntryFormID primitive.ObjectID `bson:"entry_form_id,omitempty" json:"entry_form_id,omitempty"`
 	ScheduleID  primitive.ObjectID `bson:"schedule_id,omitempty" json:"schedule_id"`
-	TestChoice  []string           `bson:"test_choice,omitempty" json:"test_choice,omitempty"`
+	TestChoice  []ChoiceItem       `bson:"test_choice,omitempty" json:"test_choice,omitempty"`
 	TestResult  struct {
 		LeQunXing   int64
 		YouHengXing int64

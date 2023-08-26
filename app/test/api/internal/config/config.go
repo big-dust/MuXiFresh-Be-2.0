@@ -12,5 +12,9 @@ type Config struct {
 		AccessSecret string
 		AccessExpire int64
 	}
-	UserConf zrpc.RpcClientConf
+	UserConf    zrpc.RpcClientConf
+	MongoDBConf struct {
+		URL string
+		DB  string
+	}
 }
