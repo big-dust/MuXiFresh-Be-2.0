@@ -13,17 +13,15 @@ import (
 )
 
 type (
+	ChoiceItem   = pb.ChoiceItem
 	TestInfoReq  = pb.TestInfoReq
 	TestInfoResp = pb.TestInfoResp
 	TestReq      = pb.TestReq
 	TestResp     = pb.TestResp
-	UserTypeReq  = pb.UserTypeReq
-	UserTypeResp = pb.UserTypeResp
 
 	TestClient interface {
 		UserTest(ctx context.Context, in *TestReq, opts ...grpc.CallOption) (*TestResp, error)
 		CheckTestResult(ctx context.Context, in *TestInfoReq, opts ...grpc.CallOption) (*TestInfoResp, error)
-		JudgeUserType(ctx context.Context, in *UserTypeReq, opts ...grpc.CallOption) (*UserTypeResp, error)
 	}
 
 	defaultTestClient struct {
@@ -45,9 +43,4 @@ func (m *defaultTestClient) UserTest(ctx context.Context, in *TestReq, opts ...g
 func (m *defaultTestClient) CheckTestResult(ctx context.Context, in *TestInfoReq, opts ...grpc.CallOption) (*TestInfoResp, error) {
 	client := pb.NewTestClientClient(m.cli.Conn())
 	return client.CheckTestResult(ctx, in, opts...)
-}
-
-func (m *defaultTestClient) JudgeUserType(ctx context.Context, in *UserTypeReq, opts ...grpc.CallOption) (*UserTypeResp, error) {
-	client := pb.NewTestClientClient(m.cli.Conn())
-	return client.JudgeUserType(ctx, in, opts...)
 }
