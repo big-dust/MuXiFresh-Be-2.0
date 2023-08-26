@@ -3,7 +3,9 @@ package logic
 import (
 	"MuXiFresh-Be-2.0/app/test/rpc/testclient"
 	"MuXiFresh-Be-2.0/app/userauth/model"
+	"MuXiFresh-Be-2.0/common/ctxData"
 	"context"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"strconv"
 	"strings"
 	"time"
@@ -28,16 +30,55 @@ func NewUserTestLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UserTest
 	}
 }
 
-func contains(slice []int, value int) bool {
-	for _, item := range slice {
-		if item == value {
-			return true
-		}
+func (l *UserTestLogic) UserTest(req *types.TestReq) (resp *types.TestResp, err error) {
+
+	userId := ctxData.GetUserIdFromCtx(l.ctx)
+
+	uid, err := primitive.ObjectIDFromHex(userId)
+
+	if err != nil {
+		return nil, err
 	}
-	return false
+
+	score, c := Exam(req.Choice)
+
+	_, err = l.svcCtx.UserInfoClient.Update(l.ctx, &model.UserInfo{
+		ID:         uid,
+		TestChoice: c,
+		TestResult: struct {
+			LeQunXing   int64
+			YouHengXing int64
+			XingFenXing int64
+			CongHuiXing int64
+			JiaoJiXing  int64
+			HuaiYiXing  int64
+			WenDingXing int64
+		}{
+			score[0],
+			score[4],
+			score[3],
+			score[1],
+			score[5],
+			score[6],
+			score[2],
+		},
+		UpdateAt: time.Now()})
+	if err != nil {
+		return nil, err
+	}
+
+	testResp, err := l.svcCtx.TestClient.UserTest(l.ctx, &testclient.TestReq{
+		Token: req.Authorization,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return &types.TestResp{
+		Flag: testResp.Flag,
+	}, nil
 }
 
-func (l *UserTestLogic) UserTest(req *types.TestReq) (resp *types.TestResp, err error) {
+func Exam(choice []types.ChoiceItem) ([7]int64, []model.ChoiceItem) {
 	type Question struct {
 		Number     int
 		TextNumber int
@@ -107,7 +148,7 @@ func (l *UserTestLogic) UserTest(req *types.TestReq) (resp *types.TestResp, err 
 		{TextNumber: 178, TrueAnswer: "A"},
 	}
 
-	for index, answer := range req.Choice {
+	for index, answer := range choice {
 		for _, item := range answerTrueB {
 			if item.TextNumber == objectArr[index].TextNumber {
 				if answer.Data == item.TrueAnswer {
@@ -132,7 +173,7 @@ func (l *UserTestLogic) UserTest(req *types.TestReq) (resp *types.TestResp, err 
 		}{TextNumber: textNumber, TrueAnswer: temp[1]})
 	}
 
-	for index, answer := range req.Choice {
+	for index, answer := range choice {
 		for _, item := range answerTrue {
 			if item.TextNumber == objectArr[index].TextNumber {
 				if answer.Data == "B" {
@@ -177,45 +218,20 @@ func (l *UserTestLogic) UserTest(req *types.TestReq) (resp *types.TestResp, err 
 	}
 
 	var c []model.ChoiceItem
-	for _, item := range req.Choice {
+	for _, item := range choice {
 		newItem := model.ChoiceItem{
 			Number: item.Number,
 			Data:   item.Data,
 		}
 		c = append(c, newItem)
 	}
-
-	_, err = l.svcCtx.UserInfoClient.Update(l.ctx, &model.UserInfo{
-		TestChoice: c,
-		TestResult: struct {
-			LeQunXing   int64
-			YouHengXing int64
-			XingFenXing int64
-			CongHuiXing int64
-			JiaoJiXing  int64
-			HuaiYiXing  int64
-			WenDingXing int64
-		}{
-			score[0],
-			score[4],
-			score[3],
-			score[1],
-			score[5],
-			score[6],
-			score[2],
-		},
-		UpdateAt: time.Now()})
-	if err != nil {
-		return nil, err
+	return score, c
+}
+func contains(slice []int, value int) bool {
+	for _, item := range slice {
+		if item == value {
+			return true
+		}
 	}
-
-	testResp, err := l.svcCtx.TestClient.UserTest(l.ctx, &testclient.TestReq{
-		Token: req.Authorization,
-	})
-	if err != nil {
-		return nil, err
-	}
-	return &types.TestResp{
-		Flag: testResp.Flag,
-	}, nil
+	return false
 }
