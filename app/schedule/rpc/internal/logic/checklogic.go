@@ -1,6 +1,7 @@
 package logic
 
 import (
+	formmodel "MuXiFresh-Be-2.0/app/form/model"
 	"context"
 
 	"MuXiFresh-Be-2.0/app/schedule/rpc/internal/svc"
@@ -25,8 +26,9 @@ func NewCheckLogic(ctx context.Context, svcCtx *svc.ServiceContext) *CheckLogic 
 
 func (l *CheckLogic) Check(in *pb.CheckReq) (*pb.CheckResp, error) {
 
+	f := &formmodel.EntryForm{}
 	f, err := l.svcCtx.EntryFormClient.FindOneByUserId(l.ctx, in.UserId)
-	if err != nil {
+	if err != nil && err != formmodel.ErrNotFound {
 		return nil, err
 	}
 
@@ -35,9 +37,14 @@ func (l *CheckLogic) Check(in *pb.CheckReq) (*pb.CheckResp, error) {
 		return nil, err
 	}
 
+	userInfo, err := l.svcCtx.UserInfoClient.FindOne(l.ctx, in.UserId)
+	if err != nil {
+		return nil, err
+	}
+
 	return &pb.CheckResp{
-		Name:            f.Name,
-		School:          f.School,
+		Name:            userInfo.Name,
+		School:          userInfo.School,
 		Major:           f.Major,
 		Group:           f.Group,
 		EntryFormStatus: s.EntryFormStatus,

@@ -35,14 +35,18 @@ func (l *GetAllSubmissionStatusLogic) GetAllSubmissionStatus(in *pb.GetAllSubmis
 		if err != nil {
 			return nil, err
 		}
+		userInfo, err := l.svcCtx.UserInfoModel.FindOne(l.ctx, userId)
+		if err != nil {
+			return nil, err
+		}
 
 		completions = append(completions, &pb.Completion{
 			UserId: entryForm.UserId.String()[10:34],
-			Name:   entryForm.Name,
+			Name:   userInfo.Name,
 			Avatar: entryForm.Avatar,
-			Email:  entryForm.Email,
+			Email:  userInfo.Email,
 			Grade:  entryForm.Grade,
-			School: entryForm.School,
+			School: userInfo.School,
 			Status: submission.Status,
 		})
 	}

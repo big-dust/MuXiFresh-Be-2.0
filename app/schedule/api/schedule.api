@@ -19,7 +19,7 @@ type CreateResp {
 //进度查询
 type CheckReq {
 	Authorization string `header:"Authorization"`
-	ScheduleID    string `json:"schedule_id"`
+	ScheduleID    string `form:"schedule_id"`
 }
 type CheckResp {
 	Name            string `json:"name"`

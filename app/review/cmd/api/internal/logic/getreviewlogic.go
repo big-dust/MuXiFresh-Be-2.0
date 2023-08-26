@@ -71,19 +71,13 @@ func (l *GetReviewLogic) GetReview(req *types.GetReviewReq) (resp *types.GetRevi
 			return nil, err
 
 		}
+
 		examStatus := "已提交"
 
-		if userInfo.TestChoice == nil {
-
-			examStatus = "未提交"
-
-			userId = globalKey.NULL
-		}
-
 		rows = append(rows, types.Row{
-			Name:            entryForm.Name,
+			Name:            userInfo.Name,
 			Grade:           entryForm.Grade,
-			School:          entryForm.School,
+			School:          userInfo.School,
 			Group:           entryForm.Group,
 			FormID:          entryForm.ID.String()[10:34],
 			ExamStuatus:     examStatus,

@@ -1,5 +1,7 @@
 package convert
 
+import "MuXiFresh-Be-2.0/common/globalKey"
+
 func GroupCvtChinese(group string) string {
 	switch group {
 	case "Backend":
@@ -14,4 +16,16 @@ func GroupCvtChinese(group string) string {
 		group = "前端组"
 	}
 	return group
+}
+
+func TypeCvtChinese(Type string) string {
+	switch Type {
+	case globalKey.Register:
+		Type = "注册账户"
+	case globalKey.SetPassword:
+		Type = "找回密码"
+	case globalKey.SetEmail:
+		Type = "修改邮箱"
+	}
+	return Type
 }

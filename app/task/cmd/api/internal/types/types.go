@@ -22,8 +22,8 @@ type SetSubmissionResp struct {
 
 type GetSubmissionInfoReq struct {
 	Authorization string `header:"Authorization"`
-	AssignmentID  string `path:"assignedTaskID"`
-	UserID        string `path:"userID"`
+	AssignmentID  string `form:"assigned_task_id"`
+	UserId        string `form:"user_id"`
 }
 
 type GetSubmissionInfoResp struct {

@@ -3,6 +3,7 @@ package logic
 import (
 	"MuXiFresh-Be-2.0/app/userauth/cmd/rpc/accountCenter/accountcenterclient"
 	"MuXiFresh-Be-2.0/common/ctxData"
+	"MuXiFresh-Be-2.0/common/tool"
 	"context"
 
 	"MuXiFresh-Be-2.0/app/userauth/cmd/api/internal/svc"
@@ -29,7 +30,7 @@ func (l *SetPasswordLogic) SetPassword(req *types.SetPasswordReq) (resp *types.S
 
 	setPasswordResp, err := l.svcCtx.AccountCenterClient.SetPassword(l.ctx, &accountcenterclient.SetPasswordReq{
 		Email:    ctxData.GetEmailFromCtx(l.ctx),
-		Password: req.Password,
+		Password: tool.EncryptedPasswordMD5(req.Password),
 	})
 	if err != nil {
 		return nil, err

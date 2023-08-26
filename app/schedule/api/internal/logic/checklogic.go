@@ -29,7 +29,7 @@ func NewCheckLogic(ctx context.Context, svcCtx *svc.ServiceContext) *CheckLogic 
 func (l *CheckLogic) Check(req *types.CheckReq) (resp *types.CheckResp, err error) {
 	//确定scheduleID
 	userid := ctxData.GetUserIdFromCtx(l.ctx)
-	if req.ScheduleID == globalKey.NULL {
+	if req.ScheduleID == globalKey.Myself {
 		u, err := l.svcCtx.UserInfoClient.FindOne(l.ctx, userid)
 		if err != nil {
 			return nil, err
