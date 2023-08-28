@@ -17,7 +17,7 @@ type TestResp struct {
 
 type TestInfoReq struct {
 	Authorization string `header:"Authorization"`
-	UserID        string `json:"user_id"`
+	UserID        string `form:"user_id"`
 }
 
 type TestInfoResp struct {

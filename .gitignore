@@ -2,6 +2,7 @@
 gen_token
 datahub
 .idea
+migration
 # 二进制
 app/form/api/form
 app/form/rpc/form

@@ -23,7 +23,7 @@ type TestResp {
 //查看测试结果
 type TestInfoReq {
 	Authorization string `header:"Authorization"`
-	UserID        string `json:"user_id"`
+	UserID        string `form:"user_id"`
 }
 type TestInfoResp {
 	Name        string       `json:"name"`

@@ -3,9 +3,11 @@ package logic
 import (
 	"MuXiFresh-Be-2.0/app/test/api/internal/svc"
 	"MuXiFresh-Be-2.0/app/test/api/internal/types"
-	"MuXiFresh-Be-2.0/app/test/rpc/testclient"
+	"MuXiFresh-Be-2.0/app/user/cmd/rpc/user/userclient"
 	"MuXiFresh-Be-2.0/common/ctxData"
+	"MuXiFresh-Be-2.0/common/globalKey"
 	"context"
+	"errors"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -25,18 +27,20 @@ func NewCheckTestResultLogic(ctx context.Context, svcCtx *svc.ServiceContext) *C
 }
 
 func (l *CheckTestResultLogic) CheckTestResult(req *types.TestInfoReq) (resp *types.TestInfoResp, err error) {
-	var uid string
-	if req.UserID == "myself" {
-		uid = ctxData.GetUserIdFromCtx(l.ctx)
-	} else {
+
+	uid := ctxData.GetUserIdFromCtx(l.ctx)
+	if req.UserID != "myself" {
+		//管理员认证
+		getUserTypeResp, err := l.svcCtx.UserClient.GetUserType(l.ctx, &userclient.GetUserTypeReq{
+			UserId: uid,
+		})
+		if err != nil {
+			return nil, err
+		}
+		if getUserTypeResp.UserType != globalKey.Admin && getUserTypeResp.UserType != globalKey.SuperAdmin {
+			return nil, errors.New("permission denied")
+		}
 		uid = req.UserID
-	}
-	_, err = l.svcCtx.TestClient.CheckTestResult(l.ctx, &testclient.TestInfoReq{
-		Token:  req.Authorization,
-		UserID: uid,
-	})
-	if err != nil {
-		return nil, err
 	}
 
 	userInfo, err := l.svcCtx.UserInfoClient.FindOne(l.ctx, uid)
@@ -47,7 +51,9 @@ func (l *CheckTestResultLogic) CheckTestResult(req *types.TestInfoReq) (resp *ty
 	formid := userInfo.EntryFormID
 
 	form, err := l.svcCtx.FormClient.FindOne(l.ctx, formid.String()[10:34])
-
+	if err != nil {
+		return nil, err
+	}
 	typesChoice := make([]types.ChoiceItem, len(userInfo.TestChoice))
 	for i, item := range userInfo.TestChoice {
 		typesChoice[i] = types.ChoiceItem(item)

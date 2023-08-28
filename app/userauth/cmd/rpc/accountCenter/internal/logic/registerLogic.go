@@ -33,7 +33,7 @@ func (l *RegisterLogic) Register(in *pb.RegisterDataReq) (*pb.RegisterDataResp, 
 		NickName:  l.svcCtx.Config.DefaultUserInfo.NickName + "_" + tool.RandStringBytes(6),
 		Email:     in.Email,
 		StudentID: globalKey.NULL,
-		UserType:  globalKey.SuperAdmin,
+		UserType:  globalKey.Freshman,
 		UpdateAt:  time.Now(),
 		CreateAt:  time.Now(),
 	}

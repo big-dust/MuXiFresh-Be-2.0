@@ -69,7 +69,6 @@ func (l *GetReviewLogic) GetReview(req *types.GetReviewReq) (resp *types.GetRevi
 		userInfo, err := l.svcCtx.UserInfoModel.FindOne(l.ctx, userId)
 		if err != nil {
 			return nil, err
-
 		}
 
 		examStatus := "已提交"
