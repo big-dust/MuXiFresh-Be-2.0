@@ -1,11 +1,10 @@
 package logic
 
 import (
-	"context"
-	"encoding/json"
-
+	"MuXiFresh-Be-2.0/app/userauth/cmd/api/internal/common/email"
 	"MuXiFresh-Be-2.0/app/userauth/cmd/api/internal/svc"
 	"MuXiFresh-Be-2.0/app/userauth/cmd/api/internal/types"
+	"context"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -25,8 +24,12 @@ func NewSendVerificationCodeLogic(ctx context.Context, svcCtx *svc.ServiceContex
 }
 
 func (l *SendVerificationCodeLogic) SendVerificationCode(req *types.SendEmailCodeReq) (resp *types.SendEmailCodeResp, err error) {
-	body, _ := json.Marshal(req)
-	if err = l.svcCtx.KqPusher.Push(string(body)); err != nil {
+	msg := &email.Msg{
+		Email: req.Email,
+		Type:  req.Type,
+	}
+	err = email.Push(msg)
+	if err != nil {
 		return nil, err
 	}
 	return &types.SendEmailCodeResp{Flag: true}, nil
