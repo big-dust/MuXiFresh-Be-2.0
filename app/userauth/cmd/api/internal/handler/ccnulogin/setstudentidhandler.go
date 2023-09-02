@@ -1,25 +1,26 @@
-package handler
+package ccnulogin
 
 import (
-	logic "MuXiFresh-Be-2.0/app/userauth/cmd/api/internal/logic/ccnulogin"
+	"net/http"
+
+	"MuXiFresh-Be-2.0/common/result"
+
+	"MuXiFresh-Be-2.0/app/userauth/cmd/api/internal/logic/ccnulogin"
 	"MuXiFresh-Be-2.0/app/userauth/cmd/api/internal/svc"
 	"MuXiFresh-Be-2.0/app/userauth/cmd/api/internal/types"
 	"github.com/zeromicro/go-zero/rest/httpx"
-	"greet/response"
-	"net/http"
 )
 
 func SetStudentIDHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var req types.SetStudentIDReq
 		if err := httpx.Parse(r, &req); err != nil {
-			httpx.Error(w, err)
+			result.ParamErrorResult(r, w, err)
 			return
 		}
 
-		l := logic.NewSetStudentIDLogic(r.Context(), svcCtx)
+		l := ccnulogin.NewSetStudentIDLogic(r.Context(), svcCtx)
 		resp, err := l.SetStudentID(&req)
-		response.Response(w, resp, err)
-
+		result.HttpResult(r, w, resp, err)
 	}
 }

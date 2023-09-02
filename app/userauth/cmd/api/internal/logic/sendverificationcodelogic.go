@@ -4,6 +4,9 @@ import (
 	"MuXiFresh-Be-2.0/app/userauth/cmd/api/internal/common/email"
 	"MuXiFresh-Be-2.0/app/userauth/cmd/api/internal/svc"
 	"MuXiFresh-Be-2.0/app/userauth/cmd/api/internal/types"
+	"MuXiFresh-Be-2.0/app/userauth/cmd/rpc/accountCenter/accountcenterclient"
+	"MuXiFresh-Be-2.0/common/globalKey"
+	"MuXiFresh-Be-2.0/common/xerr"
 	"context"
 
 	"github.com/zeromicro/go-zero/core/logx"
@@ -24,6 +27,24 @@ func NewSendVerificationCodeLogic(ctx context.Context, svcCtx *svc.ServiceContex
 }
 
 func (l *SendVerificationCodeLogic) SendVerificationCode(req *types.SendEmailCodeReq) (resp *types.SendEmailCodeResp, err error) {
+	existEmailResp, err := l.svcCtx.AccountCenterClient.ExistEmail(l.ctx, &accountcenterclient.ExistEmailReq{
+		Email: req.Email,
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	switch req.Type {
+	case globalKey.Register:
+		if existEmailResp.Exist {
+			return nil, xerr.ErrEmailHasBeenUsed
+		}
+	default:
+		if !existEmailResp.Exist {
+			return nil, xerr.ErrEmailHasNotBeenUsed
+		}
+	}
+
 	msg := &email.Msg{
 		Email: req.Email,
 		Type:  req.Type,

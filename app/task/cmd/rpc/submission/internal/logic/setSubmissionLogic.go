@@ -3,6 +3,7 @@ package logic
 import (
 	"MuXiFresh-Be-2.0/app/task/model"
 	"MuXiFresh-Be-2.0/common/globalKey"
+	"MuXiFresh-Be-2.0/common/xerr"
 	"context"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"time"
@@ -31,12 +32,12 @@ func (l *SetSubmissionLogic) SetSubmission(in *pb.SetSubmissionReq) (*pb.SetSubm
 
 	userId, err := primitive.ObjectIDFromHex(in.UserId)
 	if err != nil {
-		return nil, err
+		return nil, xerr.ErrExistInvalidId.Status()
 	}
 
 	assignmentID, err := primitive.ObjectIDFromHex(in.AssignmentID)
 	if err != nil {
-		return nil, err
+		return nil, xerr.ErrExistInvalidId.Status()
 	}
 
 	toSetSubmission := &model.Submission{
@@ -51,13 +52,20 @@ func (l *SetSubmissionLogic) SetSubmission(in *pb.SetSubmissionReq) (*pb.SetSubm
 	submission, err := l.svcCtx.SubmissionModel.FindByUserIdAndAssignmentID(l.ctx, in.UserId, in.AssignmentID)
 
 	if err != nil {
-		if err = l.svcCtx.SubmissionModel.Insert(l.ctx, toSetSubmission); err != nil {
-			return nil, err
+		switch err {
+		case model.ErrNotFound:
+			if err = l.svcCtx.SubmissionModel.Insert(l.ctx, toSetSubmission); err != nil {
+				return nil, xerr.NewErrCode(xerr.DB_ERROR).Status()
+			}
+		case model.ErrInvalidObjectId:
+			return nil, xerr.ErrExistInvalidId.Status()
+		default:
+			return nil, xerr.NewErrCode(xerr.DB_ERROR).Status()
 		}
 	} else {
 		toSetSubmission.ID = submission.ID
 		if _, err = l.svcCtx.SubmissionModel.Update(l.ctx, toSetSubmission); err != nil {
-			return nil, err
+			return nil, xerr.NewErrCode(xerr.DB_ERROR).Status()
 		}
 	}
 	return &pb.SetSubmissionResp{

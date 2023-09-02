@@ -24,15 +24,17 @@ type UserInfo struct {
 	EntryFormID primitive.ObjectID `bson:"entry_form_id,omitempty" json:"entry_form_id,omitempty"`
 	ScheduleID  primitive.ObjectID `bson:"schedule_id,omitempty" json:"schedule_id"`
 	TestChoice  []ChoiceItem       `bson:"test_choice,omitempty" json:"test_choice,omitempty"`
-	TestResult  struct {
-		LeQunXing   int64
-		YouHengXing int64
-		XingFenXing int64
-		CongHuiXing int64
-		JiaoJiXing  int64
-		HuaiYiXing  int64
-		WenDingXing int64
-	} `bson:"test_result,omitempty" json:"test_result,omitempty"`
-	UpdateAt time.Time `bson:"updateAt,omitempty" json:"updateAt,omitempty"`
-	CreateAt time.Time `bson:"createAt,omitempty" json:"createAt,omitempty"`
+	TestResult  *ExamResult        `bson:"test_result,omitempty" json:"test_result,omitempty"`
+	UpdateAt    time.Time          `bson:"updateAt,omitempty" json:"updateAt,omitempty"`
+	CreateAt    time.Time          `bson:"createAt,omitempty" json:"createAt,omitempty"`
+}
+
+type ExamResult struct {
+	LeQunXing   int64
+	YouHengXing int64
+	XingFenXing int64
+	CongHuiXing int64
+	JiaoJiXing  int64
+	HuaiYiXing  int64
+	WenDingXing int64
 }

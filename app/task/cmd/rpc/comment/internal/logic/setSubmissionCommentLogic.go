@@ -3,6 +3,7 @@ package logic
 import (
 	"MuXiFresh-Be-2.0/app/task/model"
 	"MuXiFresh-Be-2.0/common/globalKey"
+	"MuXiFresh-Be-2.0/common/xerr"
 	"context"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"time"
@@ -31,11 +32,11 @@ func (l *SetSubmissionCommentLogic) SetSubmissionComment(in *pb.SetSubmissionCom
 
 	userId, err := primitive.ObjectIDFromHex(in.UserId)
 	if err != nil {
-		return nil, err
+		return nil, xerr.ErrExistInvalidId.Status()
 	}
 	submissionId, err := primitive.ObjectIDFromHex(in.SubmissionID)
 	if err != nil {
-		return nil, err
+		return nil, xerr.ErrExistInvalidId.Status()
 	}
 	comment := &model.Comment{
 		UserId:       userId,
@@ -46,7 +47,7 @@ func (l *SetSubmissionCommentLogic) SetSubmissionComment(in *pb.SetSubmissionCom
 	}
 
 	if err = l.svcCtx.CommentModel.Insert(l.ctx, comment); err != nil {
-		return nil, err
+		return nil, xerr.NewErrCode(xerr.DB_ERROR).Status()
 	}
 
 	submission := model.Submission{
@@ -55,9 +56,9 @@ func (l *SetSubmissionCommentLogic) SetSubmissionComment(in *pb.SetSubmissionCom
 	}
 
 	if _, err = l.svcCtx.SubmissionModel.Update(l.ctx, &submission); err != nil {
-		return nil, err
+		return nil, xerr.NewErrCode(xerr.DB_ERROR).Status()
 	}
-	
+
 	return &pb.SetSubmissionCommentResp{
 		Flag: true,
 	}, nil
