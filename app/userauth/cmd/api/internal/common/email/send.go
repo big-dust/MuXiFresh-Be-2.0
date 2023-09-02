@@ -6,6 +6,7 @@ import (
 	"MuXiFresh-Be-2.0/common/convert"
 	"MuXiFresh-Be-2.0/common/globalKey"
 	"MuXiFresh-Be-2.0/common/tool"
+	"MuXiFresh-Be-2.0/common/xerr"
 	"fmt"
 	"github.com/jinzhu/copier"
 	"github.com/jordan-wright/email"
@@ -66,7 +67,7 @@ func Push(msg *Msg) error {
 	case queue <- msg:
 		return nil
 	default:
-		return fmt.Errorf("email queue push failed")
+		return xerr.NewErrMsg("邮件发送失败")
 	}
 }
 

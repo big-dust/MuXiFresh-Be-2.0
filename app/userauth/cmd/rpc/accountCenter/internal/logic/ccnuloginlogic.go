@@ -1,12 +1,12 @@
 package logic
 
 import (
-	"MuXiFresh-Be-2.0/common/tool"
-	"context"
-	"errors"
-
 	"MuXiFresh-Be-2.0/app/userauth/cmd/rpc/accountCenter/internal/svc"
 	"MuXiFresh-Be-2.0/app/userauth/cmd/rpc/accountCenter/pb"
+	"MuXiFresh-Be-2.0/app/userauth/model"
+	"MuXiFresh-Be-2.0/common/tool"
+	"MuXiFresh-Be-2.0/common/xerr"
+	"context"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -30,11 +30,14 @@ func (l *CcnuLoginLogic) CcnuLogin(in *pb.CcnuLoginReq) (*pb.CcnuLoginResp, erro
 	//查看是否绑定
 	userInfo, err := l.svcCtx.UserInfoClient.FindByStudentID(l.ctx, in.StudentID)
 	if err != nil {
-		return nil, errors.New("not bind to email")
+		if err == model.ErrNotFound {
+			return nil, xerr.ErrStudentIdHasNotBingToEmail.Status()
+		}
+		return nil, xerr.NewErrCode(xerr.DB_ERROR).Status()
 	}
 	//一站式登录
 	if !tool.CCNULogin(in.StudentID, in.Password) {
-		return nil, errors.New("student_id or password is wrong")
+		return nil, xerr.ErrStudentIdOrPasswordIsWrong.Status()
 	}
 	//返回userinfoID
 	return &pb.CcnuLoginResp{

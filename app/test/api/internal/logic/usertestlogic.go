@@ -1,9 +1,9 @@
 package logic
 
 import (
-	"MuXiFresh-Be-2.0/app/test/rpc/testclient"
 	"MuXiFresh-Be-2.0/app/userauth/model"
 	"MuXiFresh-Be-2.0/common/ctxData"
+	"MuXiFresh-Be-2.0/common/xerr"
 	"context"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"strconv"
@@ -37,7 +37,7 @@ func (l *UserTestLogic) UserTest(req *types.TestReq) (resp *types.TestResp, err 
 	uid, err := primitive.ObjectIDFromHex(userId)
 
 	if err != nil {
-		return nil, err
+		return nil, xerr.ErrExistInvalidId
 	}
 
 	score, c := Exam(req.Choice)
@@ -45,15 +45,7 @@ func (l *UserTestLogic) UserTest(req *types.TestReq) (resp *types.TestResp, err 
 	_, err = l.svcCtx.UserInfoClient.Update(l.ctx, &model.UserInfo{
 		ID:         uid,
 		TestChoice: c,
-		TestResult: struct {
-			LeQunXing   int64
-			YouHengXing int64
-			XingFenXing int64
-			CongHuiXing int64
-			JiaoJiXing  int64
-			HuaiYiXing  int64
-			WenDingXing int64
-		}{
+		TestResult: &model.ExamResult{
 			score[0],
 			score[4],
 			score[3],
@@ -64,17 +56,11 @@ func (l *UserTestLogic) UserTest(req *types.TestReq) (resp *types.TestResp, err 
 		},
 		UpdateAt: time.Now()})
 	if err != nil {
-		return nil, err
+		return nil, xerr.NewErrCode(xerr.DB_ERROR)
 	}
 
-	testResp, err := l.svcCtx.TestClient.UserTest(l.ctx, &testclient.TestReq{
-		Token: req.Authorization,
-	})
-	if err != nil {
-		return nil, err
-	}
 	return &types.TestResp{
-		Flag: testResp.Flag,
+		Flag: true,
 	}, nil
 }
 

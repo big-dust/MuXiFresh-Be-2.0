@@ -7,9 +7,8 @@ import (
 	"MuXiFresh-Be-2.0/app/user/cmd/rpc/user/userclient"
 	"MuXiFresh-Be-2.0/common/ctxData"
 	"MuXiFresh-Be-2.0/common/globalKey"
+	"MuXiFresh-Be-2.0/common/xerr"
 	"context"
-	"errors"
-
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
@@ -38,7 +37,7 @@ func (l *GetSubmissionInfoLogic) GetSubmissionInfo(req *types.GetSubmissionInfoR
 			return nil, err
 		}
 		if getUserTypeResp.UserType != globalKey.Admin && getUserTypeResp.UserType != globalKey.SuperAdmin {
-			return nil, errors.New("permission denied")
+			return nil, xerr.ErrPermissionDenied
 		}
 		userId = req.UserId
 	} else {

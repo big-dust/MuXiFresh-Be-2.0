@@ -4,6 +4,7 @@ import (
 	"MuXiFresh-Be-2.0/app/userauth/model"
 	"MuXiFresh-Be-2.0/common/globalKey"
 	"MuXiFresh-Be-2.0/common/tool"
+	"MuXiFresh-Be-2.0/common/xerr"
 	"context"
 	"time"
 
@@ -38,7 +39,7 @@ func (l *RegisterLogic) Register(in *pb.RegisterDataReq) (*pb.RegisterDataResp, 
 		CreateAt:  time.Now(),
 	}
 	if err := l.svcCtx.UserInfoClient.Insert(l.ctx, userInfo); err != nil {
-		return nil, err
+		return nil, xerr.NewErrCode(xerr.DB_ERROR).Status()
 	}
 	if err := l.svcCtx.UserAuthClient.Insert(l.ctx, &model.UserAuth{
 		Email:      in.Email,
@@ -47,7 +48,7 @@ func (l *RegisterLogic) Register(in *pb.RegisterDataReq) (*pb.RegisterDataResp, 
 		UpdateAt:   time.Now(),
 		CreateAt:   time.Now(),
 	}); err != nil {
-		return nil, err
+		return nil, xerr.NewErrCode(xerr.DB_ERROR).Status()
 	}
 	return &pb.RegisterDataResp{
 		ID: userInfo.ID.String()[10:34],
