@@ -30,13 +30,14 @@ func NewRegisterLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Register
 
 func (l *RegisterLogic) Register(in *pb.RegisterDataReq) (*pb.RegisterDataResp, error) {
 	userInfo := &model.UserInfo{
-		Avatar:    l.svcCtx.Config.DefaultUserInfo.Avatar,
-		NickName:  l.svcCtx.Config.DefaultUserInfo.NickName + "_" + tool.RandStringBytes(6),
-		Email:     in.Email,
-		StudentID: globalKey.NULL,
-		UserType:  globalKey.Freshman,
-		UpdateAt:  time.Now(),
-		CreateAt:  time.Now(),
+		Avatar:     l.svcCtx.Config.DefaultUserInfo.Avatar,
+		NickName:   l.svcCtx.Config.DefaultUserInfo.NickName + "_" + tool.RandStringBytes(6),
+		Email:      in.Email,
+		TestResult: &model.ExamResult{},
+		StudentID:  globalKey.NULL,
+		UserType:   globalKey.Freshman,
+		UpdateAt:   time.Now(),
+		CreateAt:   time.Now(),
 	}
 	if err := l.svcCtx.UserInfoClient.Insert(l.ctx, userInfo); err != nil {
 		return nil, xerr.NewErrCode(xerr.DB_ERROR).Status()
