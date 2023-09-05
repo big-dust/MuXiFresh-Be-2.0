@@ -11,7 +11,7 @@ message GetSubmissionCommentReq {
 message Comment {
   string CommentID = 1;
   string Avatar = 2;
-  string NickName = 3;
+  string Nickname = 3;
   string Group = 4;
   string Content = 5;
 }

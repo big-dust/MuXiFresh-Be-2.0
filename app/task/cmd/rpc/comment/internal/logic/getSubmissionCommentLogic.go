@@ -53,7 +53,7 @@ func (l *GetSubmissionCommentLogic) GetSubmissionComment(in *pb.GetSubmissionCom
 		cmtsWithUserInfo = append(cmtsWithUserInfo, &pb.Comment{
 			CommentID: comment.ID.String()[10:34],
 			Avatar:    userInfo.Avatar,
-			NickName:  userInfo.NickName,
+			Nickname:  userInfo.Nickname,
 			Group:     group,
 			Content:   comment.Content,
 		})

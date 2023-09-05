@@ -55,7 +55,7 @@ func (l *CheckTestResultLogic) CheckTestResult(req *types.TestInfoReq) (resp *ty
 	formid := userInfo.EntryFormID
 
 	form, err := l.svcCtx.FormClient.FindOne(l.ctx, formid.String()[10:34])
-	if err != nil && err != xerr.ErrNotFind {
+	if err != nil && err != formmodel.ErrNotFound {
 		return nil, xerr.NewErrCode(xerr.DB_ERROR)
 	}
 	if form == nil {
@@ -67,6 +67,7 @@ func (l *CheckTestResultLogic) CheckTestResult(req *types.TestInfoReq) (resp *ty
 	}
 
 	return &types.TestInfoResp{
+		UserId:      userInfo.ID.String()[10:34],
 		Name:        userInfo.Name,
 		Gender:      form.Gender,
 		Major:       form.Major,

@@ -14,7 +14,7 @@ type ChoiceItem struct {
 type UserInfo struct {
 	ID          primitive.ObjectID `bson:"_id,omitempty" json:"id,omitempty"`
 	Avatar      string             `bson:"avatar,omitempty" json:"avatar,omitempty"`
-	NickName    string             `bson:"nickname,omitempty" json:"nickname,omitempty"`
+	Nickname    string             `bson:"nickname,omitempty" json:"nickname,omitempty"`
 	Name        string             `bson:"name,omitempty" json:"name,omitempty"`
 	School      string             `bson:"school,omitempty" json:"school,omitempty"`
 	QQ          string             `bson:"qq,omitempty" json:"qq,omitempty"`

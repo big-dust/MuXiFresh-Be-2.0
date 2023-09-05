@@ -35,13 +35,13 @@ func (l *SendVerificationCodeLogic) SendVerificationCode(req *types.SendEmailCod
 	}
 
 	switch req.Type {
-	case globalKey.Register:
-		if existEmailResp.Exist {
-			return nil, xerr.ErrEmailHasBeenUsed
-		}
-	default:
+	case globalKey.SetPassword:
 		if !existEmailResp.Exist {
 			return nil, xerr.ErrEmailHasNotBeenUsed
+		}
+	default:
+		if existEmailResp.Exist {
+			return nil, xerr.ErrEmailHasBeenUsed
 		}
 	}
 
