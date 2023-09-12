@@ -31,7 +31,7 @@ func NewRegisterLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Register
 func (l *RegisterLogic) Register(in *pb.RegisterDataReq) (*pb.RegisterDataResp, error) {
 	userInfo := &model.UserInfo{
 		Avatar:     l.svcCtx.Config.DefaultUserInfo.Avatar,
-		NickName:   l.svcCtx.Config.DefaultUserInfo.NickName + "_" + tool.RandStringBytes(6),
+		Nickname:   l.svcCtx.Config.DefaultUserInfo.NickName + "_" + tool.RandStringBytes(6),
 		Email:      in.Email,
 		TestResult: &model.ExamResult{},
 		StudentID:  globalKey.NULL,

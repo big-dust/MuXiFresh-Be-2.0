@@ -39,7 +39,7 @@ func (l *SetUserInfoLogic) SetUserInfo(in *pb.SetUserInfoReq) (*pb.SetUserInfoRe
 		QQ:     in.QQ,
 	}
 	if in.NickName != globalKey.NULL {
-		userInfo.NickName = in.NickName
+		userInfo.Nickname = in.NickName
 	}
 	_, err = l.svcCtx.UserInfoModel.Update(l.ctx, userInfo)
 	if err != nil {

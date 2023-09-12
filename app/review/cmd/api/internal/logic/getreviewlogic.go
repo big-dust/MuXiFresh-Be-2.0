@@ -65,14 +65,15 @@ func (l *GetReviewLogic) GetReview(req *types.GetReviewReq) (resp *types.GetRevi
 		if req.Status != "" && schedule.AdmissionStatus != req.Status {
 			continue
 		}
+
 		//测验情况
 		userInfo, err := l.svcCtx.UserInfoModel.FindOne(l.ctx, userId)
 		if err != nil {
-			return nil, xerr.NewErrCode(xerr.DB_ERROR)
+			return nil, xerr.NewErrCodeMsg(xerr.DB_ERROR, "failed to find userinfo: user_id = "+userId)
 		}
 
 		examStatus := "已提交"
-		
+
 		if userInfo.TestChoice == nil {
 			examStatus = "未提交"
 		}

@@ -60,7 +60,7 @@ func (l *GetUserInfoLogic) GetUserInfo(in *pb.GetUserInfoReq) (*pb.GetUserInfoRe
 	}
 	return &pb.GetUserInfoResp{
 		Avatar:    userInfo.Avatar,
-		NickName:  userInfo.NickName,
+		NickName:  userInfo.Nickname,
 		Name:      userInfo.Name,
 		School:    userInfo.School,
 		Group:     group,

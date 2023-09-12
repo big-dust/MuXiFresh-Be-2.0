@@ -52,7 +52,7 @@ func (l *GetAdminListLogic) GetAdminList(in *pb.GetAdminListReq) (*pb.GetAdminLi
 	for _, userInfo := range userInfos {
 		list = append(list, &pb.One{
 			UserId:   userInfo.ID.String()[10:34],
-			Nickname: userInfo.NickName,
+			Nickname: userInfo.Nickname,
 			Avatar:   userInfo.Avatar,
 			Name:     userInfo.Name,
 			Email:    userInfo.Email,
