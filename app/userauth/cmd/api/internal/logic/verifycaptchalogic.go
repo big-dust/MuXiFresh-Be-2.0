@@ -1,9 +1,9 @@
 package logic
 
 import (
-	"MuXiFresh-Be-2.0/app/userauth/cmd/api/internal/common/code"
 	"MuXiFresh-Be-2.0/app/userauth/cmd/api/internal/svc"
 	"MuXiFresh-Be-2.0/app/userauth/cmd/api/internal/types"
+	"MuXiFresh-Be-2.0/common/code"
 	"context"
 
 	"github.com/zeromicro/go-zero/core/logx"

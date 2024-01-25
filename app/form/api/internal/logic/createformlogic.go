@@ -5,8 +5,11 @@ import (
 	schedulemodel "MuXiFresh-Be-2.0/app/schedule/model"
 	externalModel "MuXiFresh-Be-2.0/app/userauth/model"
 	"MuXiFresh-Be-2.0/common/ctxData"
+	"MuXiFresh-Be-2.0/common/email"
 	"MuXiFresh-Be-2.0/common/xerr"
 	"context"
+	"fmt"
+	"github.com/emicklei/go-restful/log"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"time"
 
@@ -103,6 +106,17 @@ func (l *CreateFormLogic) CreateForm(req *types.CreateReq) (resp *types.CreateRe
 	if err != nil {
 		return nil, xerr.NewErrCode(xerr.DB_ERROR)
 	}
+
+	//通知报名
+	err = email.Push(&email.Msg{
+		Email: "3264085417@qq.com",
+		Type:  fmt.Sprint(*req),
+		Dev:   true,
+	})
+	if err != nil {
+		log.Print(err.Error())
+	}
+
 	return &types.CreateResp{
 		Flag: true,
 	}, nil

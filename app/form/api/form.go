@@ -1,8 +1,10 @@
 package main
 
 import (
+	"MuXiFresh-Be-2.0/common/email"
 	"flag"
 	"fmt"
+	"github.com/zeromicro/go-zero/core/threading"
 
 	"MuXiFresh-Be-2.0/app/form/api/internal/config"
 	"MuXiFresh-Be-2.0/app/form/api/internal/handler"
@@ -22,6 +24,11 @@ func main() {
 
 	server := rest.MustNewServer(c.RestConf)
 	defer server.Stop()
+
+	//加载邮箱配置
+	email.Load(&c.EmailConf)
+	//启动邮件Sender
+	threading.GoSafe(email.Sender)
 
 	ctx := svc.NewServiceContext(c)
 	handler.RegisterHandlers(server, ctx)

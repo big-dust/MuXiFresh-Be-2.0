@@ -2,6 +2,7 @@ package logic
 
 import (
 	"MuXiFresh-Be-2.0/app/form/rpc/entryformclient"
+	"MuXiFresh-Be-2.0/common/globalKey"
 	"context"
 
 	"MuXiFresh-Be-2.0/app/form/api/internal/svc"
@@ -36,7 +37,18 @@ func (l *GetApplicantNumberLogic) GetApplicantNumber(req *types.GetApplicantNumb
 		return nil, err
 	}
 
+	fakeNumber := numberResp.Number
+
+	if req.Group == globalKey.Product {
+		fakeNumber = fakeNumber + 10
+	} else {
+
+		if req.Group != globalKey.Backend {
+			fakeNumber = fakeNumber + 5
+		}
+	}
+
 	return &types.GetApplicantNumberResp{
-		Number: numberResp.Number,
+		Number: fakeNumber,
 	}, nil
 }

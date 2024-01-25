@@ -4,6 +4,7 @@ datahub
 .idea
 migration
 *.com
+*.out
 # 二进制
 app/form/api/form
 app/form/rpc/form

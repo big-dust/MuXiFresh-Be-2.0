@@ -1,9 +1,9 @@
-FROM ubuntu:22.04
+FROM centos:8.1.1911
 
 WORKDIR /MuxiFresh-Be-2.0/test
 
-COPY rpc/test test-rpc
-COPY rpc/etc/test.yaml etc/test-rpc.yaml
+# COPY rpc/test test-rpc
+# COPY rpc/etc/test.yaml etc/test-rpc.yaml
 
 COPY api/test test-api
 COPY api/etc/test-api.yaml etc/test-api.yaml

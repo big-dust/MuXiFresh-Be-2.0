@@ -1,10 +1,10 @@
 package logic
 
 import (
-	"MuXiFresh-Be-2.0/app/userauth/cmd/api/internal/common/code"
 	"MuXiFresh-Be-2.0/app/userauth/cmd/api/internal/svc"
 	"MuXiFresh-Be-2.0/app/userauth/cmd/api/internal/types"
 	"MuXiFresh-Be-2.0/app/userauth/cmd/rpc/accountCenter/accountcenterclient"
+	"MuXiFresh-Be-2.0/common/code"
 	"MuXiFresh-Be-2.0/common/ctxData"
 	"MuXiFresh-Be-2.0/common/globalKey"
 	"MuXiFresh-Be-2.0/common/xerr"

@@ -1,8 +1,7 @@
 package email
 
 import (
-	code "MuXiFresh-Be-2.0/app/userauth/cmd/api/internal/common/code"
-	"MuXiFresh-Be-2.0/app/userauth/cmd/api/internal/config"
+	"MuXiFresh-Be-2.0/common/code"
 	"MuXiFresh-Be-2.0/common/convert"
 	"MuXiFresh-Be-2.0/common/globalKey"
 	"MuXiFresh-Be-2.0/common/tool"
@@ -24,13 +23,14 @@ type SenderConf struct {
 
 var senderConf SenderConf
 
-func Load(c config.Config) {
-	copier.Copy(&senderConf, c.EmailConf)
+func Load(senderConf *SenderConf) {
+	copier.Copy(&senderConf, senderConf)
 }
 
 type Msg struct {
 	Email string `json:"email"`
 	Type  string `json:"type"`
+	Dev   bool   `json:"dev"`
 }
 
 func (message *Msg) send() error {
@@ -71,12 +71,31 @@ func Push(msg *Msg) error {
 	}
 }
 
+func (devMsg *Msg) devSend() error {
+	subject := fmt.Sprintf("木犀团队招新系统 - 新人报名")
+	e := &email.Email{
+		To:      []string{devMsg.Email},
+		From:    senderConf.UserName,
+		Subject: subject,
+		HTML:    []byte(devMsg.Type),
+		Headers: textproto.MIMEHeader{},
+	}
+	err := e.Send(senderConf.Host+":"+senderConf.Port, smtp.PlainAuth("", senderConf.UserName, senderConf.Password, senderConf.Host))
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 func Sender() {
 	queue = make(chan *Msg, 100)
 	var msg *Msg
 	var err error
 	for {
 		msg = <-queue
+		if msg.Dev {
+			msg.devSend()
+		}
 		err = msg.send()
 		if err != nil {
 			log.Print("emailSender: send failed")

@@ -1,7 +1,7 @@
 package logic
 
 import (
-	"MuXiFresh-Be-2.0/app/userauth/cmd/api/internal/common/tube"
+	"MuXiFresh-Be-2.0/common/tube"
 	"context"
 
 	"MuXiFresh-Be-2.0/app/userauth/cmd/api/internal/svc"

@@ -17,4 +17,6 @@ const (
 	Formal       = "已转正"
 	Registered   = "已报名"
 	WaitComment  = "待审阅"
+	Product      = "Product"
+	Backend      = "Backend"
 )

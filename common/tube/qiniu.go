@@ -1,7 +1,6 @@
 package tube
 
 import (
-	"MuXiFresh-Be-2.0/app/userauth/cmd/api/internal/config"
 	"context"
 	"github.com/qiniu/go-sdk/v7/auth/qbox"
 	"github.com/qiniu/go-sdk/v7/storage"
@@ -18,12 +17,12 @@ type Qiniu struct {
 
 var Q Qiniu
 
-func Load(c config.Config) {
+func Load(c *Qiniu) {
 	Q = Qiniu{
-		AccessKey: c.Oss.AccessKey,
-		SecretKey: c.Oss.SecretKey,
-		Bucket:    c.Oss.BucketName,
-		Domain:    c.Oss.DomainName,
+		AccessKey: c.AccessKey,
+		SecretKey: c.SecretKey,
+		Bucket:    c.Bucket,
+		Domain:    c.Domain,
 	}
 }
 
